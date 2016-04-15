@@ -19,6 +19,10 @@ public class Utilisateur {
 		this.motDePasse = motDePasse; 
 	}
 	
+	public String toString(){
+		return ""+this.prenom +""+this.nom;  
+	}
+	
 	
 	
 }

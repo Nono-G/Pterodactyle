@@ -6,20 +6,18 @@ public class Droits {
 	//tableau des droits dans cet ordre : 
 	// 0 : lecture / 1 : modification / 2 : partage / 3 :creation / 4 : suppression
 	private boolean[] droits = new boolean[5];
-	private int nbDroits = 5; 
-	private int lecture = 0;
-	private int modification = 1;
-	private int partage = 2;
-	private int creation = 3;
-	private int suppression = 4;
+	
 	
 	
 	/*
 	 * Methode pour modifier les droits 
+	 * @require : nouveauDroits.length = 5
+	 * @return : le tableau des droits mis a jour avec les nouveaux
 	 */
-	public void setDroits(int [] t ){
-		initDroits();
-		
+	public void setDroits(boolean[] nouveauDroits){
+		for(int i = 0; i < droits.length; i++){
+			droits[i] = nouveauDroits[i];
+		}
 	}
 	
 	
