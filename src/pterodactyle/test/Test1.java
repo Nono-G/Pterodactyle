@@ -1,5 +1,7 @@
 package pterodactyle.test;
 
+import pterodactyle.*;
+
 public class Test1 {
 
 	public static void main (String[] args){
