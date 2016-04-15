@@ -1,6 +1,8 @@
 package pterodactyle.echangeable;
 
-public class Tag {
+import pterodactyle.utilisateur.Autorisation;
+
+public class Tag extends Autorisation {
 
 	private String nom;//Le nom du tag;
 	
