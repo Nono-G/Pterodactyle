@@ -1,7 +1,11 @@
 package pterodactyle.echangeable;
 
-public class Tag {
+import java.io.Serializable;
 
+public class Tag implements Serializable {
+
+	private static final long serialVersionUID = 4431577932936612825L;
+	
 	private String nom;//Le nom du tag;
 	
 	public Tag (String nom){

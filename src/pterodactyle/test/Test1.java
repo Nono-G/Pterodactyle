@@ -1,6 +1,5 @@
 package pterodactyle.test;
 
-import pterodactyle.*;
 
 public class Test1 {
 

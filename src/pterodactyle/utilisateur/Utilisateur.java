@@ -1,6 +1,12 @@
 package pterodactyle.utilisateur;
 
-public class Utilisateur {
+import java.io.Serializable;
+
+public class Utilisateur implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3755293297347406031L;
 	//Attributs de base de l'utilisateur
 	private String nom; 
 	private String prenom; 
@@ -20,7 +26,7 @@ public class Utilisateur {
 	}
 	
 	public String toString(){
-		return ""+this.prenom +""+this.nom;  
+		return ""+this.prenom +" "+this.nom;  
 	}
 	
 	

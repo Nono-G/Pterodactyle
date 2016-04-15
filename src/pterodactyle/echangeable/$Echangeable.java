@@ -1,5 +1,6 @@
 package pterodactyle.echangeable;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,8 @@ import pterodactyle.utilisateur.*;
 //Classe abstraite Echangeable général pour réunir les attributs communs
 public abstract class $Echangeable implements _Echangeable {
 
+	private static final long serialVersionUID = 9068503634795337620L;
+	
 		protected Date dateCreation;//Date a laquelle un échangeable à été mis en ligne sur le serveur
 		protected String nom;//Nom sous lequel l'échangeable est connu sur le serveur
 		protected Utilisateur auteur;//Utilisateur qui est l'auteur de cet échangeable
@@ -18,6 +21,34 @@ public abstract class $Echangeable implements _Echangeable {
 			this.dateCreation = new Date(System.currentTimeMillis());
 			this.nom = nom;
 			this.auteur = ut;
+		}
+		
+		//Recontruire un échangeable sérializé à partir de son nom.
+		public static $Echangeable charger (String nom){
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("sauv/"+nom)))){
+				$Echangeable a = ($Echangeable) ois.readObject();
+				return a;
+			}catch(Exception e){e.printStackTrace();}
+			return null;
+		}
+		
+		//Sauvegarde l'échangeable (serialization)
+		public void sauver(){
+			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("sauv/"+nom)))){
+				oos.writeObject(this);
+				oos.flush();
+			}catch(IOException e){e.printStackTrace();}
+		}
+		
+		public void sauvtest() throws Exception {
+			File f = new File("/home/nono/caca.txt");
+			FileOutputStream fos = new FileOutputStream(f);
+			OutputStreamWriter osw = new OutputStreamWriter (fos);
+			
+			osw.write("nono le cachalot");
+			osw.flush();
+			osw.close();
+			
 		}
 		
 }
