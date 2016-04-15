@@ -1,4 +1,4 @@
-package pterodactyle.utiliseur;
+package pterodactyle.utilisateur;
 
 public class Utilisateur {
 	//Attributs de base de l'utilisateur
