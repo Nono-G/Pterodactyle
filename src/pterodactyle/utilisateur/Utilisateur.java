@@ -36,12 +36,18 @@ public class Utilisateur {
 	 * Retourne la liste des autorisations et droits lies a l'utilisateur
 	 */
 	public String toStringDroits(){
-		return "";
+		return ""+listeDroits.entrySet();
 	}
 	
+	
+	/*
+	 * Ajouter des autorisations avec les droits ( autorisation = tag | Specifique) 
+	 */
 	public void ajouterAut(Autorisation aut, Droits droit ){
 		listeDroits.put(aut, droit);
 	}
+	
+	
 	
 	
 }
