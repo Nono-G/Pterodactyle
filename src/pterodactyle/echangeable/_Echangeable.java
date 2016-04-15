@@ -10,4 +10,6 @@ public interface _Echangeable {
 	
 	//...
 	
+	//Sauvegarde l'échangeable
+	public void sauver();
 }
