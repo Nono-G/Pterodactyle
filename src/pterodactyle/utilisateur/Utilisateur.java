@@ -2,6 +2,7 @@ package pterodactyle.utilisateur;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Utilisateur implements Serializable {
 
@@ -40,7 +41,14 @@ public class Utilisateur implements Serializable {
 	 * Retourne la liste des autorisations et droits lies a l'utilisateur
 	 */
 	public String toStringDroits(){
-		return ""+listeDroits.entrySet();
+		String res = "Nom autorisation = "; 
+		for(Entry<Autorisation , Droits> e: listeDroits.entrySet()){
+			res = res + e.getKey() +"\n";
+			//res = res + "Droits autorisation \n";
+			res = res + e.getValue();
+			
+		}
+		return res;
 	}
 	
 
@@ -49,6 +57,7 @@ public class Utilisateur implements Serializable {
 		listeDroits.put(aut, droit);
 	}
 	
+
 	
 	
 	
