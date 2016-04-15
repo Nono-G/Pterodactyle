@@ -3,6 +3,7 @@ package pterodactyle.echangeable;
 import java.util.Date;
 import java.util.List;
 
+
 //Classe abstraite Echangeable général pour réunir les attributs communs
 public abstract class $Echangeable implements _Echangeable {
 
