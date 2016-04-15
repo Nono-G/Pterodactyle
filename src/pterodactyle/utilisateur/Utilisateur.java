@@ -13,7 +13,7 @@ public class Utilisateur implements Serializable {
 	protected String login; 
 	protected String motDePasse; 
 	protected int id;
-	//protected HashMap< Autorisation , Droits > listeDroits;
+	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
 	
 	
 	/*
@@ -43,18 +43,12 @@ public class Utilisateur implements Serializable {
 		return ""+listeDroits.entrySet();
 	}
 	
-<<<<<<< HEAD
+
 	
-	/*
-	 * Ajouter des autorisations avec les droits ( autorisation = tag | Specifique) 
-	 */
-=======
-	/*
->>>>>>> c10cdbb5153e261b8023b99829cd5bd7e3a43f49
 	public void ajouterAut(Autorisation aut, Droits droit ){
 		listeDroits.put(aut, droit);
 	}
-	*/
+	
 	
 	
 	
