@@ -41,12 +41,10 @@ public class Utilisateur implements Serializable {
 	 * Retourne la liste des autorisations et droits lies a l'utilisateur
 	 */
 	public String toStringDroits(){
-		String res = "Nom autorisation = "; 
+		String res = ""; 
 		for(Entry<Autorisation , Droits> e: listeDroits.entrySet()){
-			res = res + e.getKey() +"\n";
-			//res = res + "Droits autorisation \n";
-			res = res + e.getValue();
-			
+			res = res + "Nom autorisation = "+e.getKey() +"\n";
+			res = res + e.getValue() + "\n";
 		}
 		return res;
 	}
