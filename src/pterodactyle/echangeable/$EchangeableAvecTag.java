@@ -7,6 +7,8 @@ import pterodactyle.utilisateur.Utilisateur;
 
 public abstract class $EchangeableAvecTag extends $Echangeable{
 
+	private static final long serialVersionUID = -2822540663675076727L;
+	
 	//Invariant de classe : tags non vide
 	private List<Tag> tags;//La liste des tags par lesquels l'échangeable est marqué
 	

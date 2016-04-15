@@ -1,15 +1,19 @@
 package pterodactyle.utilisateur;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Utilisateur {
+public class Utilisateur implements Serializable {
+
+	private static final long serialVersionUID = 3755293297347406031L;
+
 	//Attributs de base de l'utilisateur
 	protected String nom; 
 	protected String prenom; 
 	protected String login; 
 	protected String motDePasse; 
 	protected int id;
-	protected HashMap< Autorisation , Droits > listeDroits;
+	//protected HashMap< Autorisation , Droits > listeDroits;
 	
 	
 	/*
@@ -39,14 +43,18 @@ public class Utilisateur {
 		return ""+listeDroits.entrySet();
 	}
 	
+<<<<<<< HEAD
 	
 	/*
 	 * Ajouter des autorisations avec les droits ( autorisation = tag | Specifique) 
 	 */
+=======
+	/*
+>>>>>>> c10cdbb5153e261b8023b99829cd5bd7e3a43f49
 	public void ajouterAut(Autorisation aut, Droits droit ){
 		listeDroits.put(aut, droit);
 	}
-	
+	*/
 	
 	
 	
