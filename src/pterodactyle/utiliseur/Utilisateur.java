@@ -18,4 +18,6 @@ public class Utilisateur {
 		this.login = login; 
 		this.motDePasse = motDePasse; 
 	}
+	
+	
 }
