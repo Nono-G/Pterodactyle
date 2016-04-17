@@ -6,17 +6,11 @@ public class testUser {
 	
 	public static void main(String[] Args){
 		Utilisateur anasse = new Utilisateur("Anasse","Berahab","Ba","lool");
-		
-		
-		Tag t = new Tag("Comptabilite");
-		Droits d = new Droits();
-		
-		anasse.ajouterAut(t, d);
-		
-		Tag rh = new Tag("RH");
-		Droits dh = new Droits();
-		
-		anasse.ajouterAut(rh, dh);
-		System.out.println(anasse.toStringDroits());
+		Utilisateur noe = new Utilisateur("Noe","Goudian", "Ng", "lool");	
+		Utilisateur Max = new Utilisateur("Maxime","Silvestre", "Ng", "lool");	
+		Utilisateur test = new Utilisateur("Maxime","Silvestre", "Ms", "lool");
+		System.out.println(anasse.toString());
+		System.out.println(test.toString());
+		System.out.println(Max.toString());
 	}
 }
