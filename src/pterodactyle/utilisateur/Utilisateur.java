@@ -1,6 +1,7 @@
 package pterodactyle.utilisateur;
 
 import java.util.*;
+import java.awt.List;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -14,19 +15,22 @@ public class Utilisateur implements Serializable {
 	protected String prenom; 
 	protected String login; 
 	protected String motDePasse; 
-	protected int id;
+	protected int id = 0 ;
 	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
+	protected ArrayList<Integer> listID = new ArrayList<Integer>();
 	
 	/*
 	 * Constructeur basique 
 	 * @param : Nom, Prenom, Login, motDePasse
 	 */
-	public Utilisateur(String nom, String prenom, String login, String motDePasse){
+	public Utilisateur(String nom, String prenom, String login, String motDePasse, ArrayList<Integer> l){
 		this.nom = nom;
 		this.prenom = prenom; 
 		this.login = login; 
 		this.motDePasse = motDePasse; 
-		this.id = setId();
+		
+		setId(l);
+		
 	}
 	
 	
@@ -82,9 +86,14 @@ public class Utilisateur implements Serializable {
 		return profil;
 	}
 	
-	public int setId(){
-		int id = nom.hashCode() + prenom.hashCode() + this.login.hashCode() ;
-		return id;
+	public void setId(ArrayList<Integer> list){
+		if(list.isEmpty()){
+			list.add(this.id);
+		}else{
+			list.add(list.size() );
+			this.id = list.get(list.size() - 1);
+		}
+		
 	}
 	
 }
