@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class Utilisateur implements Serializable {
-
+	
 	private static final long serialVersionUID = 3755293297347406031L;
-
+	
 	//Attributs de base de l'utilisateur
 	protected String nom; 
 	protected String prenom; 
@@ -28,9 +28,7 @@ public class Utilisateur implements Serializable {
 		this.prenom = prenom; 
 		this.login = login; 
 		this.motDePasse = motDePasse; 
-		
 		setId(l);
-		
 	}
 	
 	
@@ -93,7 +91,6 @@ public class Utilisateur implements Serializable {
 			list.add(list.size() );
 			this.id = list.get(list.size() - 1);
 		}
-		
 	}
 	
 }

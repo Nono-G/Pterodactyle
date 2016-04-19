@@ -13,8 +13,11 @@ public class testUser {
 		Utilisateur anasse = new Utilisateur("Anasse","Berahab","Ba","lool", listID);
 		Utilisateur noe = new Utilisateur("Noe","Goudian", "Ng", "lool",listID);	
 		Utilisateur Max = new Utilisateur("Maxime","Silvestre", "Ng", "lool", listID);	
+		Utilisateur Naffy = new Utilisateur("Fanny","VIgnal", "Ng", "lool", listID);	
+
 		System.out.println(anasse.toString());
 		System.out.println(noe.toString());
 		System.out.println(Max.toString());
+		System.out.println(Naffy.toString());
 	}
 }
