@@ -44,11 +44,14 @@ public class Utilisateur implements Serializable {
 	 * Retourne la liste des autorisations et droits lies a l'utilisateur
 	 */
 	public String toStringDroits(){
-		String res = "Autorisation et droit de " +this.prenom+" "+ this.prenom+"\n \n"; 
+		String res = "------------------------------------------------------------------ \n";
+		res = res + "Autorisation et droit de " +this.prenom+" "+ this.prenom+"\n \n"; 
 		for(Entry<Autorisation , Droits> e: listeDroits.entrySet()){
 			res = res + "Nom autorisation = "+e.getKey() +"\n";
 			res = res + e.getValue() + "\n \n";
 		}
+		
+		res = res+ "------------------------------------------------------------------";
 		return res;
 	}
 	
@@ -60,7 +63,7 @@ public class Utilisateur implements Serializable {
 		listeDroits.put(aut, droit);
 	}
 	
-	
+	 
 	/*
 	 * Les getters pour mot de passe et login 
 	 */
