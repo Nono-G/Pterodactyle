@@ -17,18 +17,16 @@ public class Utilisateur implements Serializable {
 	protected String motDePasse; 
 	protected int id = 0 ;
 	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
-	protected ArrayList<Integer> listID = new ArrayList<Integer>();
 	
 	/*
 	 * Constructeur basique 
 	 * @param : Nom, Prenom, Login, motDePasse
 	 */
-	public Utilisateur(String nom, String prenom, String login, String motDePasse, ArrayList<Integer> l){
+	public Utilisateur(String nom, String prenom, String login, String motDePasse){
 		this.nom = nom;
 		this.prenom = prenom; 
 		this.login = login; 
 		this.motDePasse = motDePasse; 
-		setId(l);
 	}
 	
 	
@@ -85,15 +83,6 @@ public class Utilisateur implements Serializable {
 		profil[2] = this.prenom;
 		profil[3] = String.valueOf(this.id);
 		return profil;
-	}
-	
-	public void setId(ArrayList<Integer> list){
-		if(list.isEmpty()){
-			list.add(this.id);
-		}else{
-			list.add(list.size() );
-			this.id = list.get(list.size() - 1);
-		}
 	}
 	
 }

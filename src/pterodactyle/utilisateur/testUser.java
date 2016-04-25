@@ -6,15 +6,14 @@ import pterodactyle.echangeable.Tag;
 
 public class testUser {
 	
-	public static ArrayList<Integer> listID = new ArrayList<Integer>(); 
 	public static int nbreUtilisateur = 0; 
 	public static boolean[] droits= new boolean[5];
 	public static void main(String[] Args){
 		
-		Utilisateur anasse = new Utilisateur("Anasse","Berahab","Ba","lool", listID);
-		Utilisateur noe = new Utilisateur("Noe","Goudian", "Ng", "lool",listID);	
-		Utilisateur Max = new Utilisateur("Maxime","Silvestre", "Ms", "lool", listID);	
-		Utilisateur Naffy = new Utilisateur("Fanny","VIgnal", "Fv", "lool", listID);	
+		Utilisateur anasse = new Utilisateur("Anasse","Berahab","Ba","lool");
+		Utilisateur noe = new Utilisateur("Noe","Goudian", "Ng", "lool");	
+		Utilisateur Max = new Utilisateur("Maxime","Silvestre", "Ms", "lool");	
+		Utilisateur Naffy = new Utilisateur("Fanny","VIgnal", "Fv", "lool");	
 
 		Tag comptabilite = new Tag("Comptabilite");
 		Droits drCompta = new Droits();
