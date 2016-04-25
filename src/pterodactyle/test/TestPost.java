@@ -8,12 +8,11 @@ import pterodactyle.utilisateur.*;
 public class TestPost {
 
 	public static void main (String[] args){
-		ArrayList<Integer> listID = new ArrayList<Integer>();
 		
 		Tag t1 = new Tag("Dev2016");
 		Tag t2 = new Tag("ClubReptiles");
-		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre", listID);
-		Utilisateur u2 = new Utilisateur("Anas", "Berahab", "beraa", "gilles<3", listID);
+		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre");
+		Utilisateur u2 = new Utilisateur("Anas", "Berahab", "beraa", "gilles<3");
 		
 		Post p = new Post("post11", u, "Qu'est ce qu'on fait ?");
 		MessagePost m1 = new MessagePost(u,"Bonjour,\nJe m'apelle Henry");
