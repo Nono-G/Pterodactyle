@@ -1,27 +1,30 @@
 package pterodactyle.rmi;
 
-import java.net.InetAddress;
 import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-import java.rmi.*;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+
+
+// rmic pterodactyle.rmi.Implementation
 
 public class server {
 
-	public static void main(String[] args) {
-		try {
-			LocateRegistry.createRegistry(1010);
-			Implementation app = new Implementation();
-			String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/TestRMI";
-			System.out.println("Enregistrement de l'objet avec l'url : " + url);
-			Naming.rebind(url, app);
+	public static void main(String[] args) throws RemoteException {
+		// Positionner le chemin de recherche des classes RMI sur le répertoire
+		// courant
+		LocateRegistry.createRegistry(1098);
+		String cwd = System.getProperty("user.dir");
+		System.out.println("PWD = " + cwd);
+		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
+		System.out.println("codebase = " + System.getProperty("java.rmi.server.codebase"));
 
-			System.out.println("Serveur lanc�");
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (UnknownHostException e) {
+		// Compteur héritant de UnicastRemoteObject (automatiquement visible)
+		Implementation app = new Implementation();
+		try {
+			Naming.rebind("app", app);
+			System.out.println("serveur lancé");
+		} catch (RemoteException | MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
