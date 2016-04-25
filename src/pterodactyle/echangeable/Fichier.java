@@ -14,14 +14,20 @@ public class Fichier extends $EchangeableAvecTag{
 		super(nom, ut);
 	}
 	
-	//Renvoie la n-ieme tranche de 1024 octets du fichier.
-	public byte[] obtenirTranche(int n) throws ExceptionEchangeableFichierFini {
-		byte[] buffer = new byte[1024];
-		try (FileInputStream fis = new FileInputStream(new File("sauv/"+this.nom))) {
-			int l;
-	        if( ( l = fis.read(buffer, 1024*n, 1024)) == 0){throw new ExceptionEchangeableFichierFini();}
+	//Renvoie un couple composé du nombre d'octets lu et de la n-ieme tranche de 'tailleTampon' octets du fichier.
+	//
+	public Object[] obtenirTranche(int n, int tailleTampon) throws ExceptionEchangeableFichierFini {
+		byte[] buffer = new byte[tailleTampon];
+		Object[] ret = new Object[2];
+		File f = new File("sauv/"+this.nom);
+		try (FileInputStream fis = new FileInputStream(f)) {
+			if(n*tailleTampon > f.length()) {throw new ExceptionEchangeableFichierFini();}
+			fis.skip(n*tailleTampon);
+	        int t = fis.read(buffer, 0, tailleTampon);
+	        ret[0]=t;
+	        ret[1]=buffer;
 	    }catch(IOException e){e.printStackTrace();}
-		return buffer;
+		return ret;
 	}
 
 	
