@@ -29,6 +29,10 @@ public class Droits {
 		}
 	}
 	
+	public boolean[] getDroits(){
+		return this.droits;
+	}
+	
 	
 	/*
 	 * initialisation des droits a false 
@@ -39,6 +43,10 @@ public class Droits {
 		}	
 	}
 	
+	
+	/*
+	 * retourne un affichage en string des droits donnees ou non
+	 */
 	public String toString(){
 		String res = "Lecture      | Modification | Partage      | Creation     | Suppression  |\n";
 		for(int i = 0 ; i < this.droits.length ; i++){
