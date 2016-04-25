@@ -38,17 +38,5 @@ public abstract class $Echangeable implements _Echangeable {
 				oos.writeObject(this);
 				oos.flush();
 			}catch(IOException e){e.printStackTrace();}
-		}
-		
-		public void sauvtest() throws Exception {
-			File f = new File("/home/nono/caca.txt");
-			FileOutputStream fos = new FileOutputStream(f);
-			OutputStreamWriter osw = new OutputStreamWriter (fos);
-			
-			osw.write("nono le cachalot");
-			osw.flush();
-			osw.close();
-			
-		}
-		
+		}		
 }
