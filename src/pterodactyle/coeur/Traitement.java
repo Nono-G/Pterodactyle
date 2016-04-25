@@ -1,22 +1,18 @@
 package pterodactyle.coeur;
 
-import java.util.HashMap;
+import java.rmi.RemoteException;
 
-import pterodactyle.utilisateur.Utilisateur;
+import pterodactyle.rmi.ServicesRmi;
 
+public class Traitement  implements ServicesRmi  {
 
-public class Traitement {
-	
-	private static HashMap< String , Utilisateur > listeUtilisateurs = new HashMap< String , Utilisateur >();
-	
-	
-	public Traitement(){}
-	
-	public boolean estUtilisateur(String login, String mdp){
-		Utilisateur utilisateur = listeUtilisateurs.get(login);
-		if( utilisateur != null){
-			return mdp == utilisateur.getMdp();
-		}
-		return false;
+	public Traitement() {
 	}
+
+	@Override
+	public String getUSer(String nom, String prenom) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

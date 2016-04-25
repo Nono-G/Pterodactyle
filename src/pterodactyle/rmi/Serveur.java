@@ -11,15 +11,11 @@ import java.rmi.registry.LocateRegistry;
 public class Serveur {
 
 	public static void main(String[] args) throws RemoteException {
-		// Positionner le chemin de recherche des classes RMI sur le répertoire
-		// courant
-		LocateRegistry.createRegistry(1098);
-		String cwd = System.getProperty("user.dir");
-		System.out.println("PWD = " + cwd);
-		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
-		System.out.println("codebase = " + System.getProperty("java.rmi.server.codebase"));
 
-		// Compteur héritant de UnicastRemoteObject (automatiquement visible)
+		LocateRegistry.createRegistry(1095);
+		String cwd = System.getProperty("user.dir");
+		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
+
 		ServicesRmiImpl app = new ServicesRmiImpl();
 		try {
 			Naming.rebind("app", app);

@@ -19,8 +19,6 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements  ServicesRmi
 		return nom+" "+prenom;
 	}
 	
-	public boolean verification(String login,String mdp){
-		return true;
-	}
+	
 
 }
