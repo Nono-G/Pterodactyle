@@ -6,12 +6,10 @@ import pterodactyle.rmi.*;
 import pterodactyle.utilisateur.Utilisateur;
 
 public class VerificationDroits implements ServicesRmi{
+
 	Traitement t = new Traitement();
-	@Override
-	public String getUSer(String nom, String prenom) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
 	
 	public void creerUtilisateur(Utilisateur utilisateur, String login, String mdp){
 		if( ! utilisateur.estAdmin()){
@@ -27,6 +25,11 @@ public class VerificationDroits implements ServicesRmi{
 			throw new AdministrateurException("Est admin");
 		}
 		t.creerUtilisateur(nom, prenom, loginFuturUtilisateur, motDePasse, admin, utilisateurCourant);
+	}
+
+	@Override
+	public Utilisateur utilisateurCourant(String login, String motDePasse) throws RemoteException {
+		return t.utilisateurCourant(login, motDePasse);
 	}
 	
 	

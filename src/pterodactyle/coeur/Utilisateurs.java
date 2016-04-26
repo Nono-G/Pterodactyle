@@ -20,5 +20,16 @@ public  class Utilisateurs {
 	public static void ajouterUtilisateur(Utilisateur utilisateur) {
 		listeUtilisateurs.put(utilisateur.getLogin(), utilisateur);
 	}
+	
+
+	public static Utilisateur voirUtilisateur(String login){
+		return listeUtilisateurs.get(login);
+	}
+
+	public static Utilisateur getUtilisateur(String login, String motDePasse){
+		if(! Utilisateurs.estUtilisateur(login, motDePasse)) throw new UtilisateurException("est Utilisateur");
+		if(! listeUtilisateurs.get(login).estAdmin()) throw new AdministrateurException("est Admin");
+		return listeUtilisateurs.get(login);
+	}
 
 }

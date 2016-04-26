@@ -10,11 +10,7 @@ public class Traitement  implements ServicesRmi  {
 	public Traitement() {
 	}
 
-	@Override
-	public String getUSer(String nom, String prenom) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse,
@@ -22,6 +18,20 @@ public class Traitement  implements ServicesRmi  {
 		Utilisateur utilisateur = new Utilisateur(nom, prenom, loginFuturUtilisateur, motDePasse, admin);
 		Utilisateurs.ajouterUtilisateur(utilisateur);
 		
+	}
+
+
+
+	@Override
+	public Utilisateur utilisateurCourant(String login, String motDePasse) throws RemoteException {
+		return Utilisateurs.getUtilisateur(login, motDePasse);
+	}
+
+
+
+	@Override
+	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {		
+		return Utilisateurs.voirUtilisateur(login);
 	}
 
 
