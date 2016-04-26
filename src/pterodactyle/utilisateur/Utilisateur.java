@@ -87,7 +87,7 @@ public class Utilisateur implements Serializable {
 		return profil;
 	}
 	
-	public boolean estAdmin(){
+	public boolean estAdmin()throws AdministrateurException{
 		return admin;
 	}
 	

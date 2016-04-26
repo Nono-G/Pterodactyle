@@ -3,6 +3,7 @@ package pterodactyle.coeur;
 import java.rmi.RemoteException;
 
 import pterodactyle.rmi.*;
+import pterodactyle.utilisateur.Utilisateur;
 
 public class VerificationDroits implements ServicesRmi{
 
@@ -12,7 +13,11 @@ public class VerificationDroits implements ServicesRmi{
 		return null;
 	}
 	
-
+	public void creerUtilisateur(Utilisateur utilisateur, String login, String mdp){
+		if(utilisateur.estAdmin()){
+			
+		}
+	}
 	
 	
 }

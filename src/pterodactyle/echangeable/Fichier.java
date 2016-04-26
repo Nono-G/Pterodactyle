@@ -5,17 +5,16 @@ import java.io.*;
 
 import pterodactyle.utilisateur.Utilisateur;
 
-public class Fichier extends $EchangeableAvecTag{
+public class Fichier extends $DossierOuFichier{
 
 	private static final long serialVersionUID = 4875854715778443691L;
 
 	
-	public Fichier(String nom, Utilisateur ut) {
-		super(nom, ut);
+	public Fichier(String nom, Utilisateur ut, Dossier pere) {
+		super(nom, ut, pere);
 	}
 	
 	//Renvoie un couple composé du nombre d'octets lu et de la n-ieme tranche de 'tailleTampon' octets du fichier.
-	//
 	public Object[] obtenirTranche(int n, int tailleTampon) throws ExceptionEchangeableFichierFini {
 		byte[] buffer = new byte[tailleTampon];
 		Object[] ret = new Object[2];
@@ -28,6 +27,12 @@ public class Fichier extends $EchangeableAvecTag{
 	        ret[1]=buffer;
 	    }catch(IOException e){e.printStackTrace();}
 		return ret;
+	}
+
+	//Renvoie false car l'objet est un fichier
+	@Override
+	public boolean estDossier() {
+		return false;
 	}
 
 	
