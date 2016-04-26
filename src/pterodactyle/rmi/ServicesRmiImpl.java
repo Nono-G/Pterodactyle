@@ -3,6 +3,7 @@ package pterodactyle.rmi;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import pterodactyle.coeur.UtilisateurException;
 import pterodactyle.coeur.Utilisateurs;
 import pterodactyle.coeur.VerificationDroits;
 import pterodactyle.utilisateur.Utilisateur;
@@ -26,7 +27,7 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements  ServicesRmi
 	}
 	
 	public void creerUtilisateur(Utilisateur utilisateur,String login, String mdp){
-		Utilisateurs.estUtilisateur(login, mdp);
+		if(!Utilisateurs.estUtilisateur(login, mdp)) throw new UtilisateurException("Est utilisateur");
 		a.creerUtilisateur(utilisateur, login, mdp);
 		
 	}
