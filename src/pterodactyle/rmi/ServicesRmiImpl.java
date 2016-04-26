@@ -22,7 +22,11 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi 
 	public void verifaication(String login, String motDePasse){}
 	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse, boolean admin, Utilisateur utilisateurCourant){
 		if(!Utilisateurs.estUtilisateur(utilisateurCourant.getLogin(), utilisateurCourant.getMdp())) throw new UtilisateurException("Est utilisateur");
+<<<<<<< HEAD
 		droit.creerUtilisateur(nom,prenom,loginFuturUtilisateur,motDePasse,admin,utilisateurCourant);
+=======
+		a.creerUtilisateur(nom,prenom,loginFuturUtilisateur,motDePasse,admin,utilisateurCourant);
+>>>>>>> 3596e1e02af2c6370bc89534be93a8ea21f7ca98
 		
 	}
 

@@ -17,7 +17,6 @@ public class Utilisateur implements Serializable {
 	protected String login; 
 	protected String motDePasse; 
 	protected boolean admin; 
-	protected int id = 0 ;
 	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
 	
 	/*
@@ -37,7 +36,7 @@ public class Utilisateur implements Serializable {
 	 * @return : String le nom de l'utilisateur
 	 */
 	public String toString(){
-		return ""+this.prenom +" "+this.nom+" id = "+this.id;  
+		return ""+this.prenom +" "+this.nom;  
 	}
 	
 	
@@ -84,7 +83,6 @@ public class Utilisateur implements Serializable {
 		profil[0] = this.login;
 		profil[1] = this.nom;
 		profil[2] = this.prenom;
-		profil[3] = String.valueOf(this.id);
 		return profil;
 	}
 	
