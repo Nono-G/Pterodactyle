@@ -24,8 +24,7 @@ public class Traitement  implements ServicesRmi  {
 
 	@Override
 	public Utilisateur utilisateurCourant(String login, String motDePasse) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return Utilisateurs.getUtilisateur(login, motDePasse);
 	}
 
 
