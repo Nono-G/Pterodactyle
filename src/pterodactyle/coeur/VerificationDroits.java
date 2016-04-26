@@ -1,5 +1,8 @@
 package pterodactyle.coeur;
 
-public class VerificationDroits {
+import pterodactyle.rmi.*;
 
+public class VerificationDroits extends ServicesRmi{
+	
+	
 }
