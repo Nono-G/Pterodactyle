@@ -52,7 +52,7 @@ public class pterodactyleInterface {
 	 */
 	private void initialize() {
 		framePtrodactyle = new JFrame();
-		framePtrodactyle.setIconImage(Toolkit.getDefaultToolkit().getImage(pterodactyleInterface.class.getResource("/pterodactyle/editeur/Ptero.jpg")));
+		framePtrodactyle.setIconImage(Toolkit.getDefaultToolkit().getImage(pterodactyleInterface.class.getResource("/pterodactyle/editeur/output.png")));
 		framePtrodactyle.getContentPane().setFont(new Font("Book Antiqua", Font.ITALIC, 14));
 		framePtrodactyle.setFont(new Font("Book Antiqua", Font.BOLD, 16));
 		framePtrodactyle.getContentPane().setBackground(Color.WHITE);
@@ -60,7 +60,7 @@ public class pterodactyleInterface {
 		
 		JLabel lblNewLabel = new JLabel("Éditeur Ptérodactyle");
 		lblNewLabel.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 19));
-		lblNewLabel.setIcon((Icon) new ImageIcon("Ptero.jpg").getImage());
+		lblNewLabel.setIcon(new ImageIcon(pterodactyleInterface.class.getResource("/pterodactyle/editeur/Ptero.jpg")));
 		lblNewLabel.setBounds(10, 11, 565, 167);
 		framePtrodactyle.getContentPane().add(lblNewLabel);
 		
