@@ -1,6 +1,5 @@
 package pterodactyle.test;
 
-import java.util.ArrayList;
 
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.*;
@@ -11,8 +10,8 @@ public class TestPost {
 		
 		Tag t1 = new Tag("Dev2016");
 		Tag t2 = new Tag("ClubReptiles");
-		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre");
-		Utilisateur u2 = new Utilisateur("Anas", "Berahab", "beraa", "gilles<3");
+		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre", false);
+		Utilisateur u2 = new Utilisateur("Anas", "Berahab", "beraa", "gilles<3", false);
 		
 		Post p = new Post("post11", u, "Qu'est ce qu'on fait ?");
 		MessagePost m1 = new MessagePost(u,"Bonjour,\nJe m'apelle Henry");
@@ -25,9 +24,9 @@ public class TestPost {
 		p.ajouterTag(t2);
 		
 		System.out.print(p);
-		System.out.print(p.voirTags());
+		System.out.println(p.voirTags());
 		
-		System.out.println("\nSERIALISATION");
+		System.out.println("SERIALISATION");
 		p.sauver();
 		$EchangeableAvecTag p2 = ($EchangeableAvecTag) $Echangeable.charger("post11");
 		System.out.print(p2);

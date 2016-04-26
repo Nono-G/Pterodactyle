@@ -8,9 +8,8 @@ import pterodactyle.utilisateur.Utilisateur;
 public class TestFich {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre");
+				
+		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre", false);
 		
 		Fichier f = new Fichier("t.avi", u, null);
 		

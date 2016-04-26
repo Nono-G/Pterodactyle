@@ -34,6 +34,5 @@ public class Fichier extends $DossierOuFichier{
 	public boolean estDossier() {
 		return false;
 	}
-
 	
 }
