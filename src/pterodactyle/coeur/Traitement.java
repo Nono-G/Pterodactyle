@@ -30,4 +30,11 @@ public class Traitement  implements ServicesRmi  {
 
 
 
+	@Override
+	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {		
+		return Utilisateurs.voirUtilisateur(login);
+	}
+
+
+
 }

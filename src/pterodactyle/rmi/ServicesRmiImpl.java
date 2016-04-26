@@ -19,22 +19,26 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi 
 		// TODO Auto-generated constructor stub
 	}
 
-	public void verifaication(String login, String motDePasse){}
-	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse, boolean admin, Utilisateur utilisateurCourant){
+	public void verification(Utilisateur utilisateurCourant ){
 		if(!Utilisateurs.estUtilisateur(utilisateurCourant.getLogin(), utilisateurCourant.getMdp())) throw new UtilisateurException("Est utilisateur");
-<<<<<<< HEAD
-		droit.creerUtilisateur(nom,prenom,loginFuturUtilisateur,motDePasse,admin,utilisateurCourant);
-=======
-		a.creerUtilisateur(nom,prenom,loginFuturUtilisateur,motDePasse,admin,utilisateurCourant);
->>>>>>> 3596e1e02af2c6370bc89534be93a8ea21f7ca98
-		
+	}
+	
+	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse, boolean admin, Utilisateur utilisateurCourant){
+		verification(utilisateurCourant);
+		droit.creerUtilisateur(nom,prenom,loginFuturUtilisateur,motDePasse,admin,utilisateurCourant);		
 	}
 
 
 	@Override
 	public Utilisateur utilisateurCourant(String login, String motDePasse) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		if(!Utilisateurs.estUtilisateur(login, motDePasse)) throw new UtilisateurException("Est utilisateur");
+		return droit.utilisateurCourant(login, motDePasse);
+	}
+
+	@Override
+	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
+		verification(utilisateurCourant);
+		return droit.voirUtlisateur(login, utilisateurCourant);
 	}
 
 }

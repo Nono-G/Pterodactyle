@@ -20,5 +20,9 @@ public  class Utilisateurs {
 	public static void ajouterUtilisateur(Utilisateur utilisateur) {
 		listeUtilisateurs.put(utilisateur.getLogin(), utilisateur);
 	}
+	
+	public static Utilisateur voirUtilisateur(String login){
+		return listeUtilisateurs.get(login);
+	}
 
 }
