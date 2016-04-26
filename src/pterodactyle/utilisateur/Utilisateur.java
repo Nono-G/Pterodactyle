@@ -1,7 +1,6 @@
 package pterodactyle.utilisateur;
 
 import java.util.*;
-import pterodactyle.coeur.AdministrateurException;
 import java.awt.List;
 import java.io.Serializable;
 import java.util.HashMap;

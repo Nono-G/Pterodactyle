@@ -3,9 +3,9 @@ package pterodactyle.coeur2;
 import java.rmi.RemoteException;
 import java.util.*;
 
-import pterodactyle.coeur.UtilisateurException;
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.Utilisateur;
+import pterodactyle.utilisateur.UtilisateurException;
 
 public class CoeurBase extends $Coeur {
 
@@ -19,12 +19,8 @@ public class CoeurBase extends $Coeur {
 		this.utilisateurs = new HashMap<String, Utilisateur>();
 		this.tags = new HashSet<Tag>();
 		this.echangeables = new HashMap<String, _Echangeable>();
-		
 	}
 	
-	public void verificationIdentiteUtilisateur(Utilisateur utilisateurCourant){
-		if(verifIdentite.estUtilisateur(utilisateurCourant, utilisateurs)) throw new UtilisateurException("est Utilisateur");
-	}
 	
 	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utilisateuCourant) {
 		verifIdentite.estAdmin(utilisateuCourant, utilisateurs);
@@ -40,15 +36,16 @@ public class CoeurBase extends $Coeur {
 
 	@Override
 	public Utilisateur voirUtilisateur(String identificateur, Utilisateur utilisateurCourant) throws RemoteException {
-		verificationIdentiteUtilisateur(utilisateurCourant);
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		return utilisateurs.get(identificateur);
 	}
 
+	//Auteur : Nono
 	@Override
 	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType {
 		//Verification identite
-		verifIdentite.estUtilisateur(utilisateurCourant, utilisateurs);
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Verification sémantique
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof Fichier)) throw new ExceptionEchangeableMauvaisType();
@@ -58,11 +55,12 @@ public class CoeurBase extends $Coeur {
 		return ((Fichier)ech).obtenirTranche(n, tailleTampon);
 	}
 
+	//Auteur : Nono
 	@Override
 	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableMauvaisType {
 		//Verification identite
-		verifIdentite.estUtilisateur(utilisateurCourant, utilisateurs);
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Verification sémantique
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();

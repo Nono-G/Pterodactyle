@@ -3,11 +3,11 @@ package pterodactyle.rmi;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import pterodactyle.coeur.UtilisateurException;
 import pterodactyle.coeur.Utilisateurs;
 import pterodactyle.coeur.VerificationDroits;
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.Utilisateur;
+import pterodactyle.utilisateur.UtilisateurException;
 
 public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi {
 
