@@ -10,6 +10,7 @@ public interface _ServicesCoeur extends Remote {
 	
 	public void creerUtilisateur(Utilisateur nouveau, String identificateur, String cle);
 	
+	
 	public Utilisateur utilisateurCourant(String login, String motDePasse)throws RemoteException;
 	
 
