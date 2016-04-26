@@ -2,7 +2,7 @@ package pterodactyle.coeur;
 
 import java.rmi.RemoteException;
 
-import pterodactyle.rmi.ServicesRmi;
+
 import pterodactyle.utilisateur.Utilisateur;
 
 public class TraitementJava  extends $Traitement  {

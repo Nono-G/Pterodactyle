@@ -12,14 +12,14 @@ public abstract class $Echangeable implements _Echangeable {
 	private static final long serialVersionUID = 9068503634795337620L;
 	
 		protected Date dateCreation;//Date a laquelle un échangeable à été mis en ligne sur le serveur
-		protected String nom;//Nom sous lequel l'échangeable est connu sur le serveur
+		protected String url;//Nom sous lequel l'échangeable est connu sur le serveur
 		protected Utilisateur auteur;//Utilisateur qui est l'auteur de cet échangeable
 		protected List<Utilisateur> modifieurs;//Liste des utilisateurs ayant apporté des modifications au fichier
 		
-		public $Echangeable(String nom, Utilisateur ut){
+		public $Echangeable(String url, Utilisateur ut){
 			this.modifieurs = new ArrayList<Utilisateur>();
 			this.dateCreation = new Date(System.currentTimeMillis());
-			this.nom = nom;
+			this.url = url;
 			this.auteur = ut;
 		}
 		
@@ -34,7 +34,7 @@ public abstract class $Echangeable implements _Echangeable {
 		
 		//Sauvegarde l'échangeable (serialization)
 		public void sauver(){
-			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("sauv/"+nom)))){
+			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("sauv/"+url)))){
 				oos.writeObject(this);
 				oos.flush();
 			}catch(IOException e){e.printStackTrace();}
