@@ -19,6 +19,15 @@ public class VerificationDroits implements ServicesRmi{
 		}
 		
 	}
+
+	@Override
+	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse,
+			boolean admin, Utilisateur utilisateurCourant) {
+		if( ! utilisateurCourant.estAdmin()){
+			throw new AdministrateurException("Est admin");
+		}
+		t.creerUtilisateur(nom, prenom, loginFuturUtilisateur, motDePasse, admin, utilisateurCourant);
+	}
 	
 	
 }
