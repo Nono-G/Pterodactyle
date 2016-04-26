@@ -11,7 +11,7 @@ public class Traitement  implements ServicesRmi  {
 	}
 
 
-
+ 
 	@Override
 	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse,
 			boolean admin, Utilisateur utilisateurCourant) {
@@ -20,14 +20,10 @@ public class Traitement  implements ServicesRmi  {
 		
 	}
 
-
-
 	@Override
 	public Utilisateur utilisateurCourant(String login, String motDePasse) throws RemoteException {
 		return Utilisateurs.getUtilisateur(login, motDePasse);
 	}
-
-
 
 	@Override
 	public String voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {		

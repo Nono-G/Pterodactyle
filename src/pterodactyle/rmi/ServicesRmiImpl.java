@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import pterodactyle.coeur.UtilisateurException;
 import pterodactyle.coeur.Utilisateurs;
 import pterodactyle.coeur.VerificationDroits;
+import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.Utilisateur;
 
 public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi {
@@ -40,5 +41,11 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi 
 		verification(utilisateurCourant);
 		return droit.voirUtlisateur(login, utilisateurCourant);
 	}
+	
+	public void creerPost(Utilisateur auteur, String login , String motDePasse, Post post){
+		verification(auteur);
+	}
+
+
 
 }
