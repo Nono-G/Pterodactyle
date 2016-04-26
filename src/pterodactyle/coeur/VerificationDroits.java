@@ -12,7 +12,7 @@ public class VerificationDroits implements ServicesRmi{
 		return null;
 	}
 	
-	
+
 	
 	
 }
