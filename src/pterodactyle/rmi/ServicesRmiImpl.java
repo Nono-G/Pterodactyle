@@ -8,9 +8,8 @@ import pterodactyle.coeur.Utilisateurs;
 import pterodactyle.coeur.VerificationDroits;
 import pterodactyle.utilisateur.Utilisateur;
 
+public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi {
 
-public class ServicesRmiImpl extends UnicastRemoteObject implements  ServicesRmi  {
-	
 	VerificationDroits a;
 
 	private static final long serialVersionUID = 958097467225680669L;
@@ -22,16 +21,14 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements  ServicesRmi
 
 	@Override
 	public String getUSer(String nom, String prenom) throws RemoteException {
-		
-		return nom+" "+prenom;
+
+		return nom + " " + prenom;
 	}
-	
-	public void creerUtilisateur(Utilisateur utilisateur,String login, String mdp){
-		if(!Utilisateurs.estUtilisateur(login, mdp)) throw new UtilisateurException("Est utilisateur");
-		a.creerUtilisateur(utilisateur, login, mdp);
+
+	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse, boolean admin, Utilisateur utilisateurCourant){
+		if(!Utilisateurs.estUtilisateur(utilisateurCourant.getLogin(), utilisateurCourant.getMdp())) throw new UtilisateurException("Est utilisateur");
+		a.creerUtilisateur(nom,prenom,loginFuturUtilisateur,motDePasse,admin,utilisateurCourant.getLogin(),utilisateurCourant.getMdp());
 		
 	}
-	
-	
 
 }
