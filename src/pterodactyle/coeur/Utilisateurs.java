@@ -28,7 +28,6 @@ public  class Utilisateurs {
 
 	public static Utilisateur getUtilisateur(String login, String motDePasse){
 		if(! Utilisateurs.estUtilisateur(login, motDePasse)) throw new UtilisateurException("est Utilisateur");
-		if(! listeUtilisateurs.get(login).estAdmin()) throw new AdministrateurException("est Admin");
 		return listeUtilisateurs.get(login);
 	}
 
