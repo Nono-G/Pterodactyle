@@ -16,5 +16,9 @@ public  class Utilisateurs {
 		}
 		return false;
 	}
+	
+	public static void ajouterUtilisateur(Utilisateur utilisateur){
+		listeUtilisateurs.put(utilisateur.getLogin(), utilisateur);
+	}
 
 }
