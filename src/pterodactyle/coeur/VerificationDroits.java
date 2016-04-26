@@ -33,9 +33,9 @@ public class VerificationDroits implements ServicesRmi{
 	}
 
 	@Override
-	public String voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
+	public String voirUtilisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
 		
-		return t.voirUtlisateur(login, utilisateurCourant);
+		return t.voirUtilisateur(login, utilisateurCourant);
 	}
 	
 	

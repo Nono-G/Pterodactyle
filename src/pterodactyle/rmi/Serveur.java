@@ -8,13 +8,14 @@ import java.rmi.registry.LocateRegistry;
 import pterodactyle.coeur.Utilisateurs;
 
 
-// rmic pterodactyle.rmi.Implementation
+// rmic pterodactyle.rmi.ServicesRmiImpl
 
 public class Serveur {
 
 	public static void main(String[] args) throws RemoteException {
 		
 		Utilisateurs.admin();
+		System.out.println(Utilisateurs.getUtilisateur("silvemax", "12345").toString());
 
 		LocateRegistry.createRegistry(1099);
 		String cwd = System.getProperty("user.dir");

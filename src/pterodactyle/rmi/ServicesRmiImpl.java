@@ -37,9 +37,9 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi 
 	}
 
 	@Override
-	public String voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
+	public String voirUtilisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
 		verification(utilisateurCourant);
-		return droit.voirUtlisateur(login, utilisateurCourant);
+		return droit.voirUtilisateur(login, utilisateurCourant);
 	}
 	
 	public void creerPost(Utilisateur auteur, String login , String motDePasse, Post post){

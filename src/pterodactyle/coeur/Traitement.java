@@ -26,7 +26,7 @@ public class Traitement  implements ServicesRmi  {
 	}
 
 	@Override
-	public String voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {		
+	public String voirUtilisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {		
 		return Utilisateurs.voirUtilisateur(login).toString();
 	}
 

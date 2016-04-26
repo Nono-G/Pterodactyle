@@ -16,7 +16,7 @@ public  class Utilisateurs {
 	public static boolean estUtilisateur(String login, String mdp){
 		Utilisateur utilisateur = listeUtilisateurs.get(login);
 		if( utilisateur != null){
-			return mdp == utilisateur.getMdp();
+			return mdp.equals(utilisateur.getMdp());
 		}
 		return false;
 	}
