@@ -14,5 +14,6 @@ public interface ServicesRmi extends Remote{
 	public Utilisateur utilisateurCourant(String login, String motDePasse)throws RemoteException;
 	
 	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant)throws RemoteException;
+	
 
 }

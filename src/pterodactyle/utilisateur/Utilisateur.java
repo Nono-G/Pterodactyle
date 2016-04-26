@@ -18,7 +18,6 @@ public class Utilisateur implements Serializable {
 	protected String motDePasse; 
 	protected boolean admin; 
 	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
-	
 	/*
 	 * Constructeur basique 
 	 * @param : Nom, Prenom, Login, motDePasse
