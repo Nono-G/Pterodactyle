@@ -11,13 +11,13 @@ public class CoeurBase extends $Coeur {
 	
 	protected Set<Tag> tags;
 	protected Map<String, Utilisateur> utilisateurs;
-	protected Set<_Echangeable> echangeables;
+	protected Map<String, _Echangeable> echangeables;
 
 	protected CoeurBase() throws RemoteException {
 		super();
 		this.utilisateurs = new HashMap<String, Utilisateur>();
 		this.tags = new HashSet<Tag>();
-		this.echangeables = new HashSet<_Echangeable>();
+		this.echangeables = new HashMap<String, _Echangeable>();
 		
 	}
 	
@@ -40,9 +40,31 @@ public class CoeurBase extends $Coeur {
 
 	@Override
 	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType {
+		//Verification identite
+		verifIdentite.estUtilisateur(utilisateurCourant, utilisateurs);
+		//Verification sémantique
+		_Echangeable ech = this.echangeables.get(url);
+		if( ! (ech instanceof Fichier)) throw new ExceptionEchangeableMauvaisType();
+		//Verification autorisation
+		verifAutorisation.lecture((Fichier)ech, utilisateurCourant);
+		
+		return ((Fichier)ech).obtenirTranche(n, tailleTampon);
+	}
+
+	@Override
+	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType {
+		//Verification identite
+		verifIdentite.estUtilisateur(utilisateurCourant, utilisateurs);
+		//Verification sémantique
+		_Echangeable ech = this.echangeables.get(url);
+		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();
+		//Verification autorisation
+		verifAutorisation.ecriture((Post)ech, utilisateurCourant);
+		
+		((Post)ech).repondre(new MessagePost(utilisateurCourant, contenu));
+		
 	}
 	
 }
