@@ -1,7 +1,7 @@
 package pterodactyle.utilisateur;
 
 import java.util.*;
-import pterodactyle.coeur.AdministrateurExecption;
+import pterodactyle.coeur.AdministrateurException;
 import java.awt.List;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -88,7 +88,7 @@ public class Utilisateur implements Serializable {
 		return profil;
 	}
 	
-	public boolean estAdmin()throws AdministrateurExecption{
+	public boolean estAdmin()throws AdministrateurException{
 		return admin;
 	}
 	
