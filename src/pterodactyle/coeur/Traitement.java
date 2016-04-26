@@ -17,9 +17,13 @@ public class Traitement  implements ServicesRmi  {
 	}
 
 	@Override
-	public void creerUtilisateur(Utilisateur utilisateur, String login, String mdp) {
-		// TODO Auto-generated method stub
+	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse,
+			boolean admin, Utilisateur utilisateurCourant) {
+		Utilisateur utilisateur = new Utilisateur(nom, prenom, loginFuturUtilisateur, motDePasse, admin);
+		Utilisateurs.ajouterUtilisateur(utilisateur);
 		
 	}
+
+
 
 }
