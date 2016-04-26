@@ -26,8 +26,17 @@ public class Traitement  implements ServicesRmi  {
 	}
 
 	@Override
-	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {		
-		return Utilisateurs.voirUtilisateur(login);
+	public String voirUtilisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {		
+		return Utilisateurs.voirUtilisateur(login).toString();
+	}
+
+
+
+	@Override
+	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -35,4 +35,12 @@ public class TraitementJava  extends $Traitement  {
 		return null;
 	}
 
+
+
+	@Override
+	public String voirUtilisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
