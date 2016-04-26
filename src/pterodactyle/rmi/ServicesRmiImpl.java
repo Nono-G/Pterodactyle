@@ -36,7 +36,7 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi 
 	}
 
 	@Override
-	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
+	public String voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
 		verification(utilisateurCourant);
 		return droit.voirUtlisateur(login, utilisateurCourant);
 	}
