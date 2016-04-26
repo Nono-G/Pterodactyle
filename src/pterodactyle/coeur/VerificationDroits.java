@@ -6,7 +6,7 @@ import pterodactyle.rmi.*;
 import pterodactyle.utilisateur.Utilisateur;
 
 public class VerificationDroits implements ServicesRmi{
-	Traitement t ;
+	Traitement t = new Traitement();
 	@Override
 	public String getUSer(String nom, String prenom) throws RemoteException {
 		// TODO Auto-generated method stub
