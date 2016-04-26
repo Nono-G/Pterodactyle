@@ -1,5 +1,11 @@
 package pterodactyle.coeur2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -14,11 +20,36 @@ public class CoeurBase extends $Coeur {
 	protected Map<String, Utilisateur> utilisateurs;
 	protected Map<String, _Echangeable> echangeables;
 
-	protected CoeurBase() throws RemoteException {
+	protected CoeurBase() throws RemoteException{
 		super();
 		this.utilisateurs = new HashMap<String, Utilisateur>();
 		this.tags = new HashSet<Tag>();
 		this.echangeables = new HashMap<String, _Echangeable>();
+	}
+	
+	protected CoeurBase(String repertoire) throws RemoteException{
+		super();
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
+			this.tags = (Set<Tag>)ois.readObject();
+		}catch(Exception e){e.printStackTrace();}
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexUtilisateurs")))){
+			this.utilisateurs = (Map<String,Utilisateur>)ois.readObject();
+		}catch(Exception e){e.printStackTrace();}
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexEchangeables")))){
+			this.echangeables = (Map<String, _Echangeable>)ois.readObject();
+		}catch(Exception e){e.printStackTrace();}
+	}
+	
+	protected void Sauvegarder(String repertoire){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexTags")))){
+			oos.writeObject(this.tags);
+		}catch(IOException e){e.printStackTrace();}
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexUtilisateurs")))){
+			oos.writeObject(this.utilisateurs);
+		}catch(IOException e){e.printStackTrace();}
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexEchangeables")))){
+			oos.writeObject(this.echangeables);
+		}catch(IOException e){e.printStackTrace();}
 	}
 	
 	
@@ -69,6 +100,25 @@ public class CoeurBase extends $Coeur {
 		
 		((Post)ech).repondre(new MessagePost(utilisateurCourant, contenu));
 		
+	}
+	
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(Tag t, Utilisateur utilisateurCourant){
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		//Verification autorisation
+		verifAutorisation.lectureTag(t, utilisateurCourant);
+		
+		Set<$EchangeableAvecTag> ret = new HashSet<$EchangeableAvecTag>();
+		for(String s : echangeables.keySet()){
+			_Echangeable ech = echangeables.get(s);
+			if(ech instanceof $EchangeableAvecTag){
+				$EchangeableAvecTag ech2 = ($EchangeableAvecTag)ech;
+				if(ech2.getTags().contains(t)){
+					ret.add(ech2);
+				}
+			}
+		}
+		return ret;
 	}
 	
 }

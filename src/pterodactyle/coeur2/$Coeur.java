@@ -9,9 +9,10 @@ public abstract class $Coeur extends UnicastRemoteObject implements _ServicesCoe
 	protected _VerifIdentite verifIdentite;
 	protected _VerifAutorisation verifAutorisation;
 	
-	protected $Coeur() throws RemoteException {
+	protected $Coeur() throws RemoteException{
 		super();
-		// TODO Auto-generated constructor stub
+		this.verifIdentite = new VerifIdentiteLogMdp();
+		this.verifAutorisation = new VerifAutorisation();
 	}
 
 }
