@@ -31,6 +31,12 @@ public class VerificationDroits implements ServicesRmi{
 	public Utilisateur utilisateurCourant(String login, String motDePasse) throws RemoteException {
 		return t.utilisateurCourant(login, motDePasse);
 	}
+
+	@Override
+	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant) throws RemoteException {
+		
+		return t.voirUtlisateur(login, utilisateurCourant);
+	}
 	
 	
 }
