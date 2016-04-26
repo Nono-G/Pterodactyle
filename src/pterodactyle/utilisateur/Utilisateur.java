@@ -97,4 +97,18 @@ public class Utilisateur implements Serializable {
 		}
 	}
 	
+	/*
+	 * Verifie si l'utilisateur a une autorisation precise 
+	 */
+	public boolean possedeAut(Autorisation autorisation){
+		return listeDroits.containsKey(autorisation);	
+	}
+	
+	/*
+	 * 
+	 */
+	public Droits getDroits(Autorisation autorisation){
+		return listeDroits.get(autorisation);
+	}
+	
 }

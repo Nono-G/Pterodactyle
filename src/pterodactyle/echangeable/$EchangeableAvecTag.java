@@ -30,4 +30,8 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 		}
 		return ret;
 	}
+	
+	public Set<Tag> getTags(){
+		return tags;
+	}
 }
