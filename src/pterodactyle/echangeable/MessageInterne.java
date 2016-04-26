@@ -25,16 +25,16 @@ public class MessageInterne extends $EchangeableSansTag {
 	
 	@Override
 	public String toString(){
-		return "[ "+this.nom + " - "+this.dateCreation + "\n\tDe : "+this.auteur+"\n\tA : "+this.destinataire+"\n\tObjet : "+this.objet+"\n\t"+this.texte+"\n]";
+		return "[ "+this.url + " - "+this.dateCreation + "\n\tDe : "+this.auteur+"\n\tA : "+this.destinataire+"\n\tObjet : "+this.objet+"\n\t"+this.texte+"\n]";
 		
 	}
 	
 	public MessageInterne reponse(String t){
-		return new MessageInterne(("Rep"+this.nom), this.destinataire, this.auteur, t,("Réponse : "+this.objet));
+		return new MessageInterne(("Rep"+this.url), this.destinataire, this.auteur, t,("Réponse : "+this.objet));
 	}
 	
 	public MessageInterne reponse(String t, String objet){
-		return new MessageInterne(("Rep"+this.nom), this.destinataire, this.auteur, t,("Réponse : "+objet));
+		return new MessageInterne(("Rep"+this.url), this.destinataire, this.auteur, t,("Réponse : "+objet));
 	}
 
 }
