@@ -15,5 +15,7 @@ public interface ServicesRmi extends Remote{
 	
 	public Utilisateur voirUtlisateur(String login, Utilisateur utilisateurCourant)throws RemoteException;
 	
+	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant) throws RemoteException;
+	
 
 }

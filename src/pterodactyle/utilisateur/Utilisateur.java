@@ -66,7 +66,7 @@ public class Utilisateur implements Serializable {
 	/*
 	 * Les getters pour mot de passe et login 
 	 */
-	public String getMdp(){
+	public String getCle(){
 		return this.motDePasse;
 	}
 	
@@ -87,6 +87,14 @@ public class Utilisateur implements Serializable {
 	
 	public boolean estAdmin()throws AdministrateurException{
 		return admin;
+	}
+	
+	@Override
+	public boolean equals(Object u2){
+		if (!(u2 instanceof Utilisateur)){return false;
+		}else{
+			return this.login.equals( ((Utilisateur)u2).login);
+		}
 	}
 	
 }

@@ -32,5 +32,9 @@ public class MessageInterne extends $EchangeableSansTag {
 	public MessageInterne reponse(String t){
 		return new MessageInterne(("Rep"+this.nom), this.destinataire, this.auteur, t,("Réponse : "+this.objet));
 	}
+	
+	public MessageInterne reponse(String t, String objet){
+		return new MessageInterne(("Rep"+this.nom), this.destinataire, this.auteur, t,("Réponse : "+objet));
+	}
 
 }

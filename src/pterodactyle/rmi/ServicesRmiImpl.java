@@ -21,10 +21,10 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi 
 	}
 
 	public void verification(Utilisateur utilisateurCourant ){
-		if(!Utilisateurs.estUtilisateur(utilisateurCourant.getLogin(), utilisateurCourant.getMdp())) throw new UtilisateurException("Est utilisateur");
+		if(!Utilisateurs.estUtilisateur(utilisateurCourant.getLogin(), utilisateurCourant.getCle())) throw new UtilisateurException("Est utilisateur");
 	}
 	
-	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse, boolean admin, Utilisateur utilisateurCourant){
+	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse, boolean admin, Utilisateur utilisateurCourant) throws RemoteException{
 		verification(utilisateurCourant);
 		droit.creerUtilisateur(nom,prenom,loginFuturUtilisateur,motDePasse,admin,utilisateurCourant);		
 	}
@@ -46,6 +46,11 @@ public class ServicesRmiImpl extends UnicastRemoteObject implements ServicesRmi 
 		verification(auteur);
 	}
 
+	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant) throws RemoteException{
+		verification(utilisateurCourant);
+		return droit.trancheFichier(url, n, tailleTampon, utilisateurCourant);
+		
+	}
 
 
 }
