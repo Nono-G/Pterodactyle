@@ -12,11 +12,11 @@ public class TestFich {
 		
 		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre");
 		
-		Fichier f = new Fichier("t.iso", u);
+		Fichier f = new Fichier("t.avi", u, null);
 		
 		//Copy
 		
-		try( FileOutputStream fos = new FileOutputStream(new File("sauv/t.iso-copy"))){
+		try( FileOutputStream fos = new FileOutputStream(new File("sauv/t.avi-copy"))){
 			byte[] buffer;
 			int n=0;
 			while(true){
@@ -24,11 +24,12 @@ public class TestFich {
 					Object[] donnees =f.obtenirTranche(n, 104857);
 					buffer = (byte[]) donnees[1];
 					fos.write(buffer, 0, (int)donnees[0]);
-					/**/System.out.println("buff "+donnees[0]);
 					n++;
 				}catch(ExceptionEchangeableFichierFini e){break;}
 			}
 		}catch(IOException e){e.printStackTrace();}
+		
+		
 		System.out.println("Fini");
 		
 	}
