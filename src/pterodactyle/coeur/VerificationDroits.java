@@ -29,8 +29,7 @@ public class VerificationDroits implements ServicesRmi{
 
 	@Override
 	public Utilisateur utilisateurCourant(String login, String motDePasse) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return t.utilisateurCourant(login, motDePasse);
 	}
 	
 	
