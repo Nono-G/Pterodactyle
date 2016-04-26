@@ -17,7 +17,8 @@ public class Traitement  implements ServicesRmi  {
 	}
 
 	@Override
-	public void creerUtilisateur(Utilisateur utilisateur, String login, String mdp) {
+	public void creerUtilisateur(String nom, String prenom, String loginFuturUtilisateur, String motDePasse,
+			boolean admin, Utilisateur utilisateurCourant) {
 		
 	}
 
