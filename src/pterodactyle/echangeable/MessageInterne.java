@@ -4,6 +4,7 @@ import pterodactyle.utilisateur.Utilisateur;
 
 public class MessageInterne extends $EchangeableSansTag {
 
+	private static final long serialVersionUID = -8116311786837092301L;
 	protected Utilisateur destinataire;
 	protected String texte;
 	protected String objet;
