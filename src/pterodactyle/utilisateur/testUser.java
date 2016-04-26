@@ -10,10 +10,10 @@ public class testUser {
 	public static boolean[] droits= new boolean[5];
 	public static void main(String[] Args){
 		
-		Utilisateur anasse = new Utilisateur("Anasse","Berahab","Ba","lool");
-		Utilisateur noe = new Utilisateur("Noe","Goudian", "Ng", "lool");	
-		Utilisateur Max = new Utilisateur("Maxime","Silvestre", "Ms", "lool");	
-		Utilisateur Naffy = new Utilisateur("Fanny","VIgnal", "Fv", "lool");	
+		Utilisateur anasse = new Utilisateur("Anasse","Berahab","Ba","lool", false);
+		Utilisateur noe = new Utilisateur("Noe","Goudian", "Ng", "lool", false);	
+		Utilisateur Max = new Utilisateur("Maxime","Silvestre", "Ms", "lool",false);	
+		Utilisateur Naffy = new Utilisateur("Fanny","VIgnal", "Fv", "lool",false);	
 
 		Tag comptabilite = new Tag("Comptabilite");
 		Droits drCompta = new Droits();

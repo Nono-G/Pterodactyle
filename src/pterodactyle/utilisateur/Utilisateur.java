@@ -15,6 +15,7 @@ public class Utilisateur implements Serializable {
 	protected String prenom; 
 	protected String login; 
 	protected String motDePasse; 
+	protected boolean admin; 
 	protected int id = 0 ;
 	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
 	
@@ -22,11 +23,12 @@ public class Utilisateur implements Serializable {
 	 * Constructeur basique 
 	 * @param : Nom, Prenom, Login, motDePasse
 	 */
-	public Utilisateur(String nom, String prenom, String login, String motDePasse){
+	public Utilisateur(String nom, String prenom, String login, String motDePasse, boolean admin){
 		this.nom = nom;
 		this.prenom = prenom; 
 		this.login = login; 
 		this.motDePasse = motDePasse; 
+		this.admin = admin;
 	}
 	
 	
@@ -83,6 +85,10 @@ public class Utilisateur implements Serializable {
 		profil[2] = this.prenom;
 		profil[3] = String.valueOf(this.id);
 		return profil;
+	}
+	
+	public boolean estAdmin(){
+		return admin;
 	}
 	
 }
