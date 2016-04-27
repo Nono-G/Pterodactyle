@@ -112,8 +112,7 @@ public class CoeurBase extends $Coeur {
 			Utilisateur destinataire =utilisateurs.get(identificateurDestinataire);
 			verifIdentite.estUtilisateur(destinataire, utilisateurs);
 			//Ajout du message échangeable
-			this.echangeables.put(url, new MessageInterne(url, utilisateurCourant, destinataire, contenu, objet));
-		
+			this.echangeables.put(url, new MessageInterne(url,utilisateurCourant, destinataire, contenu, objet));
 	}
 	
 	public Set<$EchangeableAvecTag> listeEchangeableParTag(Tag t, Utilisateur utilisateurCourant){
@@ -121,7 +120,6 @@ public class CoeurBase extends $Coeur {
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Verification autorisation
 		verifAutorisation.lectureTag(t, utilisateurCourant);
-		
 		Set<$EchangeableAvecTag> ret = new HashSet<$EchangeableAvecTag>();
 		for(String s : echangeables.keySet()){
 			_Echangeable ech = echangeables.get(s);
