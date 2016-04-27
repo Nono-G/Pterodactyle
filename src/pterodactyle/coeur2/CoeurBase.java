@@ -66,5 +66,19 @@ public class CoeurBase extends $Coeur {
 		((Post)ech).repondre(new MessagePost(utilisateurCourant, contenu));
 		
 	}
+	//A FINIR
+	@Override
+	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant,
+			String identificateurDestinataire) throws RemoteException, ExceptionEchangeableMauvaisType {
+			//vérification identité emetteur
+			verifIdentite.estUtilisateur(utilisateurCourant, utilisateurs);
+			//vérification identité destinataire
+			if(!(utilisateurs.get(identificateurDestinataire)!=null))throw new RemoteException();
+			Utilisateur destinataire =utilisateurs.get(identificateurDestinataire);
+			verifIdentite.estUtilisateur(destinataire, utilisateurs);
+			//Ajout du message échangeable
+			this.echangeables.put(url, new MessageInterne(url, utilisateurCourant, destinataire, contenu, objet));
+		
+	}
 	
 }
