@@ -20,7 +20,7 @@ public class CoeurBase extends $Coeur {
 	protected Map<String, Utilisateur> utilisateurs;
 	protected Map<String, _Echangeable> echangeables;
 
-	protected CoeurBase() throws RemoteException{
+	public CoeurBase() throws RemoteException{
 		super();
 		this.utilisateurs = new HashMap<String, Utilisateur>();
 		this.tags = new HashSet<Tag>();
@@ -133,6 +133,11 @@ public class CoeurBase extends $Coeur {
 			}
 		}
 		return ret;
+	}
+
+	@Override
+	public String test() throws RemoteException {
+		return "Ca marche fdp";
 	}
 	
 }

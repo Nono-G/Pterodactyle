@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
 import pterodactyle.coeur.Utilisateurs;
+import pterodactyle.coeur2.CoeurBase;
 
 
 // rmic pterodactyle.rmi.ServicesRmiImpl
@@ -21,7 +22,7 @@ public class Serveur {
 		String cwd = System.getProperty("user.dir");
 		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
 
-		ServicesRmiImpl app = new ServicesRmiImpl();
+		CoeurBase app = new CoeurBase();
 		try {
 			Naming.rebind("app", app);
 			System.out.println("serveur lancé");
