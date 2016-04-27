@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class applicationPterodactyle {
 
@@ -62,7 +64,7 @@ public class applicationPterodactyle {
 		
 		JLabel lblLogin = new JLabel("Entrez votre login :");
 		lblLogin.setFont(new Font("Book Antiqua", Font.BOLD, 14));
-		lblLogin.setBounds(86, 44, 128, 20);
+		lblLogin.setBounds(86, 44, 218, 20);
 		lblLogin.setForeground(new Color(11,29,62));
 		frameConnection.getContentPane().add(lblLogin);
 		
@@ -74,14 +76,18 @@ public class applicationPterodactyle {
 		JLabel lblMdp = new JLabel("Entrez votre mot de passe :");
 		lblMdp.setForeground(new Color(11,29,62));
 		lblMdp.setFont(new Font("Book Antiqua", Font.BOLD, 14));
-		lblMdp.setBounds(86, 106, 185, 20);
+		lblMdp.setBounds(86, 106, 277, 20);
 		frameConnection.getContentPane().add(lblMdp);
 		
 		JButton btnConnection = new JButton("Se connecter");
+		btnConnection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnConnection.setForeground(new Color(255, 255, 255));
 		btnConnection.setBackground(new Color(11,29,62));
 		btnConnection.setFont(new Font("Book Antiqua", Font.BOLD, 14));
-		btnConnection.setBounds(100, 189, 122, 34);
+		btnConnection.setBounds(86, 187, 150, 34);
 		//btnConnection.setBorder(new RoundedBorder(10));
 
 		frameConnection.getContentPane().add(btnConnection);

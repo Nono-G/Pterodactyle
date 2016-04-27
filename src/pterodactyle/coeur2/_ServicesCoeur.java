@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 import java.rmi.*;
+
 import java.io.*;
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.*;
@@ -40,7 +41,9 @@ public interface _ServicesCoeur extends Remote {
 	 * @param identificateurCible de la personne dont nous voulons récuperer les informations
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
 	 * @return un Utilisateur
+<<<<<<< HEAD
 	 */
+
 	public Utilisateur voirUtilisateur(String identificateurCible, String identificateur, String cle)throws RemoteException;
 	
 	/*
@@ -56,6 +59,7 @@ public interface _ServicesCoeur extends Remote {
 	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
 	 */
 	public Object[] trancheFichier(String url, int n, int tailleTampon, String identificateur, String cle)
+
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
 	public void ecrireTranche(Object[] tranche, Fichier fich, String identificateur, String cle)

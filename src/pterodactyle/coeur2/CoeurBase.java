@@ -240,4 +240,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		
 	}
 
+
 }
+
