@@ -59,13 +59,11 @@ public class VerifAutorisation implements _VerifAutorisation {
 	@Override
 	public boolean creationTag(Tag tag, Utilisateur utilisateur) {
 		return utilisateur.getDroits(tag).getDroits()[3] = true;
-
 	}
 
 	@Override
 	public boolean suppressionTag(Tag tag, Utilisateur utilisateur) {
 		return utilisateur.getDroits(tag).getDroits()[4] = true;
-
 	}
 	
 	public boolean aDroit($EchangeableAvecTag echangeable, Utilisateur utilisateur, int numeroDroit){
