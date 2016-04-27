@@ -1,13 +1,9 @@
 package pterodactyle.coeur2;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+import java.rmi.*;
+import java.io.*;
 
-import pterodactyle.echangeable.ExceptionEchangeableFichierFini;
-import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
-import pterodactyle.echangeable.Fichier;
+import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.Utilisateur;
 
 public interface _ServicesCoeur extends Remote {
@@ -46,9 +42,19 @@ public interface _ServicesCoeur extends Remote {
 	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 	
+	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant)
+			throws FileNotFoundException, IOException;
+
 	/**
 	 * POST	
 	 */
+	/*
+	 * @author Fanny
+	 * Méthode qui permet le service de création d'un post
+	 * @require utilisateur ci 
+	 */
+	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType;
 	/*
 	 * 
 	 */
@@ -59,14 +65,32 @@ public interface _ServicesCoeur extends Remote {
 	 * MESSAGERIE INTERNE
 	 */
 	/*
-	 * 
+	 * @author Fanny
+	 * Méthode qui permet le service d'un envoie de message interne
+	 * @require verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateur)
+	 * @require utilisateurs. verifIdentite.estUtilisateur(destinataire, utilisateurs)
+	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
 	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant, String identificateurDestinataire)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	/*
-	 * 
+	 * @author Fanny
+	 * Méthode qui permet le service de réponse à un message interne sans objet
+	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur()
+	 * @require l'url correspond bien au message interne
+	 * @ensure la réponse est envoyée
 	 */
-	//public void reponseMessage(String url, String contenu, Utilisateur utilisateurCourant);
+	public void reponseMessage(String url, String contenu, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
-	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant) throws FileNotFoundException, IOException;
+	/*
+	 * @author Fanny
+	 * Méthode qui permet le service de réponse à un message interne avec objet
+	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur()
+	 * @require l'url correspond bien au message interne
+	 * @ensure la réponse est envoyée
+	 */
+	public void reponseMessage(String url, String contenu, String objet, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType;
+	
 }
