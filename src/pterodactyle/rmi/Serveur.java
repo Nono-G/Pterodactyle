@@ -24,6 +24,7 @@ public class Serveur {
 		LocateRegistry.createRegistry(1099);
 		String cwd = System.getProperty("user.dir");
 		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
+		System.setProperty("java.security.policy", "file://" + cwd + "/bin/policy");
 		
 		String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";   
 
