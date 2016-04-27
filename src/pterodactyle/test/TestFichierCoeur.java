@@ -14,8 +14,8 @@ public class TestFichierCoeur {
 	try{
 		CoeurBase c = new CoeurBase("Petry", "abc");
 		c.creerTag("dauphins", "Petry", "abc");
-		c.creerFichier("didier", null, "dauphins", "Petry", "abc");
-		upload("testlocal/test1", "didier", 15, c);
+		c.creerFichier("t.avi", null, "dauphins", "Petry", "abc");
+		upload("testlocal/t.avi", "t.avi", 10000000, c);
 		
 	}catch(Exception e){e.printStackTrace();}
 	
@@ -38,7 +38,7 @@ public class TestFichierCoeur {
 				data[1] = buffer;
 				c.ecrireTranche(data, urlServeur, "Petry", "abc");
 				i--;
-				tr(""+data[0]);
+				System.out.println(""+data[0]);
 			}
 		}catch(IOException e){e.printStackTrace();}
 	}
