@@ -13,7 +13,7 @@ import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.Utilisateur;
 import pterodactyle.utilisateur.UtilisateurException;
 
-public class CoeurBase extends $Coeur {
+public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 	private static final long serialVersionUID = -5431026872014363966L;
 	protected Set<Tag> tags;
