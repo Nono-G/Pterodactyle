@@ -1,10 +1,8 @@
 package pterodactyle.coeur2;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-
-import pterodactyle.echangeable.ExceptionEchangeableFichierFini;
-import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
+import java.rmi.*;
+import java.io.*;
+import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.AdministrateurException;
 import pterodactyle.utilisateur.Utilisateur;
 import pterodactyle.utilisateur.UtilisateurException;
@@ -50,12 +48,15 @@ public interface _ServicesCoeur extends Remote {
 	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
+	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant)
+			throws FileNotFoundException, IOException;
+
 	/**
 	 * ADMINISTRATEUR TAG
 	 */
 	
 	public void creerTag(String nomTag, Utilisateur utilisateurCourant)
-		throws RemoteException, AdministrateurException;
+		throws RemoteException, AdministrateurException;	
 	
 	/**
 	 * POST	
@@ -65,8 +66,9 @@ public interface _ServicesCoeur extends Remote {
 	 * Méthode qui permet le service de création d'un post
 	 * @require utilisateur ci 
 	 */
-	public void creerPost(String url, String titre, Utilisateur utilisateurCourant)
-			throws RemoteException;
+
+	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
 	 */

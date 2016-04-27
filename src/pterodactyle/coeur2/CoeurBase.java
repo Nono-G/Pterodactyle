@@ -1,11 +1,6 @@
 package pterodactyle.coeur2;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -86,6 +81,21 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	//Auteur : Nono
+	@Override
+	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant) throws FileNotFoundException, IOException {
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		//Verification autorisation
+		if(! verifAutorisation.creation(fich, utilisateurCourant))throw new ExceptionAutorisationManquante();
+		
+		fich.ecrireTranche(tranche);
+	}
+	
+	public void creerFichier(Utilisateur utilisateurCourant){
+		
+	}
+	
+	//Auteur : Nono
 	public Set<$EchangeableAvecTag> listeEchangeableParTag(Tag t, Utilisateur utilisateurCourant){
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
@@ -110,12 +120,13 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 */
 	//Auteur Fanny
 	@Override
-	public void creerPost(String url, String titre, Utilisateur utilisateurCourant)
-		throws RemoteException{
+
+	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeablePasDeTag {
 		//vérification identité
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Ajout du post échangeable
-		Post post = new Post(url,utilisateurCourant, titre);
+		Post post = Post.nouveauPost(url,utilisateurCourant, titre, t);
 		this.echangeables.put(url, post);
 		//Sauvegarde du post
 		post.sauver();
@@ -209,4 +220,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	public String test() throws RemoteException {
 		return "Ca marche fdp";
 	}
+
 }
+
