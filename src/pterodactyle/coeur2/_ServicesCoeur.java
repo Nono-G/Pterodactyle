@@ -142,4 +142,5 @@ public interface _ServicesCoeur extends Remote {
 	 * Methodes qui permet d'ajouter/supprimer des droits 
 	 */
 	
+	public void partage(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle);
 }

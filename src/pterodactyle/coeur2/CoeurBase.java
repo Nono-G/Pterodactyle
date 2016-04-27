@@ -241,8 +241,22 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	
+	/*
+	 * @author : Anasse
+	 * Permet d'ajouter des droits aux utilisateus
+	 */
+	@Override
+	public void partage(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle){
+		if( !(verifIdentite.estUtilisateur(idResponsable, cle, utilisateurs)) ) throw new UtilisateurException();
+		Utilisateur victime   = utilisateurs.get(idVictime);
+		Utilisateur responsable = utilisateurs.get(idResponsable);
+		if( ! (victime == null)) throw new UtilisateurException();
+		if( ! (verifAutorisation.droitTag(autorisation, victime, numeroDroit))) throw new ExceptionAutorisationManquante();
+		victime.getDroits(autorisation).ajouterDroits(numeroDroit);
+	}
 	
-
-
+	
+	
+	
 }
 
