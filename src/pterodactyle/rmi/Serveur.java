@@ -1,5 +1,6 @@
 package pterodactyle.rmi;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -15,7 +16,7 @@ import pterodactyle.coeur2.CoeurBase;
 
 public class Serveur {
 
-	public static void main(String[] args) throws RemoteException, UnknownHostException {
+	public static void main(String[] args) throws IOException {
 		
 		Utilisateurs.admin();
 		System.out.println(Utilisateurs.getUtilisateur("silvemax", "12345").toString());
@@ -24,13 +25,11 @@ public class Serveur {
 		String cwd = System.getProperty("user.dir");
 		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
 		
-		//String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";
-		String url = "rmi://130.190.65.31/app";
-	    System.out.println("Enregistrement de l'objet avec l'url : " + url);
-	    
+		String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";   
 
 		CoeurBase app = new CoeurBase();
 		try {
+			System.out.println("Lancement serveur");
 			Naming.rebind(url, app);
 			System.out.println("serveur lancé");
 		} catch (RemoteException | MalformedURLException e) {
