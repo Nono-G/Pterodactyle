@@ -5,16 +5,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
 
-import pterodactyle.echangeable.ExceptionEchangeableFichierFini;
-import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
-=======
 import java.rmi.*;
 import java.io.*;
 import pterodactyle.echangeable.*;
-import pterodactyle.utilisateur.AdministrateurException;
->>>>>>> e3801e6b396401c01b07ef28b197c742693f1965
-import pterodactyle.utilisateur.Utilisateur;
-import pterodactyle.utilisateur.UtilisateurException;
+import pterodactyle.utilisateur.*;
 
 public interface _ServicesCoeur extends Remote {
 	
@@ -47,22 +41,14 @@ public interface _ServicesCoeur extends Remote {
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
 	 * @return un Utilisateur
 	 */
-	public Utilisateur voirUtilisateur(String identificateur, Utilisateur utilisateurCourant)throws RemoteException;
+	public Utilisateur voirUtilisateur(String identificateurCible, String identificateur, String cle)throws RemoteException;
 	
 	/*
 	 * @autor MaximeSIlvestre
 	 * Permet de recuperer tout les utilisateurs
 	 * @return hasmap<login,Utilisateur>
 	 */
-	public Map<String, Utilisateur> recupererToutLesUtilisateurs(Utilisateur utilisateurCourant)throws RemoteException;
-
-	/*
-	 * Renvoie une tranche (cf méthode dans la classe pterodactyle.echangeable.Fichier) du fichier désigné par url,
-	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
-	**/
-	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
-=======
-	public Utilisateur voirUtilisateur(String identificateurCible, String identificateur, String cle)throws RemoteException;
+	public Map<String, Utilisateur> recupererToutLesUtilisateurs(String identificateur, String cle) throws RemoteException;
 
 	/*
 	 * @author Nono
@@ -70,7 +56,6 @@ public interface _ServicesCoeur extends Remote {
 	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
 	 */
 	public Object[] trancheFichier(String url, int n, int tailleTampon, String identificateur, String cle)
->>>>>>> e3801e6b396401c01b07ef28b197c742693f1965
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
 	public void ecrireTranche(Object[] tranche, Fichier fich, String identificateur, String cle)
