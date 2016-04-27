@@ -60,4 +60,18 @@ public class Droits {
 		}
 		return res;
 	}
+	
+	
+	public void ajouterDroits(int numeroDroit){
+		this.droits[numeroDroit] = true;
+	}
+	
+	
+	
+	
+	public void supprimerLecture(int numeroDroit){
+		this.droits[numeroDroit] = false;
+	}
+	
+	
 }

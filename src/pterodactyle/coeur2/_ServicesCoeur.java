@@ -136,4 +136,10 @@ public interface _ServicesCoeur extends Remote {
 	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
+	
+	/*
+	 * @author Anasse
+	 * Methodes qui permet d'ajouter/supprimer des droits 
+	 */
+	
 }

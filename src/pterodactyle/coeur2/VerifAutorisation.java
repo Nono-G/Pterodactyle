@@ -72,6 +72,11 @@ public class VerifAutorisation implements _VerifAutorisation {
 	public boolean aDroit($EchangeableAvecTag echangeable, Utilisateur utilisateur, int numeroDroit){
 		boolean resultat = false;
 		tags = echangeable.getTags();	
+		
+		
+		if(utilisateur.estAdmin()){
+			return true;
+		}
 		if(echangeable.getClass().getName() == "pterodactyle.echangeable.Fichier" || echangeable.getClass().getName() == "pterodactyle.echangeable.Dossier"){
 			while(echangeable.getPere() != null){
 				tagsHeritage = echangeable.getTags();

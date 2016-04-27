@@ -239,6 +239,9 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	
 
 
 }
