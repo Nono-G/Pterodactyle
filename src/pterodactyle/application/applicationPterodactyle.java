@@ -17,16 +17,17 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import javax.swing.JPasswordField;
 
 public class applicationPterodactyle {
 
 	private JFrame frameConnection;
 	private JTextField textFieldLogin;
-	private JTextField txtFieldMdp;
 	private static _ServicesCoeur app;
 	private boolean estConnecte = false;
 	private String loginCourant;
 	private String motDePasseCourant;
+	private JPasswordField passwordFieldMdp;
 
 	/**
 	 * Launch the application.
@@ -74,20 +75,23 @@ public class applicationPterodactyle {
 		frameConnection.getContentPane().setLayout(null);
 
 		textFieldLogin = new JTextField();
+		textFieldLogin.setForeground(new Color(11,29,62));
+		textFieldLogin.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		textFieldLogin.setBounds(86, 75, 150, 20);
 		frameConnection.getContentPane().add(textFieldLogin);
 		textFieldLogin.setColumns(10);
+		
+		passwordFieldMdp = new JPasswordField();
+		passwordFieldMdp.setForeground(new Color(11,29,62));
+		passwordFieldMdp.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		passwordFieldMdp.setBounds(86, 137, 150, 20);
+		frameConnection.getContentPane().add(passwordFieldMdp);
 
 		JLabel lblLogin = new JLabel("Entrez votre login :");
 		lblLogin.setFont(new Font("Book Antiqua", Font.BOLD, 14));
 		lblLogin.setBounds(86, 44, 128, 20);
 		lblLogin.setForeground(new Color(11, 29, 62));
 		frameConnection.getContentPane().add(lblLogin);
-
-		txtFieldMdp = new JTextField();
-		txtFieldMdp.setColumns(10);
-		txtFieldMdp.setBounds(86, 137, 150, 20);
-		frameConnection.getContentPane().add(txtFieldMdp);
 
 		JLabel lblMdp = new JLabel("Entrez votre mot de passe :");
 		lblMdp.setForeground(new Color(11, 29, 62));
@@ -100,7 +104,7 @@ public class applicationPterodactyle {
 
 			public void actionPerformed(ActionEvent e) {
 				String login = textFieldLogin.getText();
-				String mdp = txtFieldMdp.getText();
+				String mdp = passwordFieldMdp.getText();
 					try {
 						estConnecte = app.seConnecter(login, mdp);
 					} catch (RemoteException e1) {
@@ -117,7 +121,7 @@ public class applicationPterodactyle {
 						acc.accueil();
 					}else{
 						textFieldLogin.setBackground(new Color(255, 0, 0));
-						txtFieldMdp.setBackground(new Color(255, 0, 0));
+						passwordFieldMdp.setBackground(new Color(255, 0, 0));
 						System.out.println("Incorrect");
 					}
 			}
@@ -130,5 +134,7 @@ public class applicationPterodactyle {
 		// btnConnection.setBorder(new RoundedBorder(10));
 
 		frameConnection.getContentPane().add(btnConnection);
+		
+		
 	}
 }

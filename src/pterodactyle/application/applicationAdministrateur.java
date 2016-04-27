@@ -13,10 +13,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTextField;
 
 public class applicationAdministrateur extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -73,6 +75,8 @@ public class applicationAdministrateur extends JFrame {
 		contentPane.add(panel);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setForeground(new Color(11,29,62));
+		tabbedPane.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -93,13 +97,23 @@ public class applicationAdministrateur extends JFrame {
 		JPanel onglet3 = new JPanel();
 		onglet3.setBackground(new Color(244, 244, 243));
 		
-		JLabel lblForum = new JLabel("Forum");
+		JLabel lblForum = new JLabel("Filtrer par tags :");
+		lblForum.setForeground(new Color(11, 29, 62));
+		lblForum.setFont(new Font("Book Antiqua", Font.BOLD, 12));
+		lblForum.setBounds(10, 11, 96, 21);
 		JLabel lblCloud = new JLabel("Cloud");
 		JLabel lblAdmin = new JLabel("Administrer");
+		onglet1.setLayout(null);
 		onglet1.add(lblForum);
 		onglet2.add(lblCloud);
 		onglet3.add(lblAdmin);
 		tabbedPane.add("Forum ",onglet1);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textField.setBounds(102, 11, 108, 21);
+		onglet1.add(textField);
+		textField.setColumns(10);
 		tabbedPane.add("Cloud ",onglet2);
 		tabbedPane.add("Administrer ",onglet3);
 		
