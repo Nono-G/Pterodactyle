@@ -49,6 +49,11 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * 
 	 */
+	public void creerPost(String url, String titre, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType;
+	/*
+	 * 
+	 */
 	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
@@ -56,12 +61,32 @@ public interface _ServicesCoeur extends Remote {
 	 * MESSAGERIE INTERNE
 	 */
 	/*
-	 * 
+	 * @author Fanny
+	 * Méthode qui permet le service d'un envoie de message interne
+	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur()
+	 * @require utilisateur destinataire existe dans la liste des utilisateur verifIdentite.estUtilisateur()
+	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
 	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant, String identificateurDestinataire)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	/*
-	 * 
+	 * @author Fanny
+	 * Méthode qui permet le service de réponse à un message interne sans objet
+	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur()
+	 * @require l'url correspond bien au message interne
+	 * @ensure la réponse est envoyée
 	 */
-	//public void reponseMessage(String url, String contenu, Utilisateur utilisateurCourant);
+	public void reponseMessageSansObjet(String url, String contenu, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType;
+	
+	/*
+	 * @author Fanny
+	 * Méthode qui permet le service de réponse à un message interne avec objet
+	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur()
+	 * @require l'url correspond bien au message interne
+	 * @ensure la réponse est envoyée
+	 */
+	public void reponseMessageAvecObjet(String url, String contenu, String objet, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType;
+	
 }
