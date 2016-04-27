@@ -70,33 +70,40 @@ public class VerifAutorisation implements _VerifAutorisation {
 	}
 	
 	public boolean aDroit($EchangeableAvecTag echangeable, Utilisateur utilisateur, int numeroDroit){
+		boolean resultat = false;
 		tags = echangeable.getTags();	
 		if(echangeable.getClass().getName() == "pterodactyle.echangeable.Fichier" || echangeable.getClass().getName() == "pterodactyle.echangeable.Dossier"){
 			while(echangeable.getPere() != null){
 				tagsHeritage = echangeable.getTags();
 				for(Tag t : tagsHeritage){
 					if(utilisateur.possedeTag(t)){
-						return droitTag(t,utilisateur, numeroDroit);
+						if(droitTag(t,utilisateur, numeroDroit)) resultat = droitTag(t,utilisateur, numeroDroit);
 					}
 				}
 				for(Specifique s : utilisateur.getSpecifique()){
-					if(s.aPourCible(echangeable.getUrl())) return droitTag(s, utilisateur, numeroDroit);
+					if(s.aPourCible(echangeable.getUrl())) {
+						if(droitTag(s,utilisateur, numeroDroit)) {
+							resultat = droitTag(s,utilisateur, numeroDroit);
+						}
+					}
 				}
 				echangeable = echangeable.getPere();
 			}
 		}
 		for(Tag t : tags){
 			if(utilisateur.possedeTag(t)){
-				return droitTag(t,utilisateur, numeroDroit);
+				if(droitTag(t,utilisateur, numeroDroit)) resultat = droitTag(t,utilisateur, numeroDroit);
 			}
 		}
 		for(Specifique s : utilisateur.getSpecifique()){
 			if(s.aPourCible(echangeable.getUrl())){
-				return droitTag(s, utilisateur, numeroDroit);
+				if(droitTag(s,utilisateur, numeroDroit)) {
+					resultat = droitTag(s,utilisateur, numeroDroit);
+				}			
 			}
 		}
 		
-		return true;
+		return resultat;
 
 		
 		
