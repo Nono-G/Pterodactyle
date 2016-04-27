@@ -67,8 +67,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	@Override
-	public Map<String, Utilisateur> recupererToutLesUtilisateurs(Utilisateur utilisateurCourant) throws RemoteException {
-		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+	public Map<String, Utilisateur> recupererToutLesUtilisateurs(String identificateur, String cle) throws RemoteException {
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		return utilisateurs;
 	}
 
@@ -232,5 +232,12 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		return "Ca marche fdp";
 	}
 
-}
 
+	@Override
+	public void supprimerTag(Tag tag, String identificateur, String cle)
+			throws RemoteException, AdministrateurException {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
