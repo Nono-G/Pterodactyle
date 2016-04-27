@@ -57,9 +57,22 @@ public interface _ServicesCoeur extends Remote {
 	 * ADMINISTRATEUR TAG
 	 */
 	
+	/*
+	 * @author Fanny
+	 * @Require verifIdentite.estAdmin(utilisateurCourant, utilisateurs)
+	 * @Ensure le tag est dans la liste de 
+	 * 
+	 * création d'un tag par un admin
+	 */
 	public void creerTag(String nomTag, String identificateur, String cle)
 		throws RemoteException, AdministrateurException;	
 	
+	/*
+	 * @author Fanny
+	 * Service de suppression de tag par un admin
+	 */
+	public void supprimerTag(Tag tag, String identificateur, String cle)
+			throws RemoteException, AdministrateurException;	
 	/**
 	 * POST	
 	 */
@@ -84,7 +97,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @author Fanny
 	 * Méthode qui permet le service d'un envoie de message interne
 	 * @require verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateur)
-	 * @require utilisateurs. verifIdentite.estUtilisateur(destinataire, utilisateurs)
+	 * @require verifIdentite.estUtilisateur(destinataire, utilisateurs)
 	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
 	public void envoieMessageInterne(String url, String contenu, String objet, String identificateurDestinataire, String identificateur, String cle )

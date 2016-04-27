@@ -130,6 +130,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Ajout du post échangeable
 		Post post = Post.nouveauPost(url,utilisateurs.get(identificateur), titre, t);
+		if( ! verifAutorisation.creation(post, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		this.echangeables.put(url, post);
 		//Sauvegarde du post
 		post.sauver();
@@ -223,6 +224,13 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	@Override
 	public String test() throws RemoteException {
 		return "Ca marche fdp";
+	}
+
+	@Override
+	public void supprimerTag(Tag tag, String identificateur, String cle)
+			throws RemoteException, AdministrateurException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

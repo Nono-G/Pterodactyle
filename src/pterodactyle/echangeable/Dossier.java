@@ -46,5 +46,8 @@ public class Dossier extends $DossierOuFichier{
 	public $DossierOuFichier get(int i){
 		return this.contenu.get(i);
 	}
+	
+	
+
 
 }

@@ -29,7 +29,6 @@ public class Utilisateur implements Serializable {
 		this.admin = admin;
 	}
 	
-	
 	/*
 	 * @return : String le nom de l'utilisateur
 	 */
@@ -99,7 +98,7 @@ public class Utilisateur implements Serializable {
 	/*
 	 * Verifie si l'utilisateur a une autorisation precise 
 	 */
-	public boolean possedeAut(Autorisation autorisation){
+	public boolean possedeTag(Autorisation autorisation){
 		return listeDroits.containsKey(autorisation);	
 	}
 	
@@ -108,6 +107,18 @@ public class Utilisateur implements Serializable {
 	 */
 	public Droits getDroits(Autorisation autorisation){
 		return listeDroits.get(autorisation);
+	}
+	
+	public Set<Specifique> getSpecifique(){
+		Set<Specifique> resultat = new HashSet<Specifique>(); 
+
+		for(Autorisation autorisation : listeDroits.keySet()){
+
+			if(autorisation.getClass().getName() == "pterodactyle.utilisateur.Specifique"){
+				resultat.add((Specifique)autorisation);
+			}
+		}
+		return resultat;
 	}
 	
 }

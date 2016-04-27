@@ -14,9 +14,9 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 	
 	protected $EchangeableAvecTag(String nom, Utilisateur ut, Tag t) {
 		super(nom, ut);
-		
-		this.ajouterTag(t);
 		this.tags = new HashSet<Tag>();
+
+		this.ajouterTag(t);
 	}
 	
 	//Ajoute le tag passé en paramètre à cet échangeable
@@ -36,4 +36,9 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 	public Set<Tag> getTags(){
 		return tags;
 	}
+	
+	public abstract Dossier getPere();
+	
+
+
 }
