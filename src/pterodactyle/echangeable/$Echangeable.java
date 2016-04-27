@@ -38,5 +38,9 @@ public abstract class $Echangeable implements _Echangeable {
 				oos.writeObject(this);
 				oos.flush();
 			}catch(IOException e){e.printStackTrace();}
-		}		
+		}	
+		
+		public String getUrl(){
+			return this.url;
+		}
 }
