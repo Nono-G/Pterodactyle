@@ -17,18 +17,20 @@ import pterodactyle.utilisateur.AdministrateurException;
 public class TestRmiEtCoeur {
 
 	public static void main(String[] args) {
-		String url = "rmi://127.0.1.1/app";		
+		String url = "rmi://192.168.137.228/app";		
 		try {
 			_ServicesCoeur r = (_ServicesCoeur) Naming.lookup(url);
+			System.out.println("lookups");
 			try {
 				r.creerTag("dauphins", "silvemax", "12345");
+				System.out.println("Coucou");
 			} catch (AdministrateurException | ExceptionEchangeableTagExistant e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			r.creerFichier("t.avi", null, "dauphins", "silvemax", "12345");
+			r.creerFichier("anasse.png", null, "dauphins", "silvemax", "12345");
 			try {
-				upload("testlocal/t.avi", "t.avi", 10000000, r);
+				upload("docs/diagClasses.png", "anasse.png", 100, r);
 			} catch (ExceptionEchangeableMauvaisType e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
