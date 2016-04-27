@@ -1,35 +1,45 @@
 package pterodactyle.test;
 
+import java.io.*;
 import java.rmi.*;
 
 import pterodactyle.coeur2.*;
+import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
+import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.utilisateur.*;
 
 public class TestFichierCoeur {
 
 	public static void main (String[] args){
 	try{
-		_ServicesCoeur c = new CoeurBase("Petry", "abc");
-		try{
-			Utilisateur moi = c.utilisateurCourant("Petry", "abc");
-			tr(moi.toString());
-			c.creerTag("Tag1", "Petry", "abc");
-			Utilisateur moi2 = new Utilisateur("Goudian", "Noé", "goudn", "arg", false);
-			
-			try {
-				c.creerUtilisateur(moi2, "Petry", "abc");
-			} catch (Exception e) {e.printStackTrace();}
-			
-			
-			tr("etape1");
-		}catch(UtilisateurException e){tr("Inconnu");}
+		CoeurBase c = new CoeurBase("Petry", "abc");
+		c.creerTag("dauphins", "Petry", "abc");
+		c.creerFichier("didier", null, "dauphins", "Petry", "abc");
+		upload("testlocal/test1", "didier", 15, c);
 		
-	}catch(RemoteException e){}
+	}catch(Exception e){e.printStackTrace();}
 	
 	
 	}
 	
 	private static void tr (String t){
 		System.out.println(t);
+	}
+	
+	private static void upload(String urlLocal, String urlServeur, int tailleBuffer, _ServicesCoeur c) throws ExceptionEchangeableMauvaisType{
+		long i=0;
+		File local = new File(urlLocal);
+		try(FileInputStream fis = new FileInputStream(local)){
+			Object[] data = new Object[2];
+			byte[] buffer = new byte[tailleBuffer];
+			i = (local.length()/tailleBuffer)+1;
+			while(i != 0){
+				data[0] = fis.read(buffer);
+				data[1] = buffer;
+				c.ecrireTranche(data, urlServeur, "Petry", "abc");
+				i--;
+				tr(""+data[0]);
+			}
+		}catch(IOException e){e.printStackTrace();}
 	}
 }
