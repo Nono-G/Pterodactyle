@@ -116,6 +116,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		
 	}
 	
+	//Auteur : Nono
 	public Set<$EchangeableAvecTag> listeEchangeableParTag(Tag t, Utilisateur utilisateurCourant){
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
