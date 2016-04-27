@@ -13,8 +13,8 @@ public abstract class $DossierOuFichier extends $EchangeableAvecTag {
 	//Dossier dans lequel se trouve l'élément, null si il est a la racine. (= ..)
 	protected Dossier pere;
 
-	public $DossierOuFichier(String nom, Utilisateur ut, Dossier d) {
-		super(nom, ut);
+	public $DossierOuFichier(String nom, Utilisateur ut, Dossier d, Tag t) {
+		super(nom, ut, t);
 		this.pere = d;
 	}
 	

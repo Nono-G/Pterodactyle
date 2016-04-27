@@ -14,18 +14,17 @@ public class TestDossier {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ExceptionEchangeablePasDeTag {
 		
 		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre", false);
 		Tag t1 = new Tag("CHSCT2016");
 		Tag t2 = new Tag("SyndicInfo");
 		
-		Dossier d = new Dossier("ressources", u, null);
-		d.ajouterTag(t1);
+		Dossier d = Dossier.nouveauDossier("ressources", u, null, t1);
 		d.ajouterTag(t2);
 		System.out.println(d.voirTags());
 		
-		Fichier f = new Fichier("t.avi", u, d);
+		Fichier f = Fichier.nouveauFichier("t.avi", u, d, t1);
 		d.ajouterDans(f);
 		d.sauver();
 		

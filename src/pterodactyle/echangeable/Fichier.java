@@ -1,6 +1,5 @@
 package pterodactyle.echangeable;
 
-import java.io.File;
 import java.io.*;
 
 import pterodactyle.utilisateur.Utilisateur;
@@ -10,8 +9,14 @@ public class Fichier extends $DossierOuFichier{
 	private static final long serialVersionUID = 4875854715778443691L;
 
 	
-	public Fichier(String nom, Utilisateur ut, Dossier pere) {
-		super(nom, ut, pere);
+	private Fichier(String nom, Utilisateur ut, Dossier pere, Tag t) {
+		super(nom, ut, pere, t);
+	}
+	
+	//Constructeur
+	public static Fichier nouveauFichier(String nom, Utilisateur ut, Dossier pere, Tag t) throws ExceptionEchangeablePasDeTag {
+		if( ! (t != null))throw new ExceptionEchangeablePasDeTag();
+		return new Fichier(nom, ut, pere, t);
 	}
 	
 	//Renvoie un couple composé du nombre d'octets lu et de la n-ieme tranche de 'tailleTampon' octets du fichier.
@@ -27,6 +32,13 @@ public class Fichier extends $DossierOuFichier{
 	        ret[1]=buffer;
 	    }catch(IOException e){e.printStackTrace();}
 		return ret;
+	}
+	
+	//Ecrit une tranche du fichier
+	public void ecrireTranche(Object[] tranche) throws FileNotFoundException, IOException{
+		try(FileOutputStream fos = new FileOutputStream(new File("sauv/"+this.url))){
+			fos.write((byte[])tranche[1], 0, (int)tranche[0]);
+		}
 	}
 
 	//Renvoie false car l'objet est un fichier

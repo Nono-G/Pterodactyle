@@ -12,9 +12,15 @@ public class Dossier extends $DossierOuFichier{
 	//les fichiers et les dossiers contenus dans ce dossier
 	protected List<$DossierOuFichier> contenu;
 	
-	public Dossier(String nom, Utilisateur ut, Dossier pere) {
-		super(nom, ut, pere);
+	private Dossier(String nom, Utilisateur ut, Dossier pere, Tag t) {
+		super(nom, ut, pere, t);
 		this.contenu = new ArrayList<$DossierOuFichier>();
+	}
+	
+	//Contructeur
+	public static Dossier nouveauDossier(String nom, Utilisateur ut, Dossier pere, Tag t) throws ExceptionEchangeablePasDeTag {
+		if( ! (t != null))throw new ExceptionEchangeablePasDeTag();
+		return new Dossier(nom, ut, pere, t);
 	}
 	
 	//Renvoie true car l'objet est un dossier
@@ -41,13 +47,7 @@ public class Dossier extends $DossierOuFichier{
 		return this.contenu.get(i);
 	}
 	
-	@Override
-	public void ajouterTag( Tag t){
-		this.tags.add(t);
-		for($DossierOuFichier d : contenu){
-			d.ajouterTag(t);
-		}
-	}
 	
+
 
 }

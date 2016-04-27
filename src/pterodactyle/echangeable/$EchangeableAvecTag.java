@@ -12,8 +12,10 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 	//Invariant de classe : tags non vide
 	protected Set<Tag> tags;//La liste des tags par lesquels l'échangeable est marqué
 	
-	public $EchangeableAvecTag(String nom, Utilisateur ut) {
+	protected $EchangeableAvecTag(String nom, Utilisateur ut, Tag t) {
 		super(nom, ut);
+		
+		this.ajouterTag(t);
 		this.tags = new HashSet<Tag>();
 	}
 	

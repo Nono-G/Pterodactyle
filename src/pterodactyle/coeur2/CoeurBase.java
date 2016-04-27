@@ -1,19 +1,13 @@
 package pterodactyle.coeur2;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.util.*;
 
 import pterodactyle.echangeable.*;
-import pterodactyle.utilisateur.Utilisateur;
-import pterodactyle.utilisateur.UtilisateurException;
+import pterodactyle.utilisateur.*;
 
-public class CoeurBase extends $Coeur {
+public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 	private static final long serialVersionUID = -5431026872014363966L;
 	protected Set<Tag> tags;
@@ -85,42 +79,28 @@ public class CoeurBase extends $Coeur {
 		
 		return ((Fichier)ech).obtenirTranche(n, tailleTampon);
 	}
-
+	
 	//Auteur : Nono
 	@Override
-	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
-			throws RemoteException, ExceptionEchangeableMauvaisType {
+	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant) throws FileNotFoundException, IOException {
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
-		//Verification sémantique
-		_Echangeable ech = this.echangeables.get(url);
-		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();
 		//Verification autorisation
-		verifAutorisation.ecriture((Post)ech, utilisateurCourant);
+		if(! verifAutorisation.creation(fich, utilisateurCourant))throw new ExceptionAutorisationManquante();
 		
-		((Post)ech).repondre(new MessagePost(utilisateurCourant, contenu));
-		
+		fich.ecrireTranche(tranche);
 	}
-	//A FINIR
-	@Override
-	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant,
-			String identificateurDestinataire) throws RemoteException, ExceptionEchangeableMauvaisType {
-			//vérification identité emetteur
-			verifIdentite.estUtilisateur(utilisateurCourant, utilisateurs);
-			//vérification identité destinataire
-			if(!(utilisateurs.get(identificateurDestinataire)!=null))throw new RemoteException();
-			Utilisateur destinataire =utilisateurs.get(identificateurDestinataire);
-			verifIdentite.estUtilisateur(destinataire, utilisateurs);
-			//Ajout du message échangeable
-			this.echangeables.put(url, new MessageInterne(url, utilisateurCourant, destinataire, contenu, objet));
+	
+	public void creerFichier(Utilisateur utilisateurCourant){
 		
 	}
 	
+	//Auteur : Nono
 	public Set<$EchangeableAvecTag> listeEchangeableParTag(Tag t, Utilisateur utilisateurCourant){
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Verification autorisation
-		verifAutorisation.lectureTag(t, utilisateurCourant);
+		if( ! verifAutorisation.lectureTag(t, utilisateurCourant))throw new ExceptionAutorisationManquante();
 		
 		Set<$EchangeableAvecTag> ret = new HashSet<$EchangeableAvecTag>();
 		for(String s : echangeables.keySet()){
@@ -134,10 +114,112 @@ public class CoeurBase extends $Coeur {
 		}
 		return ret;
 	}
+	
+	/**
+	 * POST	
+	 */
+	//Auteur Fanny
+	@Override
+
+	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeablePasDeTag {
+		//vérification identité
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		//Ajout du post échangeable
+		Post post = Post.nouveauPost(url,utilisateurCourant, titre, t);
+		this.echangeables.put(url, post);
+		//Sauvegarde du post
+		post.sauver();
+	}
+		
+	//Auteur : Nono
+	@Override
+	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType {
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		//Verification sémantique
+		_Echangeable ech = this.echangeables.get(url);
+		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();
+		//Verification autorisation
+		verifAutorisation.ecriture((Post)ech, utilisateurCourant);
+		if( ! verifAutorisation.ecriture((Post)ech, utilisateurCourant))throw new ExceptionAutorisationManquante();
+		((Post)ech).repondre(new MessagePost(utilisateurCourant, contenu));
+		
+	}
+
+	
+	/**
+	 * MESSAGERIE INTERNE
+	 */
+	
+	//Auteur : Fanny
+	/** UNICITÉ URL ? Vérifier que l'Url ne fais pas déjà partie de la liste des MessagesInterne? 
+	 * if((this.echangeables.get(url))!=null) throw new Exception 
+	 * 
+	 * */
+	@Override
+	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant,
+		String identificateurDestinataire) throws RemoteException, UtilisateurException {
+		//vérification identité emetteur
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		//vérification identité destinataire
+		if(!(utilisateurs.get(identificateurDestinataire)!=null))throw new UtilisateurException("est Utilisateur");
+		Utilisateur destinataire =utilisateurs.get(identificateurDestinataire);
+		verifIdentite.estUtilisateur(destinataire, utilisateurs);
+		//Ajout du message échangeable
+		MessageInterne messageInterne = new MessageInterne(url,utilisateurCourant, destinataire, contenu, objet);
+		this.echangeables.put(url, messageInterne);
+		//Sauvegarde du message 
+		messageInterne.sauver();
+	}
+	
+	//Auteur : Fanny
+	@Override
+	public void reponseMessage(String url, String contenu, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType {
+			//Verification identite
+			verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+			//Verification sémantique
+			_Echangeable ech = this.echangeables.get(url);
+			if( ! (ech instanceof MessageInterne)) throw new ExceptionEchangeableMauvaisType();
+			//Pas besoin de vérification d'autorisation puisque le messageInterne n'a pas de tag
+			((MessageInterne)ech).reponse(contenu);
+	}
+	
+	//Auteur : Fanny
+	@Override
+	public void reponseMessage(String url, String contenu, String objet, Utilisateur utilisateurCourant)
+			throws RemoteException, ExceptionEchangeableMauvaisType {
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		//Verification sémantique
+		_Echangeable ech = this.echangeables.get(url);
+		if( ! (ech instanceof MessageInterne)) throw new ExceptionEchangeableMauvaisType();
+		//Pas besoin de vérification d'autorisation puisque le messageInterne n'a pas de tag
+		((MessageInterne)ech).reponse(contenu, objet);	
+	}
+	
+
+	/**
+	 * ADMINISTRATEUR
+	 */
+	//Auteur : Fanny
+	@Override
+	public void creerTag(String nomTag, Utilisateur utilisateurCourant) throws RemoteException {
+		//Vérification identité
+		if(!(verifIdentite.estAdmin(utilisateurCourant, utilisateurs)))throw new AdministrateurException("est Administrateur");
+		//Vérification existence du tag
+		Tag tag = new Tag(nomTag);
+		if(this.tags.contains(tag)) throw new RemoteException("tag existe");
+		//Ajout du tags dans la liste des tags
+		this.tags.add(tag);
+	}
 
 	@Override
 	public String test() throws RemoteException {
 		return "Ca marche fdp";
 	}
-	
+
 }
+
