@@ -122,8 +122,9 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 */
 	//Auteur Fanny
 	@Override
+
 	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
-			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag {
+			throws RemoteException, ExceptionEchangeablePasDeTag {
 		//vérification identité
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Ajout du post échangeable
@@ -161,11 +162,11 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 * */
 	@Override
 	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant,
-		String identificateurDestinataire) throws RemoteException, ExceptionEchangeableMauvaisType {
+		String identificateurDestinataire) throws RemoteException, UtilisateurException {
 		//vérification identité emetteur
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//vérification identité destinataire
-		if(!(utilisateurs.get(identificateurDestinataire)!=null))throw new RemoteException();
+		if(!(utilisateurs.get(identificateurDestinataire)!=null))throw new UtilisateurException("est Utilisateur");
 		Utilisateur destinataire =utilisateurs.get(identificateurDestinataire);
 		verifIdentite.estUtilisateur(destinataire, utilisateurs);
 		//Ajout du message échangeable
@@ -188,6 +189,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			((MessageInterne)ech).reponse(contenu);
 	}
 	
+	//Auteur : Fanny
 	@Override
 	public void reponseMessage(String url, String contenu, String objet, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableMauvaisType {
@@ -200,9 +202,26 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		((MessageInterne)ech).reponse(contenu, objet);	
 	}
 	
+
+	/**
+	 * ADMINISTRATEUR
+	 */
+	//Auteur : Fanny
+	@Override
+	public void creerTag(String nomTag, Utilisateur utilisateurCourant) throws RemoteException {
+		//Vérification identité
+		if(!(verifIdentite.estAdmin(utilisateurCourant, utilisateurs)))throw new AdministrateurException("est Administrateur");
+		//Vérification existence du tag
+		Tag tag = new Tag(nomTag);
+		if(this.tags.contains(tag)) throw new RemoteException("tag existe");
+		//Ajout du tags dans la liste des tags
+		this.tags.add(tag);
+	}
+
 	@Override
 	public String test() throws RemoteException {
 		return "Ca marche fdp";
 	}
 
 }
+
