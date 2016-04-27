@@ -2,6 +2,7 @@ package pterodactyle.coeur2;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Map;
 
 import pterodactyle.echangeable.ExceptionEchangeableFichierFini;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
@@ -12,6 +13,7 @@ public interface _ServicesCoeur extends Remote {
 	public String test()throws RemoteException;
 
 	/*
+	 * @author MaximeSilvestre
 	 * Permet de créer un nouvelle utilisateur en vérifiant que l'utilisateur est admin
 	 * @param nouveau le nouvelle utilisateur que l'on veut créer
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
@@ -21,6 +23,7 @@ public interface _ServicesCoeur extends Remote {
 	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utlisateurCourant)throws RemoteException;
 	
 	/*
+	 * @author MaximeSilvestre
 	 * Permet de recupérer l'utilisateur connecter
 	 * @param identificateur le parametre permettant de retrouver le bon utilisateur
 	 * @param cle assossier pour valider que ce soit le bon utlisateur
@@ -30,15 +33,24 @@ public interface _ServicesCoeur extends Remote {
 	
 	
 	/*
+	 * @author MaximeSilvestre
 	 * Permet de créer récuperer un Utilisateur en vérifiant l'identite de la personne
 	 * @param identificateur de la personne dont nous voulons récuperer les informations
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
 	 * @return un Utilisateur
 	 */
 	public Utilisateur voirUtilisateur(String identificateur, Utilisateur utilisateurCourant)throws RemoteException;
+	
+	/*
+	 * @autor MaximeSIlvestre
+	 * Permet de recuperer tout les utilisateurs
+	 * @return hasmap<login,Utilisateur>
+	 */
+	public Map<String, Utilisateur> recupererToutLesUtilisateurs(Utilisateur utilisateurCourant)throws RemoteException;
 
-	/*Renvoie une tranche (cf méthode dans la classe pterodactyle.echangeable.Fichier) du fichier désigné par url,
-	*Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
+	/*
+	 * Renvoie une tranche (cf méthode dans la classe pterodactyle.echangeable.Fichier) du fichier désigné par url,
+	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
 	**/
 	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;

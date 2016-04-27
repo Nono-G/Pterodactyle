@@ -69,6 +69,12 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		return utilisateurs.get(identificateur);
 	}
+	
+	@Override
+	public Map<String, Utilisateur> recupererToutLesUtilisateurs(Utilisateur utilisateurCourant) throws RemoteException {
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		return utilisateurs;
+	}
 
 	//Auteur : Nono
 	@Override
@@ -192,5 +198,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	public String test() throws RemoteException {
 		return "Ca marche fdp";
 	}
+
+
 
 }
