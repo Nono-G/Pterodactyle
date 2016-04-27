@@ -23,22 +23,22 @@ public class VerifAutorisation implements _VerifAutorisation {
 	@Override
 	public boolean ecriture($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
 		return aDroit(echangeable, utilisateur, 1);	
-		}
+	}
 
 	@Override
 	public boolean partage($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
 		return aDroit(echangeable, utilisateur, 2);	
-		}
+	}
 
 	@Override
 	public boolean creation($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
 		return aDroit(echangeable, utilisateur, 3);	
-		}
+	}
 
 	@Override
 	public boolean suppression($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
 		return aDroit(echangeable, utilisateur, 4);	
-		}
+	}
 
 	@Override
 	public boolean lectureTag(Tag tag, Utilisateur utilisateur) {
@@ -59,13 +59,11 @@ public class VerifAutorisation implements _VerifAutorisation {
 	@Override
 	public boolean creationTag(Tag tag, Utilisateur utilisateur) {
 		return utilisateur.getDroits(tag).getDroits()[3] = true;
-
 	}
 
 	@Override
 	public boolean suppressionTag(Tag tag, Utilisateur utilisateur) {
 		return utilisateur.getDroits(tag).getDroits()[4] = true;
-
 	}
 	
 	public boolean aDroit($EchangeableAvecTag echangeable, Utilisateur utilisateur, int numeroDroit){
