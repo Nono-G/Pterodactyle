@@ -17,8 +17,9 @@ public class testModificationDroitsCoeurs {
 
 			CoeurBase c = new CoeurBase("Petry", "abc");
 			System.out.println("Coucou");
-
-		}catch(Exception e){System.out.println("mort");}
+			c.creerTag( "compta", "Petry", "abc");
+					
+		}catch(Exception e){e.printStackTrace();;}
 
 	}
 }
