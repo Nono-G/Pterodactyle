@@ -1,10 +1,13 @@
 package pterodactyle.coeur2;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import pterodactyle.echangeable.ExceptionEchangeableFichierFini;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
+import pterodactyle.echangeable.Fichier;
 import pterodactyle.utilisateur.Utilisateur;
 
 public interface _ServicesCoeur extends Remote {
@@ -64,4 +67,6 @@ public interface _ServicesCoeur extends Remote {
 	 * 
 	 */
 	//public void reponseMessage(String url, String contenu, Utilisateur utilisateurCourant);
+	
+	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant) throws FileNotFoundException, IOException;
 }

@@ -13,8 +13,8 @@ public class Post extends $EchangeableAvecTag {
 	protected String titre;
 	
 	//Constructeur d'un post
-	public Post(String nom, Utilisateur ut, String titre){
-		super(nom,ut);
+	public Post(String nom, Utilisateur ut, String titre, Tag t){
+		super(nom,ut,t);
 		this.titre = titre;
 		this.messages = new ArrayList<MessagePost>();
 	}

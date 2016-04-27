@@ -13,7 +13,7 @@ public class TestPost {
 		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre", false);
 		Utilisateur u2 = new Utilisateur("Anas", "Berahab", "beraa", "gilles<3", false);
 		
-		Post p = new Post("post11", u, "Qu'est ce qu'on fait ?");
+		Post p = new Post("post11", u, "Qu'est ce qu'on fait ?", t1);
 		MessagePost m1 = new MessagePost(u,"Bonjour,\nJe m'apelle Henry");
 		MessagePost m2 = new MessagePost(u2,"Bonjour Henry");
 		

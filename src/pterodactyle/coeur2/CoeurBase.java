@@ -2,6 +2,7 @@ package pterodactyle.coeur2;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,7 +27,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.echangeables = new HashMap<String, _Echangeable>();
 	}
 	
-	protected CoeurBase(String repertoire) throws RemoteException{
+	public CoeurBase(String repertoire) throws RemoteException{
 		super();
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
 			this.tags = (Set<Tag>)ois.readObject();
@@ -39,7 +40,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
-	protected void Sauvegarder(String repertoire){
+	public void Sauvegarder(String repertoire){
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexTags")))){
 			oos.writeObject(this.tags);
 		}catch(IOException e){e.printStackTrace();}
@@ -83,6 +84,21 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		verifAutorisation.lecture((Fichier)ech, utilisateurCourant);
 		
 		return ((Fichier)ech).obtenirTranche(n, tailleTampon);
+	}
+	
+	//Auteur : Nono
+	@Override
+	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant) throws FileNotFoundException, IOException {
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
+		//Verification autorisation
+		if(! verifAutorisation.creation(fich, utilisateurCourant))throw new ExceptionAutorisationManquante();
+		
+		fich.ecrireTranche(tranche);
+	}
+	
+	public void creerFichier(Utilisateur utilisateurCourant){
+		
 	}
 
 	//Auteur : Nono
@@ -139,5 +155,5 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	public String test() throws RemoteException {
 		return "Ca marche fdp";
 	}
-	
+
 }

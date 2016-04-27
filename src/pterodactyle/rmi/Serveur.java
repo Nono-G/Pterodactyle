@@ -24,8 +24,8 @@ public class Serveur {
 		String cwd = System.getProperty("user.dir");
 		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
 		
-		//String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";
-		String url = "rmi://130.190.65.31/app";
+		String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";
+		//String url = "rmi://37.162.110.138/app";
 	    System.out.println("Enregistrement de l'objet avec l'url : " + url);
 	    
 
