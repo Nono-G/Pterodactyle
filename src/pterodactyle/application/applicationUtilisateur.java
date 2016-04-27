@@ -92,6 +92,9 @@ public class applicationUtilisateur extends JFrame {
 		onglet2.setBackground(new Color(244, 244, 243));
 		
 		JLabel lblForum = new JLabel("Forum");
+		lblForum.setForeground(new Color(11, 29, 62));
+		lblForum.setFont(new Font("Book Antiqua", Font.BOLD, 12));
+		lblForum.setBounds(10, 11, 96, 21);
 		JLabel lblCloud = new JLabel("Cloud");
 		onglet1.add(lblForum);
 		onglet2.add(lblCloud);
