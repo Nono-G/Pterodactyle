@@ -10,10 +10,9 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 import pterodactyle.echangeable.*;
-import pterodactyle.utilisateur.Utilisateur;
-import pterodactyle.utilisateur.UtilisateurException;
+import pterodactyle.utilisateur.*;
 
-public class CoeurBase extends $Coeur {
+public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 	private static final long serialVersionUID = -5431026872014363966L;
 	protected Set<Tag> tags;
@@ -96,7 +95,7 @@ public class CoeurBase extends $Coeur {
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();
 		//Verification autorisation
-		verifAutorisation.ecriture((Post)ech, utilisateurCourant);
+		if( ! verifAutorisation.ecriture((Post)ech, utilisateurCourant))throw new ExceptionAutorisationManquante();
 		
 		((Post)ech).repondre(new MessagePost(utilisateurCourant, contenu));
 		
@@ -121,7 +120,7 @@ public class CoeurBase extends $Coeur {
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Verification autorisation
-		verifAutorisation.lectureTag(t, utilisateurCourant);
+		if( ! verifAutorisation.lectureTag(t, utilisateurCourant))throw new ExceptionAutorisationManquante();
 		
 		Set<$EchangeableAvecTag> ret = new HashSet<$EchangeableAvecTag>();
 		for(String s : echangeables.keySet()){
