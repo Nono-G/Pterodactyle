@@ -117,7 +117,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		//Ajout du post échangeable
 		Post post = new Post(url,utilisateurCourant, titre);
 		this.echangeables.put(url, post);
-		//Sauvegarde du message 
+		//Sauvegarde du post
 		post.sauver();
 	}
 		

@@ -65,8 +65,8 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * @author Fanny
 	 * Méthode qui permet le service d'un envoie de message interne
-	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateur)
-	 * @require utilisateur destinataire existe dans la liste des utilisateur verifIdentite.estUtilisateur(identificateurDestinataire, utilisateur)
+	 * @require verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateur)
+	 * @require utilisateurs. verifIdentite.estUtilisateur(destinataire, utilisateurs)
 	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
 	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant, String identificateurDestinataire)
