@@ -19,5 +19,9 @@ public abstract class $DossierOuFichier extends $EchangeableAvecTag {
 	}
 	
 	public abstract boolean estDossier();
+	
+	public  Dossier getPere(){
+		return this.pere;
+	};
 
 }

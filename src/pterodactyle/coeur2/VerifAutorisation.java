@@ -2,6 +2,8 @@ package pterodactyle.coeur2;
 
 import pterodactyle.echangeable.Tag;
 import pterodactyle.echangeable._Echangeable;
+import pterodactyle.utilisateur.Autorisation;
+import pterodactyle.utilisateur.Specifique;
 import pterodactyle.utilisateur.Utilisateur;
 
 import java.util.Set;
@@ -11,6 +13,7 @@ import pterodactyle.echangeable.*;
 public class VerifAutorisation implements _VerifAutorisation {
 
 	protected Set<Tag> tags;
+	protected Set<Tag> tagsHeritage;
 	
 	@Override
 	/*
@@ -42,41 +45,64 @@ public class VerifAutorisation implements _VerifAutorisation {
 
 	@Override
 	public boolean lectureTag(Tag tag, Utilisateur utilisateur) {
-		return utilisateur.getDroits(tag).getDroits()[0] = true;
+		return utilisateur.getDroits(tag).getDroits()[0] == true;
 	}
 
 	@Override
 	public boolean ecritureTag(Tag tag, Utilisateur utilisateur) {
-		return utilisateur.getDroits(tag).getDroits()[1] = true;
+		return utilisateur.getDroits(tag).getDroits()[1] == true;
 	}
 
 	@Override
 	public boolean partageTag(Tag tag, Utilisateur utilisateur) {
-		return utilisateur.getDroits(tag).getDroits()[2] = true;
+		return utilisateur.getDroits(tag).getDroits()[2] == true;
 
 	}
 
 	@Override
 	public boolean creationTag(Tag tag, Utilisateur utilisateur) {
-		return utilisateur.getDroits(tag).getDroits()[3] = true;
+		return utilisateur.getDroits(tag).getDroits()[3] == true;
 	}
 
 	@Override
 	public boolean suppressionTag(Tag tag, Utilisateur utilisateur) {
-		return utilisateur.getDroits(tag).getDroits()[4] = true;
+		return utilisateur.getDroits(tag).getDroits()[4] == true;
 	}
 	
 	public boolean aDroit($EchangeableAvecTag echangeable, Utilisateur utilisateur, int numeroDroit){
-		tags = echangeable.getTags();
+		tags = echangeable.getTags();	
+		if(echangeable.getClass().getName() == "pterodactyle.echangeable.Fichier" || echangeable.getClass().getName() == "pterodactyle.echangeable.Dossier"){
+			while(echangeable.getPere() != null){
+				tagsHeritage = echangeable.getTags();
+				for(Tag t : tagsHeritage){
+					if(utilisateur.possedeTag(t)){
+						return droitTag(t,utilisateur, numeroDroit);
+					}
+				}
+				for(Specifique s : utilisateur.getSpecifique()){
+					if(s.aPourCible(echangeable.getUrl())) return droitTag(s, utilisateur, numeroDroit);
+				}
+				echangeable = echangeable.getPere();
+			}
+		}
 		for(Tag t : tags){
-			if(utilisateur.possedeAut(t)){
+			if(utilisateur.possedeTag(t)){
 				return droitTag(t,utilisateur, numeroDroit);
 			}
 		}
-		return false;
+		for(Specifique s : utilisateur.getSpecifique()){
+			if(s.aPourCible(echangeable.getUrl())){
+				return droitTag(s, utilisateur, numeroDroit);
+			}
+		}
+		
+		return true;
+
+		
+		
 	}
 	
-	public boolean droitTag(Tag tag, Utilisateur utilisateur, int numeroDroit){
+	public boolean droitTag(Autorisation tag, Utilisateur utilisateur, int numeroDroit){
 		return  utilisateur.getDroits(tag).getDroits()[numeroDroit] == true;
 	}
 

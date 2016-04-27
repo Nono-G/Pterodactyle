@@ -36,4 +36,9 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 	public Set<Tag> getTags(){
 		return tags;
 	}
+	
+	public abstract Dossier getPere();
+	
+
+
 }

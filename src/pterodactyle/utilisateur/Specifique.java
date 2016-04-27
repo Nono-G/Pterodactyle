@@ -13,4 +13,8 @@ public class Specifique extends Autorisation{
 	public String toString(){
 		return ""+this.cible;
 	}
+	
+	public boolean aPourCible(String cible){
+		return this.cible == cible;
+	}
 }

@@ -47,5 +47,11 @@ public class Post extends $EchangeableAvecTag {
 		ret +="]\n";
 		return ret;
 	}
+	
+	
+	@Override
+	public Dossier getPere(){
+		return null;
+	}
 
 }
