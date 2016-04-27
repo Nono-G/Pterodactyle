@@ -69,7 +69,7 @@ public class Droits {
 	
 	
 	
-	public void supprimerLecture(int numeroDroit){
+	public void supprimerDroits(int numeroDroit){
 		this.droits[numeroDroit] = false;
 	}
 	

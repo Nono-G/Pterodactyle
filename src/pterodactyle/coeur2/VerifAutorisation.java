@@ -45,27 +45,42 @@ public class VerifAutorisation implements _VerifAutorisation {
 
 	@Override
 	public boolean lectureTag(Tag tag, Utilisateur utilisateur) {
+		if(utilisateur.estAdmin()){
+			return true;
+		}
 		return utilisateur.getDroits(tag).getDroits()[0] == true;
 	}
 
 	@Override
 	public boolean ecritureTag(Tag tag, Utilisateur utilisateur) {
+		if(utilisateur.estAdmin()){
+			return true;
+		}
 		return utilisateur.getDroits(tag).getDroits()[1] == true;
 	}
 
 	@Override
 	public boolean partageTag(Tag tag, Utilisateur utilisateur) {
+		if(utilisateur.estAdmin()){
+			return true;
+		}
 		return utilisateur.getDroits(tag).getDroits()[2] == true;
 
 	}
 
 	@Override
 	public boolean creationTag(Tag tag, Utilisateur utilisateur) {
+		if(utilisateur.estAdmin()){
+			return true;
+		}
 		return utilisateur.getDroits(tag).getDroits()[3] == true;
 	}
 
 	@Override
 	public boolean suppressionTag(Tag tag, Utilisateur utilisateur) {
+		if(utilisateur.estAdmin()){
+			return true;
+		}
 		return utilisateur.getDroits(tag).getDroits()[4] == true;
 	}
 	
@@ -115,6 +130,9 @@ public class VerifAutorisation implements _VerifAutorisation {
 	}
 	
 	public boolean droitTag(Autorisation tag, Utilisateur utilisateur, int numeroDroit){
+		if(utilisateur.estAdmin()){
+			return true;
+		}
 		return  utilisateur.getDroits(tag).getDroits()[numeroDroit] == true;
 	}
 

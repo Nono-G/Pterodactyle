@@ -2,6 +2,7 @@ package pterodactyle.coeur2;
 
 import pterodactyle.echangeable.Tag;
 import pterodactyle.echangeable._Echangeable;
+import pterodactyle.utilisateur.Autorisation;
 import pterodactyle.utilisateur.Utilisateur;
 import pterodactyle.echangeable.*;
 
@@ -26,4 +27,8 @@ public interface _VerifAutorisation {
 	boolean creationTag(Tag tag, Utilisateur utilisateur);
 	
 	boolean suppressionTag(Tag tag, Utilisateur utilisateur);
+	
+	public boolean droitTag(Autorisation tag, Utilisateur utilisateur, int numeroDroit);
+	
+	
 }

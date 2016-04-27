@@ -55,9 +55,9 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 
 	@Override
-	public Utilisateur utilisateurCourant(String identificateur, String cle) throws RemoteException {
-		if(! verifIdentite.estUtilisateur(identificateur, cle, utilisateurs)) throw new UtilisateurException("est Utilisateur");
-		return utilisateurs.get(identificateur);
+	public boolean seConnecter(String identificateur, String cle) throws RemoteException {
+		return verifIdentite.estUtilisateur(identificateur, cle, utilisateurs);
+		
 	}
 
 	@Override
@@ -244,8 +244,30 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	
+	/*
+	 * @author : Anasse
+	 * Permet d'ajouter des droits aux utilisateus
+	 */
+	@Override
+	public void partageDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle){
+		if( !(verifIdentite.estUtilisateur(idResponsable, cle, utilisateurs)) ) throw new UtilisateurException();
+		Utilisateur victime   = utilisateurs.get(idVictime);
+		Utilisateur responsable = utilisateurs.get(idResponsable);
+		if( ! (victime == null)) throw new UtilisateurException();
+		if( ! (verifAutorisation.droitTag(autorisation, victime, numeroDroit))) throw new ExceptionAutorisationManquante();
+		victime.getDroits(autorisation).ajouterDroits(numeroDroit);
+	}
+
+	@Override
+	public void supprimerDroits(String idVictime, Autorisation autorisation, int numeroDroit, String idResponsable,
+			String cle) {
+		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
+		Utilisateur victime = utilisateurs.get(idVictime);
+		victime.getDroits(autorisation).supprimerDroits(numeroDroit);
+	}
 	
-
-
+	
+	
+	
 }
 

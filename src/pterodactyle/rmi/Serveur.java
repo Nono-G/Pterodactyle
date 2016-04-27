@@ -24,7 +24,7 @@ public class Serveur {
 		//String url = "rmi://37.162.110.138/app";
 	    System.out.println("Enregistrement de l'objet avec l'url : " + url);
 
-		CoeurBase app = new CoeurBase("a","b");
+		CoeurBase app = new CoeurBase("silvemax","12345");
 		try {
 			System.out.println("Lancement serveur");
 			Naming.rebind(url, app);
