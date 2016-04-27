@@ -51,6 +51,8 @@ public interface _ServicesCoeur extends Remote {
 	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant)
 			throws FileNotFoundException, IOException;
 
+	public void creerFichier(String url, Dossier pere, Tag t, Utilisateur utilisateurCourant) 
+			throws ExceptionEchangeablePasDeTag;
 	/**
 	 * ADMINISTRATEUR TAG
 	 */

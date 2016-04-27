@@ -91,8 +91,10 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		fich.ecrireTranche(tranche);
 	}
 	
-	public void creerFichier(Utilisateur utilisateurCourant){
-		
+	public void creerFichier(String url, Dossier pere, Tag t, Utilisateur utilisateurCourant) throws ExceptionEchangeablePasDeTag{
+		Fichier f = Fichier.nouveauFichier(url, utilisateurCourant, pere, t);
+		this.echangeables.put(url, f);
+		f.sauver();
 	}
 	
 	//Auteur : Nono
