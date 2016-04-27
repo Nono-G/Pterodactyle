@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class applicationPterodactyle {
 
@@ -78,6 +80,10 @@ public class applicationPterodactyle {
 		frameConnection.getContentPane().add(lblMdp);
 		
 		JButton btnConnection = new JButton("Se connecter");
+		btnConnection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnConnection.setForeground(new Color(255, 255, 255));
 		btnConnection.setBackground(new Color(11,29,62));
 		btnConnection.setFont(new Font("Book Antiqua", Font.BOLD, 14));
