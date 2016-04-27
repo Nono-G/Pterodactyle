@@ -81,7 +81,7 @@ public class applicationPterodactyle {
 		btnConnection.setForeground(new Color(255, 255, 255));
 		btnConnection.setBackground(new Color(11,29,62));
 		btnConnection.setFont(new Font("Book Antiqua", Font.BOLD, 14));
-		btnConnection.setBounds(100, 189, 122, 34);
+		btnConnection.setBounds(86, 187, 150, 34);
 		//btnConnection.setBorder(new RoundedBorder(10));
 
 		frameConnection.getContentPane().add(btnConnection);
