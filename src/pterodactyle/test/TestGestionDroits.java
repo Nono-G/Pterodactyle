@@ -21,7 +21,7 @@ public class TestGestionDroits {
 		droits[1] = false;
 		droits[2] = false;
 		droits[3] = false;
-		droits[4] = true;
+		droits[4] = false;
 		Droits drCompta = new Droits(droits);
 		anasse.ajouterAut(comptabilite, drCompta);
 		
@@ -32,7 +32,6 @@ public class TestGestionDroits {
 		droits[3] = false;
 		droits[4] = true;
 		Droits drRH = new Droits(droits);
-		anasse.ajouterAut(comptabilite, drRH);
 		anasse.ajouterAut(RH, drRH);
 		
 		
