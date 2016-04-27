@@ -129,6 +129,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Ajout du post échangeable
 		Post post = Post.nouveauPost(url,utilisateurCourant, titre, t);
+		if( ! verifAutorisation.creation(post, utilisateurCourant))throw new ExceptionAutorisationManquante();
 		this.echangeables.put(url, post);
 		//Sauvegarde du post
 		post.sauver();
@@ -144,7 +145,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();
 		//Verification autorisation
-		verifAutorisation.ecriture((Post)ech, utilisateurCourant);
 		if( ! verifAutorisation.ecriture((Post)ech, utilisateurCourant))throw new ExceptionAutorisationManquante();
 		((Post)ech).repondre(new MessagePost(utilisateurCourant, contenu));
 		
