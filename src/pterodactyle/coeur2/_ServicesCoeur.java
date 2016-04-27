@@ -3,7 +3,8 @@ package pterodactyle.coeur2;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Map;
+import java.util.*;
+import java.rmi.*;
 import java.io.*;
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.*;
@@ -39,6 +40,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
 	 * @return un Utilisateur
 	 */
+
 	public Utilisateur voirUtilisateur(String identificateurCible, String identificateur, String cle)throws RemoteException;
 	
 	/*
@@ -54,6 +56,7 @@ public interface _ServicesCoeur extends Remote {
 	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
 	 */
 	public Object[] trancheFichier(String url, int n, int tailleTampon, String identificateur, String cle)
+
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
 	public void ecrireTranche(Object[] tranche, Fichier fich, String identificateur, String cle)
@@ -130,4 +133,11 @@ public interface _ServicesCoeur extends Remote {
 	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
+	
+	/*
+	 * @author Anasse
+	 * Methodes qui permet d'ajouter/supprimer des droits 
+	 */
+	
+	public void partage(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle);
 }
