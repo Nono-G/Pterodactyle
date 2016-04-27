@@ -25,7 +25,7 @@ public class TestGestionDroits {
 		Droits drCompta = new Droits(droits);
 		anasse.ajouterAut(comptabilite, drCompta);
 		
-		Specifique RH = new Specifique("papa");
+		Specifique RH = new Specifique("t.avi");
 		droits[0] = false;
 		droits[1] = true;
 		droits[2] = false;
@@ -45,16 +45,16 @@ public class TestGestionDroits {
 		
 		
 		//Test Fichier normal sans pere 
-		//Fichier f = new Fichier("t.avi", anasse , null);
+		Fichier f =  Fichier.nouveauFichier("t.avi", anasse , null, comptabilite);
 		//f.ajouterTag(comptabilite);
-		//System.out.println(V.ecriture(f, anasse));
-		//System.out.println(V.lecture(f, anasse));
-		//System.out.println(V.suppression(f, anasse));
+		System.out.println(V.ecriture(f, anasse));
+		System.out.println(V.lecture(f, anasse));
+		System.out.println(V.suppression(f, anasse));
 		
 		
 		
 		
-		
+		/*
 		Dossier dPapa =  Dossier.nouveauDossier("papa", anasse, null, comptabilite);
 		Dossier dPapa2 =  Dossier.nouveauDossier("papa2", anasse, dPapa, comptabilite);
 		Fichier f1 = Fichier.nouveauFichier("t2 ", anasse, dPapa2,comptabilite);
@@ -64,7 +64,7 @@ public class TestGestionDroits {
 		System.out.println(V.ecriture(dPapa, anasse));
 		System.out.println(V.lecture(f1, anasse));
 		System.out.println(V.suppression(f1, anasse));
-		
+		*/
 	}
 
 }
