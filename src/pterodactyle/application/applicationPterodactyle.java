@@ -4,26 +4,37 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
+
+import pterodactyle.coeur2._ServicesCoeur;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class applicationPterodactyle {
 
 	private JFrame frameConnection;
 	private JTextField textFieldLogin;
 	private JTextField txtFieldMdp;
+	private static _ServicesCoeur app;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		String url = "rmi://127.0.0.1/app";	
+		try {
+			app = (_ServicesCoeur) Naming.lookup(url);
+		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -64,7 +75,7 @@ public class applicationPterodactyle {
 		
 		JLabel lblLogin = new JLabel("Entrez votre login :");
 		lblLogin.setFont(new Font("Book Antiqua", Font.BOLD, 14));
-		lblLogin.setBounds(86, 44, 218, 20);
+		lblLogin.setBounds(86, 44, 128, 20);
 		lblLogin.setForeground(new Color(11,29,62));
 		frameConnection.getContentPane().add(lblLogin);
 		
@@ -76,7 +87,7 @@ public class applicationPterodactyle {
 		JLabel lblMdp = new JLabel("Entrez votre mot de passe :");
 		lblMdp.setForeground(new Color(11,29,62));
 		lblMdp.setFont(new Font("Book Antiqua", Font.BOLD, 14));
-		lblMdp.setBounds(86, 106, 277, 20);
+		lblMdp.setBounds(86, 106, 185, 20);
 		frameConnection.getContentPane().add(lblMdp);
 		
 		JButton btnConnection = new JButton("Se connecter");
@@ -89,6 +100,7 @@ public class applicationPterodactyle {
 		btnConnection.setFont(new Font("Book Antiqua", Font.BOLD, 14));
 		btnConnection.setBounds(86, 187, 150, 34);
 		//btnConnection.setBorder(new RoundedBorder(10));
+
 
 		frameConnection.getContentPane().add(btnConnection);
 	}
