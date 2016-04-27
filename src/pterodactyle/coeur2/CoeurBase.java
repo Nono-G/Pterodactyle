@@ -121,11 +121,11 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	//Auteur Fanny
 	@Override
 	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
-			throws RemoteException, ExceptionEchangeableMauvaisType {
+			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag {
 		//vérification identité
 		verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateurs);
 		//Ajout du post échangeable
-		Post post = new Post(url,utilisateurCourant, titre, t);
+		Post post = Post.nouveauPost(url,utilisateurCourant, titre, t);
 		this.echangeables.put(url, post);
 		//Sauvegarde du post
 		post.sauver();

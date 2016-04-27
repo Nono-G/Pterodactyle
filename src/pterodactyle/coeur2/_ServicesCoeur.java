@@ -54,7 +54,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require utilisateur ci 
 	 */
 	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
-			throws RemoteException, ExceptionEchangeableMauvaisType;
+			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
 	 */
