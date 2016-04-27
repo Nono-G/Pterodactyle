@@ -1,15 +1,16 @@
 package pterodactyle.utilisateur;
 
+import java.util.Set;
+
 public class Specifique extends Autorisation{
 	
-	protected String nom;
+	protected String cible;
 	
-	public Specifique(String nom){
-		this.nom = nom;
+	public Specifique(String cible){
+		this.cible = cible;
 	} 
 	
 	public String toString(){
-		return ""+this.nom;
+		return ""+this.cible;
 	}
-	
 }

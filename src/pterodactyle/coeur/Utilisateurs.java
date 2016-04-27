@@ -3,6 +3,7 @@ package pterodactyle.coeur;
 import java.util.HashMap;
 
 import pterodactyle.utilisateur.Utilisateur;
+import pterodactyle.utilisateur.UtilisateurException;
 
 public  class Utilisateurs {
 	

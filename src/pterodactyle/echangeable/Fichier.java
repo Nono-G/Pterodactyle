@@ -18,7 +18,7 @@ public class Fichier extends $DossierOuFichier{
 	public Object[] obtenirTranche(int n, int tailleTampon) throws ExceptionEchangeableFichierFini {
 		byte[] buffer = new byte[tailleTampon];
 		Object[] ret = new Object[2];
-		File f = new File("sauv/"+this.nom);
+		File f = new File("sauv/"+this.url);
 		try (FileInputStream fis = new FileInputStream(f)) {
 			if(n*tailleTampon > f.length()) {throw new ExceptionEchangeableFichierFini();}
 			fis.skip(n*tailleTampon);

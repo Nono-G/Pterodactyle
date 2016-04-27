@@ -1,7 +1,6 @@
 package pterodactyle.utilisateur;
 
 import java.util.*;
-import pterodactyle.coeur.AdministrateurException;
 import java.awt.List;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -95,6 +94,20 @@ public class Utilisateur implements Serializable {
 		}else{
 			return this.login.equals( ((Utilisateur)u2).login);
 		}
+	}
+	
+	/*
+	 * Verifie si l'utilisateur a une autorisation precise 
+	 */
+	public boolean possedeAut(Autorisation autorisation){
+		return listeDroits.containsKey(autorisation);	
+	}
+	
+	/*
+	 * 
+	 */
+	public Droits getDroits(Autorisation autorisation){
+		return listeDroits.get(autorisation);
 	}
 	
 }

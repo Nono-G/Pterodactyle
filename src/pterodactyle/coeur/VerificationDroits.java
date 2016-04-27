@@ -3,6 +3,7 @@ package pterodactyle.coeur;
 import java.rmi.RemoteException;
 
 import pterodactyle.rmi.*;
+import pterodactyle.utilisateur.AdministrateurException;
 import pterodactyle.utilisateur.Utilisateur;
 
 public class VerificationDroits implements ServicesRmi{
