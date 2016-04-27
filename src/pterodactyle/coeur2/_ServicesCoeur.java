@@ -3,10 +3,8 @@ package pterodactyle.coeur2;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Map;
-
+import java.util.*;
 import java.rmi.*;
-
 import java.io.*;
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.*;
@@ -32,7 +30,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @param cle assossier pour valider que ce soit le bon utlisateur
 	 * @return un Utilisateur de la personne connectee
 	 */
-	public Utilisateur utilisateurCourant(String identificateur, String cle)throws RemoteException;
+	public boolean seConnecter(String identificateur, String cle)throws RemoteException;
 	
 	
 	/*
@@ -41,7 +39,6 @@ public interface _ServicesCoeur extends Remote {
 	 * @param identificateurCible de la personne dont nous voulons récuperer les informations
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
 	 * @return un Utilisateur
-<<<<<<< HEAD
 	 */
 
 	public Utilisateur voirUtilisateur(String identificateurCible, String identificateur, String cle)throws RemoteException;
@@ -66,7 +63,7 @@ public interface _ServicesCoeur extends Remote {
 			throws FileNotFoundException, IOException;
 
 	public void creerFichier(String url, Dossier pere, Tag t, String identificateur, String cle) 
-			throws ExceptionEchangeablePasDeTag;
+			throws ExceptionEchangeablePasDeTag, RemoteException;
 	/**
 	 * ADMINISTRATEUR TAG
 	 */
@@ -143,5 +140,7 @@ public interface _ServicesCoeur extends Remote {
 	 */
 	public void partageDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle);
 	
+
 	public void supprimerDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle);
 }
+

@@ -55,9 +55,9 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 
 	@Override
-	public Utilisateur utilisateurCourant(String identificateur, String cle) throws RemoteException {
-		if(! verifIdentite.estUtilisateur(identificateur, cle, utilisateurs)) throw new UtilisateurException("est Utilisateur");
-		return utilisateurs.get(identificateur);
+	public boolean seConnecter(String identificateur, String cle) throws RemoteException {
+		return verifIdentite.estUtilisateur(identificateur, cle, utilisateurs);
+		
 	}
 
 	@Override
