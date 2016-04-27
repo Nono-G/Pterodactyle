@@ -8,6 +8,8 @@ import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
 import pterodactyle.utilisateur.Utilisateur;
 
 public interface _ServicesCoeur extends Remote {
+	
+	public String test()throws RemoteException;
 
 	/*
 	 * Permet de créer un nouvelle utilisateur en vérifiant que l'utilisateur est admin
@@ -16,7 +18,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require etre administrateur
 	 * @return void
 	 */
-	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utlisateurCourant);
+	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utlisateurCourant)throws RemoteException;
 	
 	/*
 	 * Permet de recupérer l'utilisateur connecter
