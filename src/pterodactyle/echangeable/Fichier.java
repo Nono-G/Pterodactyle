@@ -36,7 +36,7 @@ public class Fichier extends $DossierOuFichier{
 	
 	//Ecrit une tranche du fichier
 	public void ecrireTranche(Object[] tranche) throws FileNotFoundException, IOException{
-		try(FileOutputStream fos = new FileOutputStream(new File("sauv/"+this.url))){
+		try(FileOutputStream fos = new FileOutputStream(new File("sauv/"+this.url),true)){
 			fos.write((byte[])tranche[1], 0, (int)tranche[0]);
 		}
 	}

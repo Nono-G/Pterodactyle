@@ -59,10 +59,10 @@ public interface _ServicesCoeur extends Remote {
 
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
-	public void ecrireTranche(Object[] tranche, Fichier fich, String identificateur, String cle)
-			throws FileNotFoundException, IOException;
+	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle)
+			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType;
 
-	public void creerFichier(String url, Dossier pere, Tag t, String identificateur, String cle) 
+	public void creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
 	/**
 	 * ADMINISTRATEUR TAG
@@ -76,7 +76,7 @@ public interface _ServicesCoeur extends Remote {
 	 * création d'un tag par un admin
 	 */
 	public void creerTag(String nomTag, String identificateur, String cle)
-		throws RemoteException, AdministrateurException;	
+		throws RemoteException, AdministrateurException, ExceptionEchangeableTagExistant;	
 	
 	/*
 	 * @author Fanny

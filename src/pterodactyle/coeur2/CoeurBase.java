@@ -10,14 +10,14 @@ import pterodactyle.utilisateur.*;
 public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 	private static final long serialVersionUID = -5431026872014363966L;
-	protected Set<Tag> tags;
+	protected Map<String, Tag> tags;
 	protected Map<String, Utilisateur> utilisateurs;
 	protected Map<String, _Echangeable> echangeables;
 
 	public CoeurBase(String identifiantSuperAdmin, String cleSuperAdmin) throws RemoteException{
 		super();
 		this.utilisateurs = new HashMap<String, Utilisateur>();
-		this.tags = new HashSet<Tag>();
+		this.tags = new HashMap<String, Tag>();
 		this.echangeables = new HashMap<String, _Echangeable>();
 		this.utilisateurs.put(identifiantSuperAdmin, new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true));
 	}
@@ -25,7 +25,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	protected CoeurBase(String repertoire) throws RemoteException{
 		super();
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
-			this.tags = (Set<Tag>)ois.readObject();
+			this.tags = (Map<String,Tag>)ois.readObject();
 		}catch(Exception e){e.printStackTrace();}
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexUtilisateurs")))){
 			this.utilisateurs = (Map<String,Utilisateur>)ois.readObject();
@@ -89,19 +89,22 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	
 	//Auteur : Nono
 	@Override
-	public void ecrireTranche(Object[] tranche, Fichier fich, String identificateur, String cle) throws FileNotFoundException, IOException {
+	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle) throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType {
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		//Verification fichier existe
+		_Echangeable fichier = this.echangeables.get(fich);
+		if( ! (fichier != null && this.echangeables.get(fich) instanceof Fichier))throw new ExceptionEchangeableMauvaisType();
 		//Verification autorisation
-		if(! verifAutorisation.creation(fich, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		if(! verifAutorisation.creation((Fichier)fichier, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		
-		fich.ecrireTranche(tranche);
+		((Fichier)fichier).ecrireTranche(tranche);
 	}
 	
-	public void creerFichier(String url, Dossier pere, Tag t, String identificateur, String cle) throws ExceptionEchangeablePasDeTag{
-		Fichier f = Fichier.nouveauFichier(url, utilisateurs.get(identificateur), pere, t);
+	public void creerFichier(String url, Dossier pere, String t, String identificateur, String cle) throws ExceptionEchangeablePasDeTag{
+		Fichier f = Fichier.nouveauFichier(url, utilisateurs.get(identificateur), pere, this.tags.get(t));
 		this.echangeables.put(url, f);
-		f.sauver();
+		//f.sauver();
 	}
 	
 	//Auteur : Nono
@@ -217,14 +220,14 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 */
 	//Auteur : Fanny
 	@Override
-	public void creerTag(String nomTag, String identificateur, String cle) throws RemoteException {
+	public void creerTag(String nomTag, String identificateur, String cle) throws RemoteException, ExceptionEchangeableTagExistant {
 		//Vérification identité
 		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException("est Administrateur");
 		//Vérification existence du tag
 		Tag tag = new Tag(nomTag);
-		if(this.tags.contains(tag)) throw new RemoteException("tag existe");
+		if(this.tags.containsKey(nomTag)) throw new ExceptionEchangeableTagExistant();
 		//Ajout du tags dans la liste des tags
-		this.tags.add(tag);
+		this.tags.put(nomTag,tag);
 	}
 
 	@Override
