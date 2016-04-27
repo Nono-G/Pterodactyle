@@ -8,6 +8,8 @@ import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
 import pterodactyle.utilisateur.Utilisateur;
 
 public interface _ServicesCoeur extends Remote {
+	
+	public String test()throws RemoteException;
 
 	/*
 	 * Permet de créer un nouvelle utilisateur en vérifiant que l'utilisateur est admin
@@ -16,7 +18,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require etre administrateur
 	 * @return void
 	 */
-	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utlisateurCourant);
+	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utlisateurCourant)throws RemoteException;
 	
 	/*
 	 * Permet de recupérer l'utilisateur connecter
@@ -41,9 +43,25 @@ public interface _ServicesCoeur extends Remote {
 	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 	
+	/**
+	 * POST	
+	 */
 	/*
 	 * 
 	 */
 	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
+	
+	/**
+	 * MESSAGERIE INTERNE
+	 */
+	/*
+	 * 
+	 */
+	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant, String identificateurDestinataire)
+			throws RemoteException, ExceptionEchangeableMauvaisType;
+	/*
+	 * 
+	 */
+	//public void reponseMessage(String url, String contenu, Utilisateur utilisateurCourant);
 }
