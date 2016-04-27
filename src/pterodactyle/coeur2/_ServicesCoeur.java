@@ -19,7 +19,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require etre administrateur
 	 * @return void
 	 */
-	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utlisateurCourant)throws RemoteException;
+	public void creerUtilisateur(Utilisateur nouveau, String identificateur, String cle)throws RemoteException;
 	
 	/*
 	 * @author Maxime
@@ -34,30 +34,30 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * @author Maxime
 	 * Permet de créer récuperer un Utilisateur en vérifiant l'identite de la personne
-	 * @param identificateur de la personne dont nous voulons récuperer les informations
+	 * @param identificateurCible de la personne dont nous voulons récuperer les informations
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
 	 * @return un Utilisateur
 	 */
-	public Utilisateur voirUtilisateur(String identificateur, Utilisateur utilisateurCourant)throws RemoteException;
+	public Utilisateur voirUtilisateur(String identificateurCible, String identificateur, String cle)throws RemoteException;
 
 	/*
 	 * @author Nono
 	 * Renvoie une tranche (cf méthode dans la classe pterodactyle.echangeable.Fichier) du fichier désigné par url,
 	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
 	 */
-	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
+	public Object[] trancheFichier(String url, int n, int tailleTampon, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
-	public void ecrireTranche(Object[] tranche, Fichier fich, Utilisateur utilisateurCourant)
+	public void ecrireTranche(Object[] tranche, Fichier fich, String identificateur, String cle)
 			throws FileNotFoundException, IOException;
 
-	public void creerFichier(String url, Dossier pere, Tag t, Utilisateur utilisateurCourant) 
+	public void creerFichier(String url, Dossier pere, Tag t, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag;
 	/**
 	 * ADMINISTRATEUR TAG
 	 */
 	
-	public void creerTag(String nomTag, Utilisateur utilisateurCourant)
+	public void creerTag(String nomTag, String identificateur, String cle)
 		throws RemoteException, AdministrateurException;	
 	
 	/**
@@ -69,12 +69,12 @@ public interface _ServicesCoeur extends Remote {
 	 * @require utilisateur ci 
 	 */
 
-	public void creerPost(String url, String titre, Tag t, Utilisateur utilisateurCourant)
+	public void creerPost(String url, String titre, Tag t, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
 	 */
-	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
+	public void repondrePost(String url, String contenu, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
 	/**
@@ -87,7 +87,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require utilisateurs. verifIdentite.estUtilisateur(destinataire, utilisateurs)
 	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
-	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant, String identificateurDestinataire)
+	public void envoieMessageInterne(String url, String contenu, String objet, String identificateurDestinataire, String identificateur, String cle )
 			throws RemoteException, UtilisateurException;
 	/*
 	 * @author Fanny
@@ -96,7 +96,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require l'url correspond bien au message interne
 	 * @ensure la réponse est envoyée
 	 */
-	public void reponseMessage(String url, String contenu, Utilisateur utilisateurCourant)
+	public void reponseMessage(String url, String contenu, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
 	/*
@@ -106,7 +106,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require l'url correspond bien au message interne
 	 * @ensure la réponse est envoyée
 	 */
-	public void reponseMessage(String url, String contenu, String objet, Utilisateur utilisateurCourant)
+	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
 }
