@@ -47,7 +47,9 @@ public interface _ServicesCoeur extends Remote {
 	 * POST	
 	 */
 	/*
-	 * 
+	 * @author Fanny
+	 * Méthode qui permet le service de création d'un post
+	 * @require utilisateur ci 
 	 */
 	public void creerPost(String url, String titre, Utilisateur utilisateurCourant)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
@@ -63,8 +65,8 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * @author Fanny
 	 * Méthode qui permet le service d'un envoie de message interne
-	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur()
-	 * @require utilisateur destinataire existe dans la liste des utilisateur verifIdentite.estUtilisateur()
+	 * @require utilisateur courant existe dans la liste des utilisateurs verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateur)
+	 * @require utilisateur destinataire existe dans la liste des utilisateur verifIdentite.estUtilisateur(identificateurDestinataire, utilisateur)
 	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
 	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant, String identificateurDestinataire)
