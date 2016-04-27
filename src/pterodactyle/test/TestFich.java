@@ -7,11 +7,12 @@ import pterodactyle.utilisateur.Utilisateur;
 
 public class TestFich {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ExceptionEchangeablePasDeTag {
 				
 		Utilisateur u = new Utilisateur("Nono", "Goudian", "goudn", "capre", false);
+		Tag t1 = new Tag("CHSCT2016");
 		
-		Fichier f = new Fichier("t.avi", u, null);
+		Fichier f = Fichier.nouveauFichier("t.avi", u, null, t1);
 		
 		//Copy
 		

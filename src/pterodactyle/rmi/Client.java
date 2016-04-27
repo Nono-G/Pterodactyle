@@ -8,6 +8,7 @@ import pterodactyle.coeur2._ServicesCoeur;
 
 public class Client {
 
+
 	public static void main(String[] args) throws NotBoundException, IOException {
 		String url = "rmi://127.0.0.1/app";		
 		_ServicesCoeur r = (_ServicesCoeur) Naming.lookup(url);

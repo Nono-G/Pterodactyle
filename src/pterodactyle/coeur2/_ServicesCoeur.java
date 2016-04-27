@@ -1,12 +1,20 @@
 package pterodactyle.coeur2;
 
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
 
 import pterodactyle.echangeable.ExceptionEchangeableFichierFini;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
+=======
+import java.rmi.*;
+import java.io.*;
+import pterodactyle.echangeable.*;
+import pterodactyle.utilisateur.AdministrateurException;
+>>>>>>> e3801e6b396401c01b07ef28b197c742693f1965
 import pterodactyle.utilisateur.Utilisateur;
+import pterodactyle.utilisateur.UtilisateurException;
 
 public interface _ServicesCoeur extends Remote {
 	
@@ -20,7 +28,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require etre administrateur
 	 * @return void
 	 */
-	public void creerUtilisateur(Utilisateur nouveau, Utilisateur utlisateurCourant)throws RemoteException;
+	public void creerUtilisateur(Utilisateur nouveau, String identificateur, String cle)throws RemoteException;
 	
 	/*
 	 * @author MaximeSilvestre
@@ -35,7 +43,7 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * @author MaximeSilvestre
 	 * Permet de créer récuperer un Utilisateur en vérifiant l'identite de la personne
-	 * @param identificateur de la personne dont nous voulons récuperer les informations
+	 * @param identificateurCible de la personne dont nous voulons récuperer les informations
 	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
 	 * @return un Utilisateur
 	 */
@@ -53,8 +61,43 @@ public interface _ServicesCoeur extends Remote {
 	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
 	**/
 	public Object[] trancheFichier(String url, int n, int tailleTampon, Utilisateur utilisateurCourant)
+=======
+	public Utilisateur voirUtilisateur(String identificateurCible, String identificateur, String cle)throws RemoteException;
+
+	/*
+	 * @author Nono
+	 * Renvoie une tranche (cf méthode dans la classe pterodactyle.echangeable.Fichier) du fichier désigné par url,
+	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
+	 */
+	public Object[] trancheFichier(String url, int n, int tailleTampon, String identificateur, String cle)
+>>>>>>> e3801e6b396401c01b07ef28b197c742693f1965
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
+
+	public void ecrireTranche(Object[] tranche, Fichier fich, String identificateur, String cle)
+			throws FileNotFoundException, IOException;
+
+	public void creerFichier(String url, Dossier pere, Tag t, String identificateur, String cle) 
+			throws ExceptionEchangeablePasDeTag;
+	/**
+	 * ADMINISTRATEUR TAG
+	 */
 	
+	/*
+	 * @author Fanny
+	 * @Require verifIdentite.estAdmin(utilisateurCourant, utilisateurs)
+	 * @Ensure le tag est dans la liste de 
+	 * 
+	 * création d'un tag par un admin
+	 */
+	public void creerTag(String nomTag, String identificateur, String cle)
+		throws RemoteException, AdministrateurException;	
+	
+	/*
+	 * @author Fanny
+	 * Service de suppression de tag par un admin
+	 */
+	public void supprimerTag(Tag tag, String identificateur, String cle)
+			throws RemoteException, AdministrateurException;	
 	/**
 	 * POST	
 	 */
@@ -63,12 +106,13 @@ public interface _ServicesCoeur extends Remote {
 	 * Méthode qui permet le service de création d'un post
 	 * @require utilisateur ci 
 	 */
-	public void creerPost(String url, String titre, Utilisateur utilisateurCourant)
-			throws RemoteException, ExceptionEchangeableMauvaisType;
+
+	public void creerPost(String url, String titre, Tag t, String identificateur, String cle)
+			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
 	 */
-	public void repondrePost(String url, String contenu, Utilisateur utilisateurCourant)
+	public void repondrePost(String url, String contenu, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
 	/**
@@ -78,11 +122,11 @@ public interface _ServicesCoeur extends Remote {
 	 * @author Fanny
 	 * Méthode qui permet le service d'un envoie de message interne
 	 * @require verifIdentite.verificationIdentiteUtilisateur(utilisateurCourant, utilisateur)
-	 * @require utilisateurs. verifIdentite.estUtilisateur(destinataire, utilisateurs)
+	 * @require verifIdentite.estUtilisateur(destinataire, utilisateurs)
 	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
-	public void envoieMessageInterne(String url, String contenu, String objet, Utilisateur utilisateurCourant, String identificateurDestinataire)
-			throws RemoteException, ExceptionEchangeableMauvaisType;
+	public void envoieMessageInterne(String url, String contenu, String objet, String identificateurDestinataire, String identificateur, String cle )
+			throws RemoteException, UtilisateurException;
 	/*
 	 * @author Fanny
 	 * Méthode qui permet le service de réponse à un message interne sans objet
@@ -90,7 +134,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require l'url correspond bien au message interne
 	 * @ensure la réponse est envoyée
 	 */
-	public void reponseMessageSansObjet(String url, String contenu, Utilisateur utilisateurCourant)
+	public void reponseMessage(String url, String contenu, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
 	/*
@@ -100,7 +144,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require l'url correspond bien au message interne
 	 * @ensure la réponse est envoyée
 	 */
-	public void reponseMessageAvecObjet(String url, String contenu, String objet, Utilisateur utilisateurCourant)
+	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
 }

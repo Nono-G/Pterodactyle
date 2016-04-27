@@ -13,10 +13,16 @@ public class Post extends $EchangeableAvecTag {
 	protected String titre;
 	
 	//Constructeur d'un post
-	public Post(String nom, Utilisateur ut, String titre){
-		super(nom,ut);
+	private Post(String nom, Utilisateur ut, String titre, Tag t){
+		super(nom,ut,t);
 		this.titre = titre;
 		this.messages = new ArrayList<MessagePost>();
+	}
+	
+	//Constructeur
+	public static Post nouveauPost(String nom, Utilisateur ut, String titre, Tag t) throws ExceptionEchangeablePasDeTag {
+		if( ! (t != null))throw new ExceptionEchangeablePasDeTag();
+		return new Post(nom, ut,titre, t);
 	}
 	
 	//Constructeur pour charger un post depuis un fichier
@@ -40,6 +46,12 @@ public class Post extends $EchangeableAvecTag {
 		}
 		ret +="]\n";
 		return ret;
+	}
+	
+	
+	@Override
+	public Dossier getPere(){
+		return null;
 	}
 
 }
