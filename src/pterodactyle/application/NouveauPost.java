@@ -48,6 +48,9 @@ public class NouveauPost extends JFrame {
 	private String motDePasseCourant;
 	private List<String> tagEnAjout;
 
+<<<<<<< HEAD
+	
+=======
 
 	public NouveauPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant) {
 		this.loginCourant = loginCourant;
@@ -56,6 +59,7 @@ public class NouveauPost extends JFrame {
 		initialisation();
 		tagEnAjout = new ArrayList<String>(3);
 	}
+>>>>>>> b0ca34d37aa7d80f5852ef08f493ec3a113f2214
 	/**
 	 * Create the frame.
 	 */

@@ -24,7 +24,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 	}
 
 	@Override
-	public boolean ecriture($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
+	public boolean modification($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
 		return aDroit(echangeable, utilisateur, 1);	
 	}
 
@@ -52,7 +52,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 	}
 
 	@Override
-	public boolean ecritureTag(Tag tag, Utilisateur utilisateur) {
+	public boolean modificationTag(Tag tag, Utilisateur utilisateur) {
 		if(utilisateur.estAdmin()){
 			return true;
 		}
@@ -96,7 +96,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 			while(echangeable instanceof $DossierOuFichier && (($DossierOuFichier)echangeable).getPere() != null){
 				tagsHeritage = echangeable.getTags();
 				for(Tag t : tagsHeritage){
-					if(utilisateur.possedeTag(t)){
+					if(utilisateur.aAutorisation(t)){
 						if(droitTag(t,utilisateur, numeroDroit)) resultat = droitTag(t,utilisateur, numeroDroit);
 					}
 				}
@@ -111,7 +111,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 			}
 		}
 		for(Tag t : tags){
-			if(utilisateur.possedeTag(t)){
+			if(utilisateur.aAutorisation(t)){
 				if(droitTag(t,utilisateur, numeroDroit)) resultat = droitTag(t,utilisateur, numeroDroit);
 			}
 		}

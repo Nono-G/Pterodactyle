@@ -17,9 +17,9 @@ public class TestGestionDroits {
 		Utilisateur anasse = new Utilisateur("Anasse", "Berahab" , "ba", "lol" ,false);
 		VerifAutorisation V = new VerifAutorisation();
 		Tag comptabilite = new Tag("comptabilite");
-		droits[0] = false;
-		droits[1] = false;
-		droits[2] = false;
+		droits[0] = true;
+		droits[1] = true;
+		droits[2] = true;
 		droits[3] = false;
 		droits[4] = false;
 		Droits drCompta = new Droits(droits);
@@ -46,8 +46,9 @@ public class TestGestionDroits {
 		
 		//Test Fichier normal sans pere 
 		Fichier f =  Fichier.nouveauFichier("t.avi", anasse , null, comptabilite);
-		//f.ajouterTag(comptabilite);
-		System.out.println(V.ecriture(f, anasse));
+		f.ajouterTag(comptabilite);
+		
+		System.out.println(V.modification(f, anasse));
 		System.out.println(V.lecture(f, anasse));
 		System.out.println(V.suppression(f, anasse));
 		
