@@ -4,7 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable.Tag;
 
 import javax.swing.JButton;
@@ -41,6 +46,7 @@ public class NouveauPost extends JFrame {
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
+	private List<String> tagEnAjout;
 
 
 	public NouveauPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant) {
@@ -48,6 +54,7 @@ public class NouveauPost extends JFrame {
 		this.motDePasseCourant = motDePasseCourant;
 		this.app = app;
 		initialisation();
+		tagEnAjout = new ArrayList<String>(3);
 	}
 	/**
 	 * Create the frame.
@@ -86,19 +93,46 @@ public class NouveauPost extends JFrame {
 		JComboBox comboBox = new JComboBox();
 		comboBox.setForeground(new Color(11,29,62));
 		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"tag1", "tag2", "tag3", "tag4"}));
+		comboBox.setModel(new DefaultComboBoxModel(refreshTagsEcriture()));
 		
-		JLabel lblListTagPres = new JLabel("Liste des tags ajoutés :");
-		lblListTagPres.setForeground(new Color(11, 29, 62));
-		lblListTagPres.setFont(new Font("Book Antiqua", Font.BOLD, 18));
-		
-		JScrollPane scrollPane = new JScrollPane();
+		JList<String> listTagAjoutes = new JList<String>();
+		AbstractListModel<String> almListTagsAjoutes = new AbstractListModel<String>() {
+			String[] values = new String[] {"toto"};
+			public int getSize() {
+				return values.length;
+			}
+			public String getElementAt(int index) {
+				return values[index];
+			}
+			//public void addElement(String s){
+			//	this.values.add(s);
+			//}
+		};
+		listTagAjoutes.setModel(almListTagsAjoutes);
+		listTagAjoutes.setBackground(new Color(211,210,250));
 		
 		JButton btnAddTagPost = new JButton("OK");
 		btnAddTagPost.setIcon(null);
 		btnAddTagPost.setForeground(Color.WHITE);
 		btnAddTagPost.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnAddTagPost.setBackground(new Color(11, 29, 62));
+		final JComboBox ComboBoxInBtnAddTagPost = comboBox;
+		final JList<String> jListInBtnAddTagPost = listTagAjoutes;
+		//final AbstractListModel almInBtnAddTagPost = almListTagsAjoutes;
+		btnAddTagPost.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String[] nouveau = new String[] {"tit", "de", "Lomont"};
+				tagEnAjout.add(ComboBoxInBtnAddTagPost.getSelectedItem().toString());
+				jListInBtnAddTagPost.setListData(nouveau);
+			}
+		});
+		
+		JLabel lblListTagPres = new JLabel("Liste des tags ajoutés :");
+		lblListTagPres.setForeground(new Color(11, 29, 62));
+		lblListTagPres.setFont(new Font("Book Antiqua", Font.BOLD, 18));
+		
+		JScrollPane scrollPane = new JScrollPane();
+				
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -159,17 +193,6 @@ public class NouveauPost extends JFrame {
 		JPanel panel = new JPanel();
 		scrollPane.setViewportView(panel);
 		
-		JList listTagAjoutes = new JList();
-		listTagAjoutes.setModel(new AbstractListModel() {
-			String[] values = new String[] {"654", "654", "654", "654", "654", "654", "654", "654", "654", "654", "654", "654", "bonojour"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		listTagAjoutes.setBackground(new Color(211,210,250));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -193,6 +216,24 @@ public class NouveauPost extends JFrame {
 					ex.printStackTrace();
 				}
 			}
-		});
+		});	
+	}
+	
+	protected String[] refreshTagsEcriture(){
+		Set<Tag> tags = null;
+		int i = 0;
+		try {
+			tags = app.getTagsDroitCreation(loginCourant, motDePasseCourant);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] nomsTags = new String[tags.size()];
+		
+		for(Tag p : tags){
+			nomsTags[i] = p.toString();
+			i++;
+		}
+		return nomsTags;
 	}
 }
