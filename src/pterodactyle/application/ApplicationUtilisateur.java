@@ -31,22 +31,6 @@ public class ApplicationUtilisateur extends JFrame {
 	private JTextField textField_1;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ApplicationUtilisateur frame = new ApplicationUtilisateur();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public ApplicationUtilisateur() {
