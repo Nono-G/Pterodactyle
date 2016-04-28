@@ -147,5 +147,12 @@ public interface _ServicesCoeur extends Remote {
 	
 
 	public void supprimerDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle) throws RemoteException;
+
+	/*
+	 * @author Anasse
+	 * Supprimer un utilisateur
+	 */
+	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle);
+
 }
 

@@ -268,10 +268,17 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			String cle) {
 		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
 		Utilisateur victime = utilisateurs.get(idVictime);
+		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
 		victime.getDroits(autorisation).supprimerDroits(numeroDroit);
 	}
 	
-	
+	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle){
+		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
+		Utilisateur victime = utilisateurs.get(idSupprime);
+		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
+		utilisateurs.remove(idSupprime);
+	}
+
 	
 	
 }
