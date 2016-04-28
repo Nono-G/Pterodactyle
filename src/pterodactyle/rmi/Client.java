@@ -35,7 +35,7 @@ public class Client {
 		}
 		
 		try {
-			stub = (_ServicesCoeur) Naming.lookup("rmi://"+adresseIPServeur+"/Together");
+			stub = (_ServicesCoeur) Naming.lookup("rmi://"+adresseIPServeur+"/app");
 			System.out.println(stub);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
