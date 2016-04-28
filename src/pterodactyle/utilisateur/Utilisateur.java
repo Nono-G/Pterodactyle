@@ -62,6 +62,7 @@ public class Utilisateur implements Serializable {
 	public void ajouterAut(Autorisation aut){
 		Droits d = new Droits();
 		listeDroits.put(aut, d);
+		System.out.println("Ajout d'autorisation = " +aut);
 	}
 	 
 	/*
@@ -128,9 +129,32 @@ public class Utilisateur implements Serializable {
 		return listeDroits.keySet().contains(autorisation);	
 	}
 	
+	public boolean aSpecifique(String url){
+		for(Specifique s : this.getSpecifique()){
+			if(s.aPourCible(url)) return true;
+		}
+		return false;
+	}
+	
+	public void supprimerSpec(String nom){
+		for(Specifique s : this.getSpecifique()){
+			if(s.aPourCible(nom)) this.getSpecifique().remove(s);
+		}
+	}
+	
+	public Specifique getSpecifique(String urlSpec){
+		Specifique resultat = null;
+		for(Specifique s : this.getSpecifique()){
+			if(s.aPourCible(urlSpec)) resultat = s;
+		}
+		return resultat;
+	}
+	
+	
 	public void sauver(){
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File ("sauv/utilisateurs/"+this.login)))){
 			oos.writeObject(this);
 		}catch(IOException e){e.printStackTrace();}
 	}
+
 }

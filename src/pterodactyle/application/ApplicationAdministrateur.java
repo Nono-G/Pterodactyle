@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import pterodactyle.coeur2._ServicesCoeur;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
@@ -30,27 +33,21 @@ public class ApplicationAdministrateur extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textRechercheAdmin;
+	private String loginCourant;
+	private String motDePasseCourant;
+	private _ServicesCoeur app;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ApplicationAdministrateur frame = new ApplicationAdministrateur();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public ApplicationAdministrateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant) {
+		this.loginCourant = loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app = app;
+		initialisation();
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ApplicationAdministrateur() {
+	public void initialisation() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setResizable(false);
 		setSize(500,500);
@@ -221,7 +218,7 @@ public class ApplicationAdministrateur extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					NouveauPost np = new NouveauPost();
+					NouveauPost np = new NouveauPost(app, loginCourant, motDePasseCourant);
 					np.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();

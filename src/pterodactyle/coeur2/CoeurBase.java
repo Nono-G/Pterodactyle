@@ -21,19 +21,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.utilisateurs.put(identifiantSuperAdmin, new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true));
 	}
 	
-	public CoeurBase(String repertoire) throws RemoteException{
-		super();
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
-			this.tags = (Map<String,Tag>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexUtilisateurs")))){
-			this.utilisateurs = (Map<String,Utilisateur>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexEchangeables")))){
-			this.echangeables = (Map<String, _Echangeable>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-	}
-	
 	public CoeurBase() throws RemoteException, ClassNotFoundException{
 		super();
 		File rep; File[] objets; String adresse;
@@ -127,7 +114,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	//Auteur : Nono
-	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle){
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification autorisation
@@ -145,6 +132,46 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}
 		return ret;
 	}
+	
+	private Set<_Echangeable> getContenu(Class cl, String identificateur, String cle){
+		Set<_Echangeable> ret = new HashSet<_Echangeable>();
+		for(String url : this.echangeables.keySet()){
+			_Echangeable ech = this.echangeables.get(url);
+			if(cl.isInstance(ech) && verifAutorisation.lecture((($EchangeableAvecTag)ech), this.utilisateurs.get(identificateur))){
+				ret.add(ech);
+			}
+		}
+		return ret;
+	}
+	
+	//Auteur : Nono
+	public Set<Post> getPosts(String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		Set<Post> ret = (Set)getContenu(Post.class, identificateur, cle);
+		return ret;
+	}
+	
+	//Auteur : Nono
+	public Set<Fichier> getFichier(String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		Set<Fichier> ret = (Set)getContenu(Fichier.class, identificateur, cle);
+		return ret;
+	}
+	
+	public Set<Tag> getTagsDroitCreation(String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		
+		Set<Tag> ret = new HashSet<Tag>();
+		
+		
+		return ret;
+	}
+	
 	
 	@Override
 	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType {
@@ -194,7 +221,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();
 		//Verification autorisation
-		if( ! verifAutorisation.ecriture((Post)ech, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		if( ! verifAutorisation.modification((Post)ech, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		
 		
 		((Post)ech).repondre(new MessagePost(utilisateurs.get(identificateur), contenu));
@@ -310,7 +337,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		Utilisateur victime   = utilisateurs.get(idVictime);
 		Utilisateur responsable = utilisateurs.get(idResponsable);
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
-		if( ! (verifAutorisation.droitTag(tags.get(tag), responsable, 2) && (verifAutorisation.droitTag(tags.get(tag), responsable, 2) ))) throw new ExceptionAutorisationManquante();
+		if( ! (verifAutorisation.droitTag(tags.get(tag), responsable, 2) && (verifAutorisation.droitTag(tags.get(tag), responsable, numeroDroit) ))) throw new ExceptionAutorisationManquante();
 		if( ! victime.aAutorisation(tags.get(tag))){
 			victime.ajouterAut(tags.get(tag));
 			victime.getDroits(tags.get(tag)).ajouterDroits(numeroDroit);
@@ -336,6 +363,54 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
 		utilisateurs.remove(idSupprime);
 	}
+
+
+	public Set<MessageInterne> releverMessages(String identificateur , String cle ){
+		Set<MessageInterne> messages = new HashSet<MessageInterne>() ; 
+		if( ! (verifIdentite.estUtilisateur(identificateur, cle, utilisateurs))) throw new UtilisateurException();
+		for(_Echangeable e : echangeables.values()){
+			if(e.getClass().getName() == "pterodactyle.echangeable.MessageInterne"){
+				messages.add((MessageInterne) e);
+			}
+		}
+		return messages;
+	}
+
+	
+	
+	public void creerSpecifique(String urlEchangeable, String idBeneficiant , String identificateur , String cle) throws ExceptionEchangeableNonExistant {
+		 if( ! (verifIdentite.estAdmin(identificateur, cle, utilisateurs))) throw new AdministrateurException();
+		 Utilisateur beneficiant = utilisateurs.get(idBeneficiant);
+		if( ! (beneficiant  != null)) throw new UtilisateurException("Bonjour");
+		 if ( ! echangeables.containsKey(urlEchangeable)) throw new ExceptionEchangeableNonExistant();
+		 Specifique specifique = new Specifique(urlEchangeable);
+		 utilisateurs.get(idBeneficiant).ajouterAut(specifique);
+	}
+	
+	
+	public void supprimerSpecifique(String urlSpecifique, String idUtilisateur, String idAmin, String cle){
+		 if( ! (verifIdentite.estAdmin(idAmin, cle, utilisateurs))) throw new AdministrateurException();
+		 if( ! (verifIdentite.estUtilisateur(idUtilisateur, cle, utilisateurs))) throw new UtilisateurException();
+		 utilisateurs.get(idUtilisateur).supprimerSpec(urlSpecifique);
+	}
+	
+	
+	
+	public void ajouterDroitsSpecifiques(String idUtilisateur,  String urlSpec, int numeroDroit, String idResponsable, String cle) throws ExceptionEchangeableNonExistant{
+		if(! verifIdentite.estAdmin(idResponsable, cle, utilisateurs)) throw new AdministrateurException();
+		Utilisateur utilisateur = utilisateurs.get(idUtilisateur);
+		if( ! (utilisateur  != null)) throw new UtilisateurException("Bonjour");
+		if( ! utilisateur.aSpecifique(urlSpec)){
+			this.creerSpecifique(urlSpec, idUtilisateur, idResponsable, cle);
+			System.out.println("Il ne l'a pas ");
+			utilisateur.getDroits(utilisateur.getSpecifique(urlSpec)).ajouterDroits(numeroDroit);
+		}else{
+			utilisateur.getDroits(utilisateur.getSpecifique(urlSpec)).ajouterDroits(numeroDroit);
+		}
+		
+	}
+	
+	
 
 }
 

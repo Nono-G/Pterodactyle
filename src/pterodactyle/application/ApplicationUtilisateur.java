@@ -22,18 +22,42 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.border.LineBorder;
+
+import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.Post;
+import pterodactyle.echangeable._Echangeable;
 
 public class ApplicationUtilisateur extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_1;
+	private _ServicesCoeur app;
+	private String loginCourant;
+	private String motDePasseCourant;
+	private Map<String, _Echangeable> echangeables;
 
+<<<<<<< HEAD
+=======
+	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		this.loginCourant= loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app =app;
+		this.echangeables = new HashMap<String, _Echangeable>();
+		initialisation();
+	}
+
+>>>>>>> b0ca34d37aa7d80f5852ef08f493ec3a113f2214
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public ApplicationUtilisateur() {
+	public void initialisation() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setResizable(false);
 		setSize(500,500);
@@ -59,7 +83,7 @@ public class ApplicationUtilisateur extends JFrame {
 		lblNewLabel_1.setBounds(5, 5, 191, 96);
 		panelPresentation.add(lblNewLabel_1);
 		
-		JLabel lbloginUtilisateur = new JLabel("Login d'un utilisateur");
+		JLabel lbloginUtilisateur = new JLabel("Login utilisateur : "+loginCourant);
 		lbloginUtilisateur.setBounds(221, 101, 170, 24);
 		contentPane.add(lbloginUtilisateur);
 		lbloginUtilisateur.setForeground(new Color(11, 29, 62));
@@ -152,17 +176,18 @@ public class ApplicationUtilisateur extends JFrame {
 		panel_1.setBackground(new Color(211,210,250));
 		scrollPane.setViewportView(panel_1);
 		
-		JList list = new JList();
+		JList<String> list = new JList<String>();
 		list.setBorder(null);
 		list.setFont(new Font("Book Antiqua", Font.BOLD, 14));
 		list.setBackground(new Color(211,210,250));
 		list.setForeground(new Color(11, 29, 62));
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"30", "40", "50", "60", "70", "80", "82", "52", "52", "56", "85", "6+", "zlf", "zefn", "zfzjglkgjlzjg", "zglkjzekgjjzgmlkjzgkj", "zgzkgjhkjheglkjzhg", "zejkghzlkjeghlkzgeh", "zegjzjegkzjehglkzjehgl", "zegjlezjgmzjegmkzje", "zg,nbzkg:z", "z,gbkzgbj*zg", "zljgjzhgkjzhgkljhgkjzh", "zjkgkjhgzklzghzgkjgz", "kzjghkljzhkjzghkjzhg", "zjhkzjghkzgjlzkjhgkjha", "azjgkjhzgkjhzlkgjhkzmjheg", "zejhgjzhegkljhz"};
+		list.setModel(new AbstractListModel<String>() {
+			
+			String[] values =  refreshPosts();;
 			public int getSize() {
 				return values.length;
 			}
-			public Object getElementAt(int index) {
+			public String getElementAt(int index) {
 				return values[index];
 			}
 		});
@@ -204,7 +229,7 @@ public class ApplicationUtilisateur extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					NouveauPost np = new NouveauPost();
+					NouveauPost np = new NouveauPost(app,loginCourant,motDePasseCourant);
 					np.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -237,5 +262,25 @@ public class ApplicationUtilisateur extends JFrame {
 		btnGo.setBounds(708, 44, 58, 23);
 		contentPane.add(btnGo);
 		
+	}
+	
+	protected String[] refreshPosts(){
+		Set<Post> posts = null;
+		int i = 0;
+		try {
+			posts = app.getPosts(loginCourant, motDePasseCourant);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] titresPosts = new String[posts.size()];
+		
+		for(Post p : posts){
+			this.echangeables.put(p.getUrl(), p);
+			titresPosts[i] = p.getTitre();
+			i++;
+		}
+		
+		return titresPosts;
 	}
 }

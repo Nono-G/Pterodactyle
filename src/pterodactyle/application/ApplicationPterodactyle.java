@@ -1,3 +1,4 @@
+
 package pterodactyle.application;
 
 import java.awt.EventQueue;
@@ -6,7 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
+import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
+import pterodactyle.echangeable.ExceptionEchangeableTagExistant;
 import pterodactyle.rmi.Client2;
+import pterodactyle.utilisateur.AdministrateurException;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -15,9 +20,6 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import javax.swing.JPasswordField;
 
@@ -34,11 +36,17 @@ public class ApplicationPterodactyle {
 	/**
 	 * Launch the application.
 	 * @throws RemoteException 
+	 * @throws ExceptionEchangeablePasDeTag 
+	 * @throws ExceptionEchangeableMauvaisType 
+	 * @throws ExceptionEchangeableTagExistant 
+	 * @throws AdministrateurException 
 	 */
-	public static void main(String[] args) throws RemoteException {
+	public static void main(String[] args) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag, AdministrateurException, ExceptionEchangeableTagExistant {
 		Client2 client = new Client2("127.0.0.1");
 		app = client.recupererApp();
-		System.out.println(app.test());
+		app.creerTag("compta", "admin", "admin");
+		app.creerPost("p1", "toto", "compta", "admin", "admin");
+		//System.out.println(app.test());
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -117,8 +125,8 @@ public class ApplicationPterodactyle {
 						System.out.println("Correct");
 						
 						frameConnection.dispose();
-						Acceuil acc = new Acceuil();
-						acc.accueil();
+						ApplicationUtilisateur acc = new ApplicationUtilisateur(app, mdp, mdp);
+						acc.setVisible(true);
 					}else{
 						textFieldLogin.setBackground(new Color(255, 0, 0));
 						passwordFieldMdp.setBackground(new Color(255, 0, 0));
@@ -138,3 +146,4 @@ public class ApplicationPterodactyle {
 		
 	}
 }
+

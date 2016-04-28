@@ -82,14 +82,20 @@ public interface _ServicesCoeur extends Remote {
 	 * @param cle de l'utilisateur à l'origine de la demande
 	 */
 	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle)
-			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType;
+			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType, RemoteException;
 
 	
 	public void creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
 	
 	
-	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType;
+	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType, RemoteException;
+	
+	public Set<Post> getPosts(String identificateur, String cle) throws RemoteException;
+	
+	public Set<Fichier> getFichier(String identificateur, String cle) throws RemoteException;
+	
+	
 	/**
 	 * ADMINISTRATEUR TAG
 	 */
@@ -120,7 +126,7 @@ public interface _ServicesCoeur extends Remote {
 	 */
 
 	public void creerPost(String url, String titre, String urlTag, String identificateur, String cle)
-			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
+			throws RemoteException, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
 	 */
@@ -159,6 +165,8 @@ public interface _ServicesCoeur extends Remote {
 	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException;
+	
 	
 	/*
 	 * @author Anasse
@@ -179,8 +187,16 @@ public interface _ServicesCoeur extends Remote {
 	 * Supprimer un utilisateur
 	 */
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle) throws RemoteException;
+	
+	
+	public Set<MessageInterne> releverMessages(String identificateur , String cle ) throws RemoteException;
+	
+	public void creerSpecifique(String urlEchangeable, String idBeneficiant , String identificateur , String cle) throws ExceptionEchangeableNonExistant ,RemoteException;
 
+	
+	public void supprimerSpecifique(String urlSpecifique, String idUtilisateur, String idAmin, String cle) throws RemoteException;
 
+	public void ajouterDroitsSpecifiques(String idUtilisateur,  String urlSpec, int numeroDroit, String idResponsable, String cle) throws ExceptionEchangeableNonExistant, RemoteException;
 
 }
 
