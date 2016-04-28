@@ -133,6 +133,36 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		return ret;
 	}
 	
+	private Set<_Echangeable> getContenu(Class cl, String identificateur, String cle){
+		Set<_Echangeable> ret = new HashSet<_Echangeable>();
+		for(String url : this.echangeables.keySet()){
+			_Echangeable ech = this.echangeables.get(url);
+			if(cl.isInstance(ech) && verifAutorisation.lecture((($EchangeableAvecTag)ech), this.utilisateurs.get(identificateur))){
+				ret.add(ech);
+			}
+		}
+		return ret;
+	}
+	
+	//Auteur : Nono
+	public Set<Post> getPosts(String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		Set<Post> ret = (Set)getContenu(Post.class, identificateur, cle);
+		return ret;
+	}
+	
+	//Auteur : Nono
+	public Set<Fichier> getFichier(String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		Set<Fichier> ret = (Set)getContenu(Fichier.class, identificateur, cle);
+		return ret;
+	}
+	
+	
 	@Override
 	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType {
 		//Verification identite

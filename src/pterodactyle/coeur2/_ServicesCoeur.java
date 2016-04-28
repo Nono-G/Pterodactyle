@@ -90,6 +90,12 @@ public interface _ServicesCoeur extends Remote {
 	
 	
 	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType, RemoteException;
+	
+	public Set<Post> getPosts(String identificateur, String cle) throws RemoteException;
+	
+	public Set<Fichier> getFichier(String identificateur, String cle) throws RemoteException;
+	
+	
 	/**
 	 * ADMINISTRATEUR TAG
 	 */

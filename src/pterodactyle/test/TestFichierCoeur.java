@@ -20,7 +20,7 @@ public class TestFichierCoeur {
 		
 		c=null;
 		
-		CoeurBase d = new CoeurBase("sauv/");
+		CoeurBase d = new CoeurBase("sauv/", "aze");
 		download("testlocal/down2", "do", 5, d);
 		
 	}catch(Exception e){e.printStackTrace();}
