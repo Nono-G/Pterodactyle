@@ -22,7 +22,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.utilisateurs.put(identifiantSuperAdmin, new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true));
 	}
 	
-	protected CoeurBase(String repertoire) throws RemoteException{
+	public CoeurBase(String repertoire) throws RemoteException{
 		super();
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
 			this.tags = (Map<String,Tag>)ois.readObject();
@@ -35,7 +35,10 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
-	protected void Sauvegarder(String repertoire){
+	public void sauvegarder(String repertoire, String identificateur, String cle){
+		//Vérification identité
+		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException("est Administrateur");
+		
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexTags")))){
 			oos.writeObject(this.tags);
 		}catch(IOException e){e.printStackTrace();}

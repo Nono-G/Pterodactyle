@@ -20,8 +20,9 @@ public class Serveur {
 		String cwd = System.getProperty("user.dir");
 		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
 		System.setProperty("java.security.policy", "file://" + cwd + "/bin/policy");
-		String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";
+		//String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";
 		//String url = "rmi://37.162.110.138/app";
+		String url = "rmi://192.168.137.228/app";
 	    System.out.println("Enregistrement de l'objet avec l'url : " + url);
 
 		CoeurBase app = new CoeurBase("silvemax","12345");
