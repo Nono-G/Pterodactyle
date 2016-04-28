@@ -93,7 +93,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require utilisateur ci 
 	 */
 
-	public void creerPost(String url, String titre, Tag t, String identificateur, String cle)
+	public void creerPost(String url, String titre, String urlTag, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
@@ -143,16 +143,16 @@ public interface _ServicesCoeur extends Remote {
 	 * @param  l'id de la personne qui fait le partage
 	 * @param la cle qui correspond au mdp de la personne responsable  
 	 */
-	public void partageDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle) throws RemoteException;
+	public void partageDroits(String idVictime,  String tag, int numeroDroit, String idResponsable, String cle) throws RemoteException;
 	
 
-	public void supprimerDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle) throws RemoteException;
+	public void supprimerDroits(String idVictime,  String tag, int numeroDroit, String idResponsable, String cle) throws RemoteException;
 
 	/*
 	 * @author Anasse
 	 * Supprimer un utilisateur
 	 */
-	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle);
+	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle) throws RemoteException;
 
 }
 
