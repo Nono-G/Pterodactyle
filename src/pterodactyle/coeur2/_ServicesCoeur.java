@@ -171,31 +171,75 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * @author Anasse
 	 * Methodes qui permet d'ajouter/supprimer des droits 
-	 * @param L'identifiant de la personne qui va subit le changement
-	 * @param L'autorisation a changer 
-	 * @param Le numero du droit a changer 0 : lecture / 1 : modification / 2 : partage / 3 :creation / 4 : suppression
-	 * @param  l'id de la personne qui fait le partage
-	 * @param la cle qui correspond au mdp de la personne responsable  
+	 * @param identifiant de la personne qui va subit le changement
+	 * @param url de L'autorisation a changer 
+	 * @param numero du droit a changer 0 : lecture / 1 : modification / 2 : partage / 3 :creation / 4 : suppression
+	 * @param id de la personne qui fait le partage
+	 * @param cle qui correspond au mdp de la personne responsable  
+	 * @require la personne qui veut partager doit avoir le droit de partage et le droit qu'elle veut partager
 	 */
 	public void partageDroits(String idVictime,  String tag, int numeroDroit, String idResponsable, String cle) throws RemoteException;
 	
 
+	/*
+	 * @author Anasse
+	 * @param identifiant de la personne qui va se faire supprimer les droits
+	 * @param url du tag dont les droits vont etre modifier
+	 * @param identifiant de la personne qui va modifier les droits
+	 * @param cle le mot de passe de la personne qui va modifier les droits
+	 * @require la personne qui va modifier doit etre administrateur
+	 */
 	public void supprimerDroits(String idVictime,  String tag, int numeroDroit, String idResponsable, String cle) throws RemoteException;
 
 	/*
 	 * @author Anasse
 	 * Supprimer un utilisateur
+	 * @param identifiant de la personne a supprimer 
+	 * @param identifiant de la personne qui supprime
+	 * @param cle le mot de passe de la personne qui va supprimer
+	 * @require la personne qui va supprimer doit etre administrateur
 	 */
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle) throws RemoteException;
 	
-	
+	/*
+	 * @author Anasse
+	 * Relever les messages 
+	 * @param identifiant de la personne qui veut voir ses messages
+	 * @param cle le mot de passe de cette personne
+	 */
 	public Set<MessageInterne> releverMessages(String identificateur , String cle ) throws RemoteException;
 	
+	
+	/*
+	 * @author Anasse
+	 * @param url de l'echangeable sur lequel va porter les droits specifiques
+	 * @param identifiant de la personne qui va en beneficier
+	 * @param identifiant de la personne qui va creer le specifique
+	 * @param cle le mot de passe de de la personne qui va le creer 
+	 * @require la personne qui va creer le specifique doit etre administrateur
+	 */
 	public void creerSpecifique(String urlEchangeable, String idBeneficiant , String identificateur , String cle) throws ExceptionEchangeableNonExistant ,RemoteException;
 
-	
+	/*
+	 * @author  Anasse
+	 * @param url du specifique a supprimer
+	 * @param identifiant de la personne qui beneficie de ce droit specifique
+	 * @param identifiant de l'admininstrateur qui va faire la suppression
+	 * @param cle mot de passe de l'administrateur
+	 * @require la personne qui supprime doit etre administrateur
+	 */
 	public void supprimerSpecifique(String urlSpecifique, String idUtilisateur, String idAmin, String cle) throws RemoteException;
 
+	
+	/*
+	 * @author Anasse
+	 * @param identifiant de l'utilisateur 
+	 * @param url des droits specifique 
+	 * @param numero du droit a changer
+	 * @param identifiant de la personne qui va faire la modification
+	 * @param cle mot de passe de l'administrateur
+	 * @require la personne qui ajoute les droits specifiques doit etre administrateur
+	 */
 	public void ajouterDroitsSpecifiques(String idUtilisateur,  String urlSpec, int numeroDroit, String idResponsable, String cle) throws ExceptionEchangeableNonExistant, RemoteException;
 
 }

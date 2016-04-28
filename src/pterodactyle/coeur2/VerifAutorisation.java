@@ -96,7 +96,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 			while(echangeable instanceof $DossierOuFichier && (($DossierOuFichier)echangeable).getPere() != null){
 				tagsHeritage = echangeable.getTags();
 				for(Tag t : tagsHeritage){
-					if(utilisateur.possedeTag(t)){
+					if(utilisateur.aAutorisation(t)){
 						if(droitTag(t,utilisateur, numeroDroit)) resultat = droitTag(t,utilisateur, numeroDroit);
 					}
 				}
@@ -111,7 +111,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 			}
 		}
 		for(Tag t : tags){
-			if(utilisateur.possedeTag(t)){
+			if(utilisateur.aAutorisation(t)){
 				if(droitTag(t,utilisateur, numeroDroit)) resultat = droitTag(t,utilisateur, numeroDroit);
 			}
 		}

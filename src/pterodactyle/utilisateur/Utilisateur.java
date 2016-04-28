@@ -1,5 +1,7 @@
 package pterodactyle.utilisateur;
-
+/*
+ * @author Anasse 
+ */
 import java.util.*;
 import java.io.*;
 import java.util.HashMap;
@@ -16,9 +18,15 @@ public class Utilisateur implements Serializable {
 	protected String motDePasse; 
 	protected boolean admin; 
 	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
+	
+	
 	/*
 	 * Constructeur basique 
-	 * @param : Nom, Prenom, Login, motDePasse
+	 * @param nom du nouvel utilisateur
+	 * @param prenom du nouvel utilisateur
+	 * @param login du nouvel utilisateur
+	 * @param motDePasse du nouvel utilisateur
+	 * @param admin un boolean pour definir si cette personne peut etre admin
 	 */
 	public Utilisateur(String nom, String prenom, String login, String motDePasse, boolean admin){
 		this.nom = nom;
@@ -54,11 +62,17 @@ public class Utilisateur implements Serializable {
 
 	/*
 	 * Ajout des autorisations avec les droits speciaux
+	 * @param autorisation a ajouter
+	 * @param Droit a lier a l'autorisation
 	 */
 	public void ajouterAut(Autorisation aut, Droits droit ){
 		listeDroits.put(aut, droit);
 	}
 	
+	/*
+	 * Ajout d'autorisation avec droits initiaux
+	 * @param autorisation 
+	 */
 	public void ajouterAut(Autorisation aut){
 		Droits d = new Droits();
 		listeDroits.put(aut, d);
@@ -66,30 +80,29 @@ public class Utilisateur implements Serializable {
 	}
 	 
 	/*
-	 * Les getters pour mot de passe et login 
+	 * @return motDePasse
 	 */
 	public String getCle(){
 		return this.motDePasse;
 	}
 	
+	/*
+	 * @return login
+	 */
 	public String getLogin(){
 		return this.login;
 	}
 	
+
 	/*
-	 * Regrouper les infos pour profil a voir selon utilite
+	 * Verifie si la personne est admin
+	 * @return admin
 	 */
-	public String[] getProfil(){
-		String[] profil = new String[4];
-		profil[0] = this.login;
-		profil[1] = this.nom;
-		profil[2] = this.prenom;
-		return profil;
-	}
-	
 	public boolean estAdmin()throws AdministrateurException{
 		return admin;
 	}
+	
+	
 	
 	@Override
 	public boolean equals(Object u2){
@@ -101,18 +114,30 @@ public class Utilisateur implements Serializable {
 	
 	/*
 	 * Verifie si l'utilisateur a une autorisation precise 
+	 * @param autorisation a verifier
 	 */
-	public boolean possedeTag(Autorisation autorisation){
+
+	public boolean aAutorisation(Autorisation autorisation){
 		return listeDroits.containsKey(autorisation);	
 	}
 	
 	/*
-	 * 
+	 * Recupere les droits lie a une autorisation (Tag ou specifique)
+	 * @param autorisation 
 	 */
 	public Droits getDroits(Autorisation autorisation){
 		return listeDroits.get(autorisation);
 	}
 	
+	
+	
+	/*
+	 * Coin des droits specifiques
+	 */
+	
+	/*
+	 * @return Speciciques un set de toutes les autorisations specifiques liees a l'utilisateur
+	 */
 	public Set<Specifique> getSpecifique(){
 		Set<Specifique> resultat = new HashSet<Specifique>(); 
 
@@ -125,10 +150,11 @@ public class Utilisateur implements Serializable {
 		return resultat;
 	}
 	
-	public boolean aAutorisation(Autorisation autorisation){
-		return listeDroits.keySet().contains(autorisation);	
-	}
-	
+
+	/*
+	 * Verifie si l'utilisateur a une autorisation specifique
+	 * @param url de l'autorisation specifique
+	 */
 	public boolean aSpecifique(String url){
 		for(Specifique s : this.getSpecifique()){
 			if(s.aPourCible(url)) return true;
@@ -136,12 +162,22 @@ public class Utilisateur implements Serializable {
 		return false;
 	}
 	
+	/*
+	 * Supprime l'autorisation specifique dont le nom est passe en parametre
+	 * @param nom de l'autorisation
+	 */
 	public void supprimerSpec(String nom){
 		for(Specifique s : this.getSpecifique()){
 			if(s.aPourCible(nom)) this.getSpecifique().remove(s);
 		}
 	}
 	
+	
+	/*
+	 * Renvoie une specifique bien precis
+	 * @param url du specifique a recuperer
+	 * @retun Specifique
+	 */
 	public Specifique getSpecifique(String urlSpec){
 		Specifique resultat = null;
 		for(Specifique s : this.getSpecifique()){
