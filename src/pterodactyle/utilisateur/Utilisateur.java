@@ -1,7 +1,6 @@
 package pterodactyle.utilisateur;
 
 import java.util.*;
-import java.awt.List;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map.Entry;

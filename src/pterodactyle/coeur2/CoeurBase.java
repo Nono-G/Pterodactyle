@@ -146,6 +146,24 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		return ret;
 	}
 	
+	@Override
+	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType {
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		_Echangeable ech = this.echangeables.get(url);
+		if (! (ech instanceof $EchangeableAvecTag)){throw new ExceptionEchangeableMauvaisType();}
+		//Verification autorisation
+		if( ! verifAutorisation.suppressionTag(tags.get(tag), utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		
+		try{
+		(($EchangeableAvecTag)ech).enleverTag(this.tags.get(tag));
+		(($EchangeableAvecTag)ech).sauver();
+		}catch(ExceptionEchangeablePasDeTag e){
+			(($EchangeableAvecTag)ech).detruireSauvegarde();
+			this.echangeables.remove(url);
+		}
+	}
+	
 	/**
 	 * POST	
 	 */
@@ -262,9 +280,22 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 
 	@Override
-	public void supprimerTag(Tag tag, String identificateur, String cle)
-			throws RemoteException, AdministrateurException {
-		// TODO Auto-generated method stub
+	public void supprimerTag(String tag, String identificateur, String cle)throws RemoteException, AdministrateurException {
+		//Vérification identité
+		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException("est Administrateur");
+		//Vérification existence du tag
+		Tag t = this.tags.get(tag);
+		if(t!=null) {
+			for(String url : this.echangeables.keySet()){
+				_Echangeable ech = this.echangeables.get(url);
+				if( ech instanceof $EchangeableAvecTag && (($EchangeableAvecTag)ech).aLeTag(t)){
+					try {
+						this.enleverTag(url, tag, identificateur, cle);
+					} catch (ExceptionEchangeableMauvaisType e) {}
+				}
+			}
+			this.tags.remove(tag);
+		}
 		
 	}
 	
@@ -306,7 +337,5 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		utilisateurs.remove(idSupprime);
 	}
 
-	
-	
 }
 

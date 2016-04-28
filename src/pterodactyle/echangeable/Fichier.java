@@ -47,4 +47,10 @@ public class Fichier extends $DossierOuFichier{
 		return false;
 	}
 	
+	@Override
+	public void detruireSauvegarde(){
+		super.detruireSauvegarde();
+		new File("sauv/fichiers/"+url).delete();
+		
+	}
 }

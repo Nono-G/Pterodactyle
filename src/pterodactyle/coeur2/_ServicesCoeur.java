@@ -87,6 +87,9 @@ public interface _ServicesCoeur extends Remote {
 	
 	public void creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
+	
+	
+	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType;
 	/**
 	 * ADMINISTRATEUR TAG
 	 */
@@ -105,8 +108,8 @@ public interface _ServicesCoeur extends Remote {
 	 * @author Fanny
 	 * Service de suppression de tag par un admin
 	 */
-	public void supprimerTag(Tag tag, String identificateur, String cle)
-			throws RemoteException, AdministrateurException;	
+	public void supprimerTag(String tag, String identificateur, String cle)throws RemoteException, AdministrateurException;
+	
 	/**
 	 * POST	
 	 */
@@ -178,6 +181,8 @@ public interface _ServicesCoeur extends Remote {
 	 * Supprimer un utilisateur
 	 */
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle) throws RemoteException;
+
+
 
 }
 

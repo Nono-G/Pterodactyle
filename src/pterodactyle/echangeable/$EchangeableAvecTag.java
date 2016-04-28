@@ -37,6 +37,15 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 		return tags;
 	}
 	
+	public boolean aLeTag(Tag t){
+		return this.tags.contains(t);
+	}
+	
+	public void enleverTag(Tag t) throws ExceptionEchangeablePasDeTag{
+		this.tags.remove(t);
+		if(this.tags.isEmpty())throw new ExceptionEchangeablePasDeTag();
+	}
+	
 	public abstract Dossier getPere();
 	
 
