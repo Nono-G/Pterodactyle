@@ -18,10 +18,9 @@ public class TestFichierCoeur {
 		c.creerFichier("do", null, "dauphins", "Petry", "abc");
 		upload("testlocal/down", "do", 15, c);
 		
-		c.sauvegarder("sauv/dumpCoeur", "Petry", "abc");
 		c=null;
 		
-		CoeurBase d = new CoeurBase("sauv/dumpCoeur");
+		CoeurBase d = new CoeurBase("sauv/");
 		download("testlocal/down2", "do", 5, d);
 		
 	}catch(Exception e){e.printStackTrace();}
