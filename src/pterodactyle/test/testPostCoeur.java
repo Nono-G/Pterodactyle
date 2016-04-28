@@ -28,11 +28,12 @@ public class testPostCoeur {
 			c.partageDroits("Ba", "Comptabilite", 3, "Petry", "abc");
 			c.partageDroits("Ba", "Comptabilite", 1, "Petry", "abc");
 			
-			
-			
 			c.creerPost("P1", "Va te faire foutre" , "Comptabilite", "Ng", "lol");
+
+			
 			c.repondrePost("P1", "Toi aussi Anasse", "Ng", "lol");
 			c.repondrePost("P1", "Tu es trop con Noe !! " , "Ba", "lol");
+			
 			
 
 			
