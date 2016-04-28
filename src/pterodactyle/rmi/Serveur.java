@@ -21,6 +21,7 @@ public class Serveur {
 		LocateRegistry.createRegistry(1099);
 		String cwd = System.getProperty("user.dir");
 		System.setProperty("java.rmi.server.codebase", "file://" + cwd + "/");
+		System.setProperty("java.rmi.server.hostname", "");
 		System.setProperty("java.security.policy", "file://" + cwd + "/bin/policy");
 		String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + ":1099/app";
 		//String url = "rmi://192.168.1.89/app";
@@ -29,7 +30,7 @@ public class Serveur {
 		CoeurBase app = new CoeurBase("silvemax", "12345");
 		try {
 			System.out.println("Lancement serveur");
-			Naming.rebind(url, app);
+			Naming.rebind("app", app);
 			System.out.println("serveur lancé");
 		} catch (RemoteException | MalformedURLException e) {
 			e.printStackTrace();
