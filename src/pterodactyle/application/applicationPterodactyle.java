@@ -36,8 +36,9 @@ public class applicationPterodactyle {
 	 * @throws RemoteException 
 	 */
 	public static void main(String[] args) throws RemoteException {
-		Client2 client = new Client2("rmi://127.0.0.1/app");
+		Client2 client = new Client2("127.0.0.1");
 		app = client.recupererApp();
+		System.out.println(app.test());
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -66,7 +67,7 @@ public class applicationPterodactyle {
 		frameConnection.setFont(new Font("Book Antiqua", Font.BOLD, 12));
 		frameConnection.setForeground(new Color(11, 29, 62));
 		frameConnection.setTitle("Connection");
-		frameConnection.setIconImage(Toolkit.getDefaultToolkit().getImage(applicationPterodactyle.class.getResource("/pterodactyle/application/images/logoSizeSmileySkeleton.png")));
+		frameConnection.setIconImage(Toolkit.getDefaultToolkit().getImage(applicationPterodactyle.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		frameConnection.getContentPane().setBackground(new Color(244, 244, 243));
 		frameConnection.setBounds(100, 100, 345, 317);
 		frameConnection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
