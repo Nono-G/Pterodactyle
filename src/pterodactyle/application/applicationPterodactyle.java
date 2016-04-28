@@ -67,8 +67,7 @@ public class applicationPterodactyle {
 		frameConnection.setFont(new Font("Book Antiqua", Font.BOLD, 12));
 		frameConnection.setForeground(new Color(11, 29, 62));
 		frameConnection.setTitle("Connection");
-		frameConnection.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(applicationPterodactyle.class.getResource("/pterodactyle/application/output.png")));
+		frameConnection.setIconImage(Toolkit.getDefaultToolkit().getImage(applicationPterodactyle.class.getResource("/pterodactyle/application/images/logoSizeSmileySkeleton.png")));
 		frameConnection.getContentPane().setBackground(new Color(244, 244, 243));
 		frameConnection.setBounds(100, 100, 345, 317);
 		frameConnection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
