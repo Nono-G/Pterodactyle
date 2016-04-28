@@ -38,7 +38,7 @@ public class Serveur {
 
 		_ServicesCoeur skeleton = (_ServicesCoeur) new CoeurBase("admin","admin");
 		LocateRegistry.createRegistry(1099);
-		Naming.rebind("Together", skeleton); // publie notre instance
+		Naming.rebind("app", skeleton); // publie notre instance
 
 
 		/*
