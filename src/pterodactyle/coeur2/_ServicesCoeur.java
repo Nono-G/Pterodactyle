@@ -137,10 +137,22 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * @author Anasse
 	 * Methodes qui permet d'ajouter/supprimer des droits 
+	 * @param L'identifiant de la personne qui va subit le changement
+	 * @param L'autorisation a changer 
+	 * @param Le numero du droit a changer 0 : lecture / 1 : modification / 2 : partage / 3 :creation / 4 : suppression
+	 * @param  l'id de la personne qui fait le partage
+	 * @param la cle qui correspond au mdp de la personne responsable  
 	 */
 	public void partageDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle) throws RemoteException;
 	
 
 	public void supprimerDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle) throws RemoteException;
+
+	/*
+	 * @author Anasse
+	 * Supprimer un utilisateur
+	 */
+	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle);
+
 }
 

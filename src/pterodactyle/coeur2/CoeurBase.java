@@ -253,9 +253,14 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if( !(verifIdentite.estUtilisateur(idResponsable, cle, utilisateurs)) ) throw new UtilisateurException();
 		Utilisateur victime   = utilisateurs.get(idVictime);
 		Utilisateur responsable = utilisateurs.get(idResponsable);
-		if( ! (victime == null)) throw new UtilisateurException();
-		if( ! (verifAutorisation.droitTag(autorisation, victime, numeroDroit))) throw new ExceptionAutorisationManquante();
-		victime.getDroits(autorisation).ajouterDroits(numeroDroit);
+		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
+		if( ! (verifAutorisation.droitTag(autorisation, responsable, 2) && (verifAutorisation.droitTag(autorisation, responsable, 2) ))) throw new ExceptionAutorisationManquante();
+		if( ! victime.aAutorisation(autorisation)){
+			victime.ajouterAut(autorisation);
+			victime.getDroits(autorisation).ajouterDroits(numeroDroit);
+
+		}else{
+		victime.getDroits(autorisation).ajouterDroits(numeroDroit);}
 	}
 
 	@Override
@@ -263,10 +268,17 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			String cle) {
 		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
 		Utilisateur victime = utilisateurs.get(idVictime);
+		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
 		victime.getDroits(autorisation).supprimerDroits(numeroDroit);
 	}
 	
-	
+	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle){
+		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
+		Utilisateur victime = utilisateurs.get(idSupprime);
+		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
+		utilisateurs.remove(idSupprime);
+	}
+
 	
 	
 }
