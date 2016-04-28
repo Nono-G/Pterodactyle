@@ -28,7 +28,7 @@ import java.awt.Scrollbar;
 import javax.swing.JScrollBar;
 import java.awt.Toolkit;
 
-public class nouveauPost extends JFrame {
+public class NouveauPost extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -41,7 +41,7 @@ public class nouveauPost extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					nouveauPost frame = new nouveauPost();
+					NouveauPost frame = new NouveauPost();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,9 +53,9 @@ public class nouveauPost extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public nouveauPost() {
+	public NouveauPost() {
 		setTitle("Ajout d'un post");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(nouveauPost.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(NouveauPost.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setBackground(new Color(244,244,243));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 466, 300);
@@ -177,7 +177,7 @@ public class nouveauPost extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					applicationUtilisateur ap = new applicationUtilisateur();
+					ApplicationUtilisateur ap = new ApplicationUtilisateur();
 					ap.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();

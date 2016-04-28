@@ -5,30 +5,31 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
-import javax.swing.JList;
-
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.AbstractListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JToggleButton;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.border.LineBorder;
-
-public class applicationUtilisateur extends JFrame {
+public class ApplicationAdministrateur extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
+	private JTextField textField;
+	private JTextField textRechercheAdmin;
 
 	/**
 	 * Launch the application.
@@ -37,7 +38,7 @@ public class applicationUtilisateur extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					applicationUtilisateur frame = new applicationUtilisateur();
+					ApplicationAdministrateur frame = new ApplicationAdministrateur();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,8 +50,8 @@ public class applicationUtilisateur extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public applicationUtilisateur() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(applicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
+	public ApplicationAdministrateur() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setResizable(false);
 		setSize(500,500);
 		setFont(new Font("Book Antiqua", Font.PLAIN, 12));
@@ -71,15 +72,15 @@ public class applicationUtilisateur extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBackground(new Color(135, 206, 250));
-		lblNewLabel_1.setIcon(new ImageIcon(applicationAdministrateur.class.getResource("/pterodactyle/application/ressourcesImages/SizedFunkySkeletoAppn.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(ApplicationAdministrateur.class.getResource("/pterodactyle/application/ressourcesImages/SizedFunkySkeletoAppn.png")));
 		lblNewLabel_1.setBounds(5, 5, 191, 96);
 		panelPresentation.add(lblNewLabel_1);
 		
-		JLabel lbloginUtilisateur = new JLabel("Login d'un utilisateur");
-		lbloginUtilisateur.setBounds(221, 101, 170, 24);
-		contentPane.add(lbloginUtilisateur);
-		lbloginUtilisateur.setForeground(new Color(11, 29, 62));
-		lbloginUtilisateur.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		JLabel lbloginAdmin = new JLabel("Login d'un admin");
+		lbloginAdmin.setBounds(221, 101, 170, 24);
+		contentPane.add(lbloginAdmin);
+		lbloginAdmin.setForeground(new Color(11, 29, 62));
+		lbloginAdmin.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		
 		JLabel lblSmileySkeletonNetwork = new JLabel("Funky Skeleton ");
 		lblSmileySkeletonNetwork.setForeground(new Color(11, 29, 62));
@@ -123,10 +124,10 @@ public class applicationUtilisateur extends JFrame {
 		lblForum.setFont(new Font("Book Antiqua", Font.BOLD, 12));
 		tabbedPane.add("Forum ",onglet1);
 		
-		JTextField textField = new JTextField();
-		textField.setBounds(102, 11, 108, 21);
-		textField.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		textField.setColumns(10);
+		JTextField textFieldAdmin = new JTextField();
+		textFieldAdmin.setBounds(102, 11, 108, 21);
+		textFieldAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textFieldAdmin.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Endroit où on rajoute les tag");
 		lblNewLabel.setForeground(new Color(11,29,62));
@@ -141,7 +142,7 @@ public class applicationUtilisateur extends JFrame {
 		
 		onglet1.setLayout(null);
 		onglet1.add(lblForum);
-		onglet1.add(textField);
+		onglet1.add(textFieldAdmin);
 		onglet1.add(lblNewLabel);
 		onglet1.add(btnOk);
 		
@@ -205,7 +206,7 @@ public class applicationUtilisateur extends JFrame {
 		btnRefresh.setBounds(793, 31, 32, 32);
 		onglet1.add(btnRefresh);
 		btnRefresh.setBackground(new Color(11,29,62));
-		btnRefresh.setIcon(new ImageIcon(applicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
 		
 		JButton btnNewPost = new JButton("Nouveau post !");
 		btnNewPost.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
@@ -220,7 +221,7 @@ public class applicationUtilisateur extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					nouveauPost np = new nouveauPost();
+					NouveauPost np = new NouveauPost();
 					np.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -235,11 +236,6 @@ public class applicationUtilisateur extends JFrame {
 		lblAnnuaire.setBounds(698, 11, 95, 24);
 		contentPane.add(lblAnnuaire);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(630, 103, 210, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
-		
 		JLabel lblRechercheParLogin = new JLabel("Recherche par login :");
 		lblRechercheParLogin.setForeground(new Color(11, 29, 62));
 		lblRechercheParLogin.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
@@ -253,5 +249,12 @@ public class applicationUtilisateur extends JFrame {
 		btnGo.setBounds(708, 44, 58, 23);
 		contentPane.add(btnGo);
 		
+		textRechercheAdmin = new JTextField();
+		textRechercheAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textRechercheAdmin.setColumns(10);
+		textRechercheAdmin.setBounds(630, 104, 210, 21);
+		contentPane.add(textRechercheAdmin);
+		
 	}
 }
+

@@ -21,7 +21,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import javax.swing.JPasswordField;
 
-public class applicationPterodactyle {
+public class ApplicationPterodactyle {
 
 	private JFrame frameConnection;
 	private JTextField textFieldLogin;
@@ -42,7 +42,7 @@ public class applicationPterodactyle {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					applicationPterodactyle window = new applicationPterodactyle();
+					ApplicationPterodactyle window = new ApplicationPterodactyle();
 					window.frameConnection.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class applicationPterodactyle {
 	/**
 	 * Create the application.
 	 */
-	public applicationPterodactyle() {
+	public ApplicationPterodactyle() {
 		initialize();
 	}
 
@@ -66,7 +66,7 @@ public class applicationPterodactyle {
 		frameConnection.setFont(new Font("Book Antiqua", Font.BOLD, 12));
 		frameConnection.setForeground(new Color(11, 29, 62));
 		frameConnection.setTitle("Connection");
-		frameConnection.setIconImage(Toolkit.getDefaultToolkit().getImage(applicationPterodactyle.class.getResource("/pterodactyle/application/images/logoSizeSmileySkeleton.png")));
+		frameConnection.setIconImage(Toolkit.getDefaultToolkit().getImage(ApplicationPterodactyle.class.getResource("/pterodactyle/application/images/logoSizeSmileySkeleton.png")));
 		frameConnection.getContentPane().setBackground(new Color(244, 244, 243));
 		frameConnection.setBounds(100, 100, 345, 317);
 		frameConnection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -116,7 +116,7 @@ public class applicationPterodactyle {
 						System.out.println("Correct");
 						
 						frameConnection.dispose();
-						acceuil acc = new acceuil();
+						Acceuil acc = new Acceuil();
 						acc.accueil();
 					}else{
 						textFieldLogin.setBackground(new Color(255, 0, 0));
