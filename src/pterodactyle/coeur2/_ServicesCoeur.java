@@ -126,7 +126,7 @@ public interface _ServicesCoeur extends Remote {
 	 */
 
 	public void creerPost(String url, String titre, String urlTag, String identificateur, String cle)
-			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
+			throws RemoteException, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
 	 */
