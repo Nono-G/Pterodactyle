@@ -1,6 +1,8 @@
 package pterodactyle.rmi;
 
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
@@ -10,7 +12,7 @@ import pterodactyle.coeur2.CoeurBase;
 
 public class Serveur2 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException {
 		try {
 			System.setProperty("java.security.policy", "file:///home/silvemax/git/Pterodactyle/bin/policy");
 			LocateRegistry.createRegistry(1099);
@@ -23,8 +25,8 @@ public class Serveur2 {
 			
 			CoeurBase app = new CoeurBase("silvemax", "12345");
 
-			//String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";
-			String url = "rmi://192.168.1.89/app";
+			String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/app";
+			//String url = "rmi://192.168.1.89/app";
 			System.out.println("Enregistrement de l'objet avec l'url : " + url);
 			Naming.rebind(url, app);
 

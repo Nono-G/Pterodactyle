@@ -29,7 +29,7 @@ public class Serveur {
 		CoeurBase app = new CoeurBase("silvemax", "12345");
 		try {
 			System.out.println("Lancement serveur");
-			Naming.rebind("app", app);
+			Naming.rebind(url, app);
 			System.out.println("serveur lancé");
 		} catch (RemoteException | MalformedURLException e) {
 			e.printStackTrace();
