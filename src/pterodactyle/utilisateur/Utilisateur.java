@@ -1,8 +1,7 @@
 package pterodactyle.utilisateur;
 
 import java.util.*;
-import java.awt.List;
-import java.io.Serializable;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -152,4 +151,10 @@ public class Utilisateur implements Serializable {
 	}
 	
 	
+	public void sauver(){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File ("sauv/utilisateurs/"+this.login)))){
+			oos.writeObject(this);
+		}catch(IOException e){e.printStackTrace();}
+	}
+
 }

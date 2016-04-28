@@ -3,7 +3,6 @@ package pterodactyle.coeur2;
 import java.io.*;
 import java.rmi.RemoteException;
 import java.util.*;
-
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.*;
 
@@ -22,39 +21,43 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.utilisateurs.put(identifiantSuperAdmin, new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true));
 	}
 	
-	public CoeurBase(String repertoire) throws RemoteException{
+	public CoeurBase() throws RemoteException, ClassNotFoundException{
 		super();
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
-			this.tags = (Map<String,Tag>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexUtilisateurs")))){
-			this.utilisateurs = (Map<String,Utilisateur>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexEchangeables")))){
-			this.echangeables = (Map<String, _Echangeable>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
+		File rep; File[] objets; String adresse;
+		//UTILISATEURS
+		adresse = "sauv/utilisateurs";
+		rep = new File(adresse);
+		objets = rep.listFiles();
+		for(File u : objets){
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
+				this.utilisateurs.put(u.getName(), (Utilisateur)ois.readObject());
+			}catch(IOException e){e.printStackTrace();}
+		}
+		//TAGS
+		adresse = "sauv/tags";
+		rep = new File(adresse);
+		objets = rep.listFiles();
+		for(File u : objets){
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
+				this.tags.put(u.getName(), (Tag)ois.readObject());
+			}catch(IOException e){e.printStackTrace();}
+		}
+		//ECHANGEABLES
+		adresse = "sauv/echangeables";
+		rep = new File(adresse);
+		objets = rep.listFiles();
+		for(File u : objets){
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
+				this.echangeables.put(u.getName(), (_Echangeable)ois.readObject());
+			}catch(IOException e){e.printStackTrace();}
+		}
 	}
-	
-	public void sauvegarder(String repertoire, String identificateur, String cle){
-		//Vérification identité
-		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException("est Administrateur");
-		
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexTags")))){
-			oos.writeObject(this.tags);
-		}catch(IOException e){e.printStackTrace();}
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexUtilisateurs")))){
-			oos.writeObject(this.utilisateurs);
-		}catch(IOException e){e.printStackTrace();}
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexEchangeables")))){
-			oos.writeObject(this.echangeables);
-		}catch(IOException e){e.printStackTrace();}
-	}
-	
 	
 	public void creerUtilisateur(Utilisateur nouveau, String identificateur, String cle) {
 		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException();
 		if(!(utilisateurs.get(nouveau.getLogin()) == null))throw new UtilisateurException("Utilisateur existe deja");
 		this.utilisateurs.put(nouveau.getLogin(), nouveau);
+		nouveau.sauver();
 	}
 
 	@Override
@@ -107,11 +110,11 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	public void creerFichier(String url, Dossier pere, String t, String identificateur, String cle) throws ExceptionEchangeablePasDeTag{
 		Fichier f = Fichier.nouveauFichier(url, utilisateurs.get(identificateur), pere, this.tags.get(t));
 		this.echangeables.put(url, f);
-		//f.sauver();
+		f.sauver();
 	}
 	
 	//Auteur : Nono
-	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle){
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification autorisation
@@ -128,6 +131,24 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			}
 		}
 		return ret;
+	}
+	
+	@Override
+	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType {
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		_Echangeable ech = this.echangeables.get(url);
+		if (! (ech instanceof $EchangeableAvecTag)){throw new ExceptionEchangeableMauvaisType();}
+		//Verification autorisation
+		if( ! verifAutorisation.suppressionTag(tags.get(tag), utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		
+		try{
+		(($EchangeableAvecTag)ech).enleverTag(this.tags.get(tag));
+		(($EchangeableAvecTag)ech).sauver();
+		}catch(ExceptionEchangeablePasDeTag e){
+			(($EchangeableAvecTag)ech).detruireSauvegarde();
+			this.echangeables.remove(url);
+		}
 	}
 	
 	/**
@@ -164,6 +185,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		
 		
 		((Post)ech).repondre(new MessagePost(utilisateurs.get(identificateur), contenu));
+		ech.sauver();
 		
 	}
 
@@ -178,15 +200,15 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 * 
 	 * */
 	@Override
-	public void envoieMessageInterne(String url, String contenu, String objet, String identificateur, String cle,
+	public void envoieMessageInterne(String contenu, String objet, String identificateur, String cle,
 		String identificateurDestinataire) throws RemoteException, UtilisateurException {
 		//vérification identité emetteur
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//vérification identité destinataire
-		if(!(utilisateurs.get(identificateurDestinataire)!=null))throw new UtilisateurException("est Utilisateur");
 		Utilisateur destinataire =utilisateurs.get(identificateurDestinataire);
-		if(! (destinataire != null) )throw new UtilisateurException("Destinataire inconnu");
+		if(!(destinataire !=null))throw new UtilisateurException("est Utilisateur");
 		//Ajout du message échangeable
+		String url = ""+System.currentTimeMillis()+objet+identificateur+identificateurDestinataire;
 		MessageInterne messageInterne = new MessageInterne(url,utilisateurs.get(identificateur), destinataire, contenu, objet);
 		this.echangeables.put(url, messageInterne);
 		//Sauvegarde du message 
@@ -203,7 +225,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			_Echangeable ech = this.echangeables.get(url);
 			if( ! (ech instanceof MessageInterne)) throw new ExceptionEchangeableMauvaisType();
 			//Pas besoin de vérification d'autorisation puisque le messageInterne n'a pas de tag
-			((MessageInterne)ech).reponse(contenu);
+			MessageInterne message = ((MessageInterne)ech).reponse(contenu);
+			message.sauver();
 	}
 	
 	//Auteur : Fanny
@@ -216,7 +239,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof MessageInterne)) throw new ExceptionEchangeableMauvaisType();
 		//Pas besoin de vérification d'autorisation puisque le messageInterne n'a pas de tag
-		((MessageInterne)ech).reponse(contenu, objet);	
+		MessageInterne message = ((MessageInterne)ech).reponse(contenu);
+		message.sauver();	
 	}
 	
 
@@ -233,6 +257,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if(this.tags.containsKey(nomTag)) throw new ExceptionEchangeableTagExistant();
 		//Ajout du tags dans la liste des tags
 		this.tags.put(nomTag,tag);
+		tag.sauver();
 	}
 
 	@Override
@@ -242,9 +267,22 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 
 	@Override
-	public void supprimerTag(Tag tag, String identificateur, String cle)
-			throws RemoteException, AdministrateurException {
-		// TODO Auto-generated method stub
+	public void supprimerTag(String tag, String identificateur, String cle)throws RemoteException, AdministrateurException {
+		//Vérification identité
+		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException("est Administrateur");
+		//Vérification existence du tag
+		Tag t = this.tags.get(tag);
+		if(t!=null) {
+			for(String url : this.echangeables.keySet()){
+				_Echangeable ech = this.echangeables.get(url);
+				if( ech instanceof $EchangeableAvecTag && (($EchangeableAvecTag)ech).aLeTag(t)){
+					try {
+						this.enleverTag(url, tag, identificateur, cle);
+					} catch (ExceptionEchangeableMauvaisType e) {}
+				}
+			}
+			this.tags.remove(tag);
+		}
 		
 	}
 	
@@ -266,6 +304,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 		}else{
 		victime.getDroits(tags.get(tag)).ajouterDroits(numeroDroit);}
+		victime.sauver();
 	}
 
 	@Override
@@ -275,6 +314,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		Utilisateur victime = utilisateurs.get(idVictime);
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
 		victime.getDroits(tags.get(tag)).supprimerDroits(numeroDroit);
+		victime.sauver();
 	}
 	
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle){
@@ -283,6 +323,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
 		utilisateurs.remove(idSupprime);
 	}
+
 
 	public Set<MessageInterne> releverMessages(String identificateur , String cle ){
 		Set<MessageInterne> messages = new HashSet<MessageInterne>() ; 
@@ -330,5 +371,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	
+
 }
 

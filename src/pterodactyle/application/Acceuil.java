@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class acceuil {
+public class Acceuil {
 
 	private JFrame frame;
 
@@ -15,7 +15,7 @@ public class acceuil {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					acceuil window = new acceuil();
+					Acceuil window = new Acceuil();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -27,7 +27,7 @@ public class acceuil {
 	/**
 	 * Create the application.
 	 */
-	public acceuil() {
+	public Acceuil() {
 		initialize();
 	}
 

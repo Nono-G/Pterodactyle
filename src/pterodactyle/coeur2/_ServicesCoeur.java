@@ -82,11 +82,14 @@ public interface _ServicesCoeur extends Remote {
 	 * @param cle de l'utilisateur à l'origine de la demande
 	 */
 	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle)
-			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType;
+			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType, RemoteException;
 
 	
 	public void creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
+	
+	
+	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType, RemoteException;
 	/**
 	 * ADMINISTRATEUR TAG
 	 */
@@ -105,8 +108,8 @@ public interface _ServicesCoeur extends Remote {
 	 * @author Fanny
 	 * Service de suppression de tag par un admin
 	 */
-	public void supprimerTag(Tag tag, String identificateur, String cle)
-			throws RemoteException, AdministrateurException;	
+	public void supprimerTag(String tag, String identificateur, String cle)throws RemoteException, AdministrateurException;
+	
 	/**
 	 * POST	
 	 */
@@ -134,7 +137,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require verifIdentite.estUtilisateur(destinataire, utilisateurs)
 	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
-	public void envoieMessageInterne(String url, String contenu, String objet, String identificateurDestinataire, String identificateur, String cle )
+	public void envoieMessageInterne(String contenu, String objet, String identificateurDestinataire, String identificateur, String cle )
 			throws RemoteException, UtilisateurException;
 	/*
 	 * @author Fanny
@@ -155,6 +158,8 @@ public interface _ServicesCoeur extends Remote {
 	 */
 	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
+	
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException;
 	
 	
 	/*
@@ -186,5 +191,6 @@ public interface _ServicesCoeur extends Remote {
 	public void supprimerSpecifique(String urlSpecifique, String idUtilisateur, String idAmin, String cle) throws RemoteException;
 
 	public void ajouterDroitsSpecifiques(String idUtilisateur,  String urlSpec, int numeroDroit, String idResponsable, String cle) throws ExceptionEchangeableNonExistant, RemoteException;
+
 }
 

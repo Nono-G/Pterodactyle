@@ -20,34 +20,35 @@ import javax.swing.AbstractListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.border.LineBorder;
 
-public class applicationUtilisateur extends JFrame {
+import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.Post;
+
+public class ApplicationUtilisateur extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_1;
+	private _ServicesCoeur app;
+	private String loginCourant;
+	private String motDePasseCourant;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					applicationUtilisateur frame = new applicationUtilisateur();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		this.loginCourant= loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app =app;
+		initialisation();
 	}
 
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public applicationUtilisateur() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(applicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
+	public void initialisation() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setResizable(false);
 		setSize(500,500);
 		setFont(new Font("Book Antiqua", Font.PLAIN, 12));
@@ -68,11 +69,11 @@ public class applicationUtilisateur extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBackground(new Color(135, 206, 250));
-		lblNewLabel_1.setIcon(new ImageIcon(applicationAdministrateur.class.getResource("/pterodactyle/application/ressourcesImages/SizedFunkySkeletoAppn.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(ApplicationAdministrateur.class.getResource("/pterodactyle/application/ressourcesImages/SizedFunkySkeletoAppn.png")));
 		lblNewLabel_1.setBounds(5, 5, 191, 96);
 		panelPresentation.add(lblNewLabel_1);
 		
-		JLabel lbloginUtilisateur = new JLabel("Login d'un utilisateur");
+		JLabel lbloginUtilisateur = new JLabel("Login utilisateur : "+loginCourant);
 		lbloginUtilisateur.setBounds(221, 101, 170, 24);
 		contentPane.add(lbloginUtilisateur);
 		lbloginUtilisateur.setForeground(new Color(11, 29, 62));
@@ -131,7 +132,8 @@ public class applicationUtilisateur extends JFrame {
 		lblNewLabel.setBounds(10, 42, 200, 21);
 		
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(220, 10, 52, 23);
+		btnOk.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnOk.setBounds(220, 10, 69, 23);
 		btnOk.setBackground(new Color(11,29,62));
 		btnOk.setForeground(new Color(255, 255, 255));
 		
@@ -170,6 +172,7 @@ public class applicationUtilisateur extends JFrame {
 		list.setBackground(new Color(211,210,250));
 		list.setForeground(new Color(11, 29, 62));
 		list.setModel(new AbstractListModel() {
+			
 			String[] values = new String[] {"30", "40", "50", "60", "70", "80", "82", "52", "52", "56", "85", "6+", "zlf", "zefn", "zfzjglkgjlzjg", "zglkjzekgjjzgmlkjzgkj", "zgzkgjhkjheglkjzhg", "zejkghzlkjeghlkzgeh", "zegjzjegkzjehglkzjehgl", "zegjlezjgmzjegmkzje", "zg,nbzkg:z", "z,gbkzgbj*zg", "zljgjzhgkjzhgkljhgkjzh", "zjkgkjhgzklzghzgkjgz", "kzjghkljzhkjzghkjzhg", "zjhkzjghkzgjlzkjhgkjha", "azjgkjhzgkjhzlkgjhkzmjheg", "zejhgjzhegkljhz"};
 			public int getSize() {
 				return values.length;
@@ -201,8 +204,29 @@ public class applicationUtilisateur extends JFrame {
 		btnRefresh.setBounds(793, 31, 32, 32);
 		onglet1.add(btnRefresh);
 		btnRefresh.setBackground(new Color(11,29,62));
-		btnRefresh.setIcon(new ImageIcon(applicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		
+		JButton btnNewPost = new JButton("Nouveau post !");
+		btnNewPost.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnNewPost.setForeground(Color.WHITE);
+		btnNewPost.setBackground(new Color(11, 29, 62));
+		btnNewPost.setBounds(614, 41, 171, 23);
+		onglet1.add(btnNewPost);
 		tabbedPane.add("Cloud ",onglet2);
+		btnNewPost.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					dispose();
+					NouveauPost np = new NouveauPost(app,loginCourant,motDePasseCourant);
+					np.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		
 		
 		JLabel lblAnnuaire = new JLabel("Annuaire");
 		lblAnnuaire.setForeground(new Color(11, 29, 62));
@@ -222,6 +246,7 @@ public class applicationUtilisateur extends JFrame {
 		contentPane.add(lblRechercheParLogin);
 		
 		JButton btnGo = new JButton("Go !");
+		btnGo.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnGo.setForeground(Color.WHITE);
 		btnGo.setBackground(new Color(11, 29, 62));
 		btnGo.setBounds(708, 44, 58, 23);

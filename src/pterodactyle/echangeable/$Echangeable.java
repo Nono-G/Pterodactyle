@@ -34,13 +34,17 @@ public abstract class $Echangeable implements _Echangeable {
 		
 		//Sauvegarde l'échangeable (serialization)
 		public void sauver(){
-			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("sauv/"+url)))){
+			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("sauv/echangeables/"+url)))){
 				oos.writeObject(this);
 				oos.flush();
 			}catch(IOException e){e.printStackTrace();}
-		}	
+		}
 		
 		public String getUrl(){
 			return this.url;
+		}
+		
+		public void detruireSauvegarde(){
+			new File("sauv/echangeables/"+url).delete();
 		}
 }
