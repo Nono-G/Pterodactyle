@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import pterodactyle.coeur2._ServicesCoeur;
+
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -33,27 +36,21 @@ public class NouveauPost extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPanel panel_2;
+	private _ServicesCoeur app;
+	private String loginCourant;
+	private String motDePasseCourant;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NouveauPost frame = new NouveauPost();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+	public NouveauPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant) {
+		this.loginCourant = loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app = app;
+		initialisation();
 	}
-
 	/**
 	 * Create the frame.
 	 */
-	public NouveauPost() {
+	public void initialisation() {
 		setTitle("Ajout d'un post");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NouveauPost.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setBackground(new Color(244,244,243));
@@ -177,7 +174,7 @@ public class NouveauPost extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					ApplicationUtilisateur ap = new ApplicationUtilisateur();
+					ApplicationUtilisateur ap = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
 					ap.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();

@@ -127,7 +127,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	//Auteur : Nono
-	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle){
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification autorisation

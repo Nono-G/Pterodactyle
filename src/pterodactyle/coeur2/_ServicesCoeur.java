@@ -156,6 +156,8 @@ public interface _ServicesCoeur extends Remote {
 	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException;
+	
 	
 	/*
 	 * @author Anasse

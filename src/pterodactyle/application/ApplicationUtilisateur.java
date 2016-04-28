@@ -25,31 +25,29 @@ import java.awt.event.ActionListener;
 
 import javax.swing.border.LineBorder;
 
+import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.Post;
+
 public class ApplicationUtilisateur extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_1;
+	private _ServicesCoeur app;
+	private String loginCourant;
+	private String motDePasseCourant;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ApplicationUtilisateur frame = new ApplicationUtilisateur();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		this.loginCourant= loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app =app;
+		initialisation();
 	}
 
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public ApplicationUtilisateur() {
+	public void initialisation() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setResizable(false);
 		setSize(500,500);
@@ -75,7 +73,7 @@ public class ApplicationUtilisateur extends JFrame {
 		lblNewLabel_1.setBounds(5, 5, 191, 96);
 		panelPresentation.add(lblNewLabel_1);
 		
-		JLabel lbloginUtilisateur = new JLabel("Login d'un utilisateur");
+		JLabel lbloginUtilisateur = new JLabel("Login utilisateur : "+loginCourant);
 		lbloginUtilisateur.setBounds(221, 101, 170, 24);
 		contentPane.add(lbloginUtilisateur);
 		lbloginUtilisateur.setForeground(new Color(11, 29, 62));
@@ -174,6 +172,7 @@ public class ApplicationUtilisateur extends JFrame {
 		list.setBackground(new Color(211,210,250));
 		list.setForeground(new Color(11, 29, 62));
 		list.setModel(new AbstractListModel() {
+			
 			String[] values = new String[] {"30", "40", "50", "60", "70", "80", "82", "52", "52", "56", "85", "6+", "zlf", "zefn", "zfzjglkgjlzjg", "zglkjzekgjjzgmlkjzgkj", "zgzkgjhkjheglkjzhg", "zejkghzlkjeghlkzgeh", "zegjzjegkzjehglkzjehgl", "zegjlezjgmzjegmkzje", "zg,nbzkg:z", "z,gbkzgbj*zg", "zljgjzhgkjzhgkljhgkjzh", "zjkgkjhgzklzghzgkjgz", "kzjghkljzhkjzghkjzhg", "zjhkzjghkzgjlzkjhgkjha", "azjgkjhzgkjhzlkgjhkzmjheg", "zejhgjzhegkljhz"};
 			public int getSize() {
 				return values.length;
@@ -220,7 +219,7 @@ public class ApplicationUtilisateur extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					NouveauPost np = new NouveauPost();
+					NouveauPost np = new NouveauPost(app,loginCourant,motDePasseCourant);
 					np.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
