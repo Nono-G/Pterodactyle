@@ -23,7 +23,7 @@ public class Fichier extends $DossierOuFichier{
 	public Object[] obtenirTranche(int n, int tailleTampon) throws ExceptionEchangeableFichierFini {
 		byte[] buffer = new byte[tailleTampon];
 		Object[] ret = new Object[2];
-		File f = new File("sauv/"+this.url);
+		File f = new File("sauv/fichiers/"+this.url);
 		try (FileInputStream fis = new FileInputStream(f)) {
 			if(n*tailleTampon > f.length()) {throw new ExceptionEchangeableFichierFini();}
 			fis.skip(n*tailleTampon);
@@ -36,7 +36,7 @@ public class Fichier extends $DossierOuFichier{
 	
 	//Ecrit une tranche du fichier
 	public void ecrireTranche(Object[] tranche) throws FileNotFoundException, IOException{
-		try(FileOutputStream fos = new FileOutputStream(new File("sauv/"+this.url),true)){
+		try(FileOutputStream fos = new FileOutputStream(new File("sauv/fichiers/"+this.url),true)){
 			fos.write((byte[])tranche[1], 0, (int)tranche[0]);
 		}
 	}

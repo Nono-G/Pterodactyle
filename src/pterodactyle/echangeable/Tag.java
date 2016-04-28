@@ -1,5 +1,9 @@
 package pterodactyle.echangeable;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import pterodactyle.utilisateur.Autorisation;
 
@@ -17,5 +21,11 @@ public class Tag extends Autorisation implements Serializable{
 	@Override
 	public String toString(){
 		return this.nom;
+	}
+	
+	public void sauver(){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File ("sauv/tags/"+this.nom)))){
+			oos.writeObject(this);
+		}catch(IOException e){e.printStackTrace();}
 	}
 }

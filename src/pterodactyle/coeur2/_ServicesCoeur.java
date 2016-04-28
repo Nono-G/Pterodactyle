@@ -134,7 +134,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require verifIdentite.estUtilisateur(destinataire, utilisateurs)
 	 * @ensure message interne est sauvé messageInterne.sauver()
 	 */
-	public void envoieMessageInterne(String url, String contenu, String objet, String identificateurDestinataire, String identificateur, String cle )
+	public void envoieMessageInterne(String contenu, String objet, String identificateurDestinataire, String identificateur, String cle )
 			throws RemoteException, UtilisateurException;
 	/*
 	 * @author Fanny

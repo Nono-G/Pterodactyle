@@ -3,7 +3,6 @@ package pterodactyle.coeur2;
 import java.io.*;
 import java.rmi.RemoteException;
 import java.util.*;
-
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.*;
 
@@ -35,26 +34,43 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
-	public void sauvegarder(String repertoire, String identificateur, String cle){
-		//Vérification identité
-		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException("est Administrateur");
-		
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexTags")))){
-			oos.writeObject(this.tags);
-		}catch(IOException e){e.printStackTrace();}
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexUtilisateurs")))){
-			oos.writeObject(this.utilisateurs);
-		}catch(IOException e){e.printStackTrace();}
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexEchangeables")))){
-			oos.writeObject(this.echangeables);
-		}catch(IOException e){e.printStackTrace();}
+	public CoeurBase() throws RemoteException, ClassNotFoundException{
+		super();
+		File rep; File[] objets; String adresse;
+		//UTILISATEURS
+		adresse = "sauv/utilisateurs";
+		rep = new File(adresse);
+		objets = rep.listFiles();
+		for(File u : objets){
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
+				this.utilisateurs.put(u.getName(), (Utilisateur)ois.readObject());
+			}catch(IOException e){e.printStackTrace();}
+		}
+		//TAGS
+		adresse = "sauv/tags";
+		rep = new File(adresse);
+		objets = rep.listFiles();
+		for(File u : objets){
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
+				this.tags.put(u.getName(), (Tag)ois.readObject());
+			}catch(IOException e){e.printStackTrace();}
+		}
+		//ECHANGEABLES
+		adresse = "sauv/echangeables";
+		rep = new File(adresse);
+		objets = rep.listFiles();
+		for(File u : objets){
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
+				this.echangeables.put(u.getName(), (_Echangeable)ois.readObject());
+			}catch(IOException e){e.printStackTrace();}
+		}
 	}
-	
 	
 	public void creerUtilisateur(Utilisateur nouveau, String identificateur, String cle) {
 		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException();
 		if(!(utilisateurs.get(nouveau.getLogin()) == null))throw new UtilisateurException("Utilisateur existe deja");
 		this.utilisateurs.put(nouveau.getLogin(), nouveau);
+		nouveau.sauver();
 	}
 
 	@Override
@@ -107,7 +123,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	public void creerFichier(String url, Dossier pere, String t, String identificateur, String cle) throws ExceptionEchangeablePasDeTag{
 		Fichier f = Fichier.nouveauFichier(url, utilisateurs.get(identificateur), pere, this.tags.get(t));
 		this.echangeables.put(url, f);
-		//f.sauver();
+		f.sauver();
 	}
 	
 	//Auteur : Nono
@@ -164,6 +180,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		
 		
 		((Post)ech).repondre(new MessagePost(utilisateurs.get(identificateur), contenu));
+		ech.sauver();
 		
 	}
 
@@ -178,15 +195,15 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 * 
 	 * */
 	@Override
-	public void envoieMessageInterne(String url, String contenu, String objet, String identificateur, String cle,
+	public void envoieMessageInterne(String contenu, String objet, String identificateur, String cle,
 		String identificateurDestinataire) throws RemoteException, UtilisateurException {
 		//vérification identité emetteur
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//vérification identité destinataire
-		if(!(utilisateurs.get(identificateurDestinataire)!=null))throw new UtilisateurException("est Utilisateur");
 		Utilisateur destinataire =utilisateurs.get(identificateurDestinataire);
-		if(! (destinataire != null) )throw new UtilisateurException("Destinataire inconnu");
+		if(!(destinataire !=null))throw new UtilisateurException("est Utilisateur");
 		//Ajout du message échangeable
+		String url = ""+System.currentTimeMillis()+objet+identificateur+identificateurDestinataire;
 		MessageInterne messageInterne = new MessageInterne(url,utilisateurs.get(identificateur), destinataire, contenu, objet);
 		this.echangeables.put(url, messageInterne);
 		//Sauvegarde du message 
@@ -203,7 +220,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			_Echangeable ech = this.echangeables.get(url);
 			if( ! (ech instanceof MessageInterne)) throw new ExceptionEchangeableMauvaisType();
 			//Pas besoin de vérification d'autorisation puisque le messageInterne n'a pas de tag
-			((MessageInterne)ech).reponse(contenu);
+			MessageInterne message = ((MessageInterne)ech).reponse(contenu);
+			message.sauver();
 	}
 	
 	//Auteur : Fanny
@@ -216,7 +234,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof MessageInterne)) throw new ExceptionEchangeableMauvaisType();
 		//Pas besoin de vérification d'autorisation puisque le messageInterne n'a pas de tag
-		((MessageInterne)ech).reponse(contenu, objet);	
+		MessageInterne message = ((MessageInterne)ech).reponse(contenu);
+		message.sauver();	
 	}
 	
 
@@ -233,6 +252,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if(this.tags.containsKey(nomTag)) throw new ExceptionEchangeableTagExistant();
 		//Ajout du tags dans la liste des tags
 		this.tags.put(nomTag,tag);
+		tag.sauver();
 	}
 
 	@Override
@@ -266,6 +286,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
 		}else{
 		victime.getDroits(tags.get(tag)).ajouterDroits(numeroDroit);}
+		victime.sauver();
 	}
 
 	@Override
@@ -275,6 +296,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		Utilisateur victime = utilisateurs.get(idVictime);
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
 		victime.getDroits(tags.get(tag)).supprimerDroits(numeroDroit);
+		victime.sauver();
 	}
 	
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle){
