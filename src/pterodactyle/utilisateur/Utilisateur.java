@@ -60,6 +60,10 @@ public class Utilisateur implements Serializable {
 		listeDroits.put(aut, droit);
 	}
 	
+	public void ajouterAut(Autorisation aut){
+		Droits d = new Droits();
+		listeDroits.put(aut, d);
+	}
 	 
 	/*
 	 * Les getters pour mot de passe et login 
@@ -119,6 +123,10 @@ public class Utilisateur implements Serializable {
 			}
 		}
 		return resultat;
+	}
+	
+	public boolean aAutorisation(Autorisation autorisation){
+		return listeDroits.keySet().contains(autorisation);	
 	}
 	
 }
