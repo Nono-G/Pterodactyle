@@ -1,3 +1,4 @@
+
 package pterodactyle.application;
 
 import java.awt.EventQueue;
@@ -15,9 +16,6 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import javax.swing.JPasswordField;
 
@@ -38,7 +36,7 @@ public class ApplicationPterodactyle {
 	public static void main(String[] args) throws RemoteException {
 		Client2 client = new Client2("127.0.0.1");
 		app = client.recupererApp();
-		System.out.println(app.test());
+		//System.out.println(app.test());
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -117,8 +115,8 @@ public class ApplicationPterodactyle {
 						System.out.println("Correct");
 						
 						frameConnection.dispose();
-						Acceuil acc = new Acceuil();
-						acc.accueil();
+						ApplicationUtilisateur acc = new ApplicationUtilisateur(app, mdp, mdp);
+						acc.setVisible(true);
 					}else{
 						textFieldLogin.setBackground(new Color(255, 0, 0));
 						passwordFieldMdp.setBackground(new Color(255, 0, 0));
@@ -138,3 +136,4 @@ public class ApplicationPterodactyle {
 		
 	}
 }
+

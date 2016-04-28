@@ -165,6 +165,8 @@ public interface _ServicesCoeur extends Remote {
 	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException;
+	
 	
 	/*
 	 * @author Anasse
@@ -185,8 +187,16 @@ public interface _ServicesCoeur extends Remote {
 	 * Supprimer un utilisateur
 	 */
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle) throws RemoteException;
+	
+	
+	public Set<MessageInterne> releverMessages(String identificateur , String cle ) throws RemoteException;
+	
+	public void creerSpecifique(String urlEchangeable, String idBeneficiant , String identificateur , String cle) throws ExceptionEchangeableNonExistant ,RemoteException;
 
+	
+	public void supprimerSpecifique(String urlSpecifique, String idUtilisateur, String idAmin, String cle) throws RemoteException;
 
+	public void ajouterDroitsSpecifiques(String idUtilisateur,  String urlSpec, int numeroDroit, String idResponsable, String cle) throws ExceptionEchangeableNonExistant, RemoteException;
 
 }
 
