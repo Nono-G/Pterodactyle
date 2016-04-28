@@ -1,6 +1,8 @@
 package pterodactyle.utilisateur;
 
-public class Droits {	
+import java.io.Serializable;
+
+public class Droits implements Serializable{	
 	
 	
 	//tableau des droits dans cet ordre : 

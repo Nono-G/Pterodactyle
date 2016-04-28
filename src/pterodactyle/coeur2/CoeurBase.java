@@ -22,7 +22,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.utilisateurs.put(identifiantSuperAdmin, new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true));
 	}
 	
-	protected CoeurBase(String repertoire) throws RemoteException{
+	public CoeurBase(String repertoire) throws RemoteException{
 		super();
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
 			this.tags = (Map<String,Tag>)ois.readObject();
@@ -35,7 +35,10 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
-	protected void Sauvegarder(String repertoire){
+	public void sauvegarder(String repertoire, String identificateur, String cle){
+		//Vérification identité
+		if(!(verifIdentite.estAdmin(identificateur, cle, utilisateurs)))throw new AdministrateurException("est Administrateur");
+		
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(repertoire+"/indexTags")))){
 			oos.writeObject(this.tags);
 		}catch(IOException e){e.printStackTrace();}
@@ -108,18 +111,18 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	//Auteur : Nono
-	public Set<$EchangeableAvecTag> listeEchangeableParTag(Tag t, String identificateur, String cle){
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle){
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification autorisation
-		if( ! verifAutorisation.lectureTag(t, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		if( ! verifAutorisation.lectureTag(tags.get(urlTag), utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		
 		Set<$EchangeableAvecTag> ret = new HashSet<$EchangeableAvecTag>();
 		for(String s : echangeables.keySet()){
 			_Echangeable ech = echangeables.get(s);
 			if(ech instanceof $EchangeableAvecTag){
 				$EchangeableAvecTag ech2 = ($EchangeableAvecTag)ech;
-				if(ech2.getTags().contains(t)){
+				if(ech2.getTags().contains(tags.get(urlTag))){
 					ret.add(ech2);
 				}
 			}
@@ -133,11 +136,13 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	//Auteur Fanny
 	@Override
 
-	public void creerPost(String url, String titre, Tag t, String identificateur, String cle)
+	public void creerPost(String url, String titre, String urlTag, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeablePasDeTag {
 		//vérification identité
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Ajout du post échangeable
+		Tag t = tags.get(urlTag);
+	
 		Post post = Post.nouveauPost(url,utilisateurs.get(identificateur), titre, t);
 		if( ! verifAutorisation.creation(post, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		this.echangeables.put(url, post);
@@ -249,27 +254,27 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 * Permet d'ajouter des droits aux utilisateus
 	 */
 	@Override
-	public void partageDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle){
+	public void partageDroits(String idVictime,  String tag, int numeroDroit, String idResponsable, String cle){
 		if( !(verifIdentite.estUtilisateur(idResponsable, cle, utilisateurs)) ) throw new UtilisateurException();
 		Utilisateur victime   = utilisateurs.get(idVictime);
 		Utilisateur responsable = utilisateurs.get(idResponsable);
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
-		if( ! (verifAutorisation.droitTag(autorisation, responsable, 2) && (verifAutorisation.droitTag(autorisation, responsable, 2) ))) throw new ExceptionAutorisationManquante();
-		if( ! victime.aAutorisation(autorisation)){
-			victime.ajouterAut(autorisation);
-			victime.getDroits(autorisation).ajouterDroits(numeroDroit);
+		if( ! (verifAutorisation.droitTag(tags.get(tag), responsable, 2) && (verifAutorisation.droitTag(tags.get(tag), responsable, 2) ))) throw new ExceptionAutorisationManquante();
+		if( ! victime.aAutorisation(tags.get(tag))){
+			victime.ajouterAut(tags.get(tag));
+			victime.getDroits(tags.get(tag)).ajouterDroits(numeroDroit);
 
 		}else{
-		victime.getDroits(autorisation).ajouterDroits(numeroDroit);}
+		victime.getDroits(tags.get(tag)).ajouterDroits(numeroDroit);}
 	}
 
 	@Override
-	public void supprimerDroits(String idVictime, Autorisation autorisation, int numeroDroit, String idResponsable,
+	public void supprimerDroits(String idVictime, String tag, int numeroDroit, String idResponsable,
 			String cle) {
 		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
 		Utilisateur victime = utilisateurs.get(idVictime);
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
-		victime.getDroits(autorisation).supprimerDroits(numeroDroit);
+		victime.getDroits(tags.get(tag)).supprimerDroits(numeroDroit);
 	}
 	
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle){

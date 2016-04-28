@@ -21,21 +21,15 @@ public class testModificationDroitsCoeurs {
 
 			Utilisateur noe = new Utilisateur("Noe", "Goudian", "Ng", "lol", false);
 			Utilisateur anasse = new Utilisateur("Anasse", "Berahab", "Ba", "lol", false);
-			Tag comptabilite = new Tag("comptabilite");
-			droits[0] = false;
-			droits[1] = false;
-			droits[2] = false;
-			droits[3] = false;
-			droits[4] = false;
-			Droits drCompta = new Droits(droits);
+
 			c.creerUtilisateur(noe, "Petry", "abc");
 			c.creerUtilisateur(anasse, "Petry", "abc");
 			
-			c.partageDroits("Ng", comptabilite ,0, "Petry", "abc");
-			c.partageDroits("Ng", comptabilite, 2, "Petry", "abc");
-			c.partageDroits("Ba", comptabilite, 0, "Ng", "lol");
+			c.partageDroits("Ng", "Comptabilite" ,0, "Petry", "abc");
+			c.partageDroits("Ng", "Comptabilite", 2, "Petry", "abc");
+			c.partageDroits("Ba", "Comptabilite", 0, "Ng", "lol");
 			
-			//c.supprimerDroits("Ba", comptabilite, 0, "Petry", "abc");
+			c.supprimerDroits("Ba", "Comptabilite", 0, "Petry", "abc");
 			System.out.println(anasse.toStringDroits());	
 			
 		}catch(Exception e){e.printStackTrace();;}

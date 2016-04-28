@@ -17,7 +17,8 @@ public interface _ServicesCoeur extends Remote {
 	 * @author MaximeSilvestre
 	 * Permet de créer un nouvelle utilisateur en vérifiant que l'utilisateur est admin
 	 * @param nouveau le nouvelle utilisateur que l'on veut créer
-	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
+	 * @param identificateur de l'utilisateur à l'origine de la demande
+	 * @param cle de l'utilisateur à l'origine de la demande
 	 * @require etre administrateur
 	 * @return void
 	 */
@@ -25,10 +26,10 @@ public interface _ServicesCoeur extends Remote {
 	
 	/*
 	 * @author MaximeSilvestre
-	 * Permet de recupérer l'utilisateur connecter
+	 * Permet de tester si un utilisateur existe pour ce mot de passe et ce login
 	 * @param identificateur le parametre permettant de retrouver le bon utilisateur
 	 * @param cle assossier pour valider que ce soit le bon utlisateur
-	 * @return un Utilisateur de la personne connectee
+	 * @return true si le compte existe et que le mot de passe est le bon
 	 */
 	public boolean seConnecter(String identificateur, String cle)throws RemoteException;
 	
@@ -37,7 +38,8 @@ public interface _ServicesCoeur extends Remote {
 	 * @author MaximeSilvestre
 	 * Permet de créer récuperer un Utilisateur en vérifiant l'identite de la personne
 	 * @param identificateurCible de la personne dont nous voulons récuperer les informations
-	 * @param utlisateurCourant permettant de reconnaitre l'utilisateur
+	 * @param identificateur de l'utilisateur à l'origine de la demande
+	 * @param cle de l'utilisateur à l'origine de la demande
 	 * @return un Utilisateur
 	 */
 
@@ -46,6 +48,8 @@ public interface _ServicesCoeur extends Remote {
 	/*
 	 * @autor MaximeSIlvestre
 	 * Permet de recuperer tout les utilisateurs
+	 * @param identificateur de l'utilisateur à l'origine de la demande
+	 * @param cle de l'utilisateur à l'origine de la demande
 	 * @return hasmap<login,Utilisateur>
 	 */
 	public Map<String, Utilisateur> recupererToutLesUtilisateurs(String identificateur, String cle) throws RemoteException;
@@ -54,14 +58,33 @@ public interface _ServicesCoeur extends Remote {
 	 * @author Nono
 	 * Renvoie une tranche (cf méthode dans la classe pterodactyle.echangeable.Fichier) du fichier désigné par url,
 	 * Sous réserve que le couple identificateur, cle corresponde à un utilisateur existant et autorisé à LIRE cet echangeable
+	 * Cette méthode est utilisé côté client dans une boucle qui constitue la méthode de téléchargement d'un fichier.
+	 * @require le droit de lecture pour l'utilisateur.
+	 * @param url du fichier côté serveur dont on veut une part
+	 * @param n numéro de la tranche que l'on veut récupérer (selon un partage en tranches de tailleTampon octets)
+	 * @param tailleTampon taille d'une tranche
+	 * @param identificateur de l'utilisateur à l'origine de la demande
+	 * @param cle de l'utilisateur à l'origine de la demande
+	 * @return un couple : le premier est le nombre d'octets effectivement présents, le second est le tableau d'octets de la tranche
 	 */
 	public Object[] trancheFichier(String url, int n, int tailleTampon, String identificateur, String cle)
-
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
+	/*
+	 * @author Nono
+	 * écrit une tranche d'octets (objet composé d'un entier représentant le nombre d'octets et du tableau d'octets)
+	 * dans le fichier désigné sur le serveur par l'url.
+	 * Sous réserve que identificateur-cle corrensponde à un utilisateur reconnu.
+	 * @require droit ECRITURE si le fichier n'existe pas, droit modification si il existe.
+	 * @param tranche un couple : le premier est le nombre d'octets effectivement présents, le second est le tableau d'octets de la tranche
+	 * @param url du fichier côté serveur dont on veut une part
+	 * @param identificateur de l'utilisateur à l'origine de la demande
+	 * @param cle de l'utilisateur à l'origine de la demande
+	 */
 	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle)
 			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType;
 
+	
 	public void creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
 	/**
@@ -93,7 +116,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @require utilisateur ci 
 	 */
 
-	public void creerPost(String url, String titre, Tag t, String identificateur, String cle)
+	public void creerPost(String url, String titre, String urlTag, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	/*
 	 * 
@@ -143,16 +166,16 @@ public interface _ServicesCoeur extends Remote {
 	 * @param  l'id de la personne qui fait le partage
 	 * @param la cle qui correspond au mdp de la personne responsable  
 	 */
-	public void partageDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle) throws RemoteException;
+	public void partageDroits(String idVictime,  String tag, int numeroDroit, String idResponsable, String cle) throws RemoteException;
 	
 
-	public void supprimerDroits(String idVictime,  Autorisation autorisation, int numeroDroit, String idResponsable, String cle) throws RemoteException;
+	public void supprimerDroits(String idVictime,  String tag, int numeroDroit, String idResponsable, String cle) throws RemoteException;
 
 	/*
 	 * @author Anasse
 	 * Supprimer un utilisateur
 	 */
-	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle);
+	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle) throws RemoteException;
 
 }
 
