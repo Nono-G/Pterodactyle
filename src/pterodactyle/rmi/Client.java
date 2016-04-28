@@ -13,7 +13,7 @@ import pterodactyle.coeur2._ServicesCoeur;
 
 public class Client {
 	
-	private static String adresseIPServeur = "193.48.34.19";
+	private static String adresseIPServeur = "127.0.0.1";
 	private static _ServicesCoeur stub;
 
 
@@ -50,7 +50,7 @@ public class Client {
 		
 		try {
 			System.out.println(stub.test());
-			System.out.println("Client connecté!");					// DEBUG
+			System.out.println("Client connecté!");					
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
