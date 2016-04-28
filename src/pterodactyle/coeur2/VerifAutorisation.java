@@ -93,7 +93,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 			return true;
 		}
 		if(echangeable.getClass().getName() == "pterodactyle.echangeable.Fichier" || echangeable.getClass().getName() == "pterodactyle.echangeable.Dossier"){
-			while(echangeable.getPere() != null){
+			while(echangeable instanceof $DossierOuFichier && (($DossierOuFichier)echangeable).getPere() != null){
 				tagsHeritage = echangeable.getTags();
 				for(Tag t : tagsHeritage){
 					if(utilisateur.possedeTag(t)){
@@ -107,7 +107,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 						}
 					}
 				}
-				echangeable = echangeable.getPere();
+				echangeable = (($DossierOuFichier)echangeable).getPere();
 			}
 		}
 		for(Tag t : tags){

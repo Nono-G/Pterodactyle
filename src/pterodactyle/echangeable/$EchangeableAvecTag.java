@@ -46,8 +46,5 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 		if(this.tags.isEmpty())throw new ExceptionEchangeablePasDeTag();
 	}
 	
-	public abstract Dossier getPere();
-	
-
 
 }

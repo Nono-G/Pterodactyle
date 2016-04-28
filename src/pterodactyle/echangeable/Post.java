@@ -48,10 +48,8 @@ public class Post extends $EchangeableAvecTag {
 		return ret;
 	}
 	
-	
-	@Override
-	public Dossier getPere(){
-		return null;
+	public String getTitre(){
+		return this.titre;
 	}
 
 }

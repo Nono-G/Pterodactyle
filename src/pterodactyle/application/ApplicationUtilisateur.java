@@ -22,11 +22,16 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
 import pterodactyle.echangeable.Post;
+import pterodactyle.echangeable._Echangeable;
 
 public class ApplicationUtilisateur extends JFrame {
 
@@ -35,11 +40,13 @@ public class ApplicationUtilisateur extends JFrame {
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
+	private Map<String, _Echangeable> echangeables;
 
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
+		this.echangeables = new HashMap<String, _Echangeable>();
 		initialisation();
 	}
 
@@ -166,18 +173,18 @@ public class ApplicationUtilisateur extends JFrame {
 		panel_1.setBackground(new Color(211,210,250));
 		scrollPane.setViewportView(panel_1);
 		
-		JList list = new JList();
+		JList<String> list = new JList<String>();
 		list.setBorder(null);
 		list.setFont(new Font("Book Antiqua", Font.BOLD, 14));
 		list.setBackground(new Color(211,210,250));
 		list.setForeground(new Color(11, 29, 62));
-		list.setModel(new AbstractListModel() {
+		list.setModel(new AbstractListModel<String>() {
 			
-			String[] values = new String[] {"30", "40", "50", "60", "70", "80", "82", "52", "52", "56", "85", "6+", "zlf", "zefn", "zfzjglkgjlzjg", "zglkjzekgjjzgmlkjzgkj", "zgzkgjhkjheglkjzhg", "zejkghzlkjeghlkzgeh", "zegjzjegkzjehglkzjehgl", "zegjlezjgmzjegmkzje", "zg,nbzkg:z", "z,gbkzgbj*zg", "zljgjzhgkjzhgkljhgkjzh", "zjkgkjhgzklzghzgkjgz", "kzjghkljzhkjzghkjzhg", "zjhkzjghkzgjlzkjhgkjha", "azjgkjhzgkjhzlkgjhkzmjheg", "zejhgjzhegkljhz"};
+			String[] values =  refreshPosts();;
 			public int getSize() {
 				return values.length;
 			}
-			public Object getElementAt(int index) {
+			public String getElementAt(int index) {
 				return values[index];
 			}
 		});
@@ -252,5 +259,25 @@ public class ApplicationUtilisateur extends JFrame {
 		btnGo.setBounds(708, 44, 58, 23);
 		contentPane.add(btnGo);
 		
+	}
+	
+	protected String[] refreshPosts(){
+		Set<Post> posts = null;
+		int i = 0;
+		try {
+			posts = app.getPosts(loginCourant, motDePasseCourant);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] titresPosts = new String[posts.size()];
+		
+		for(Post p : posts){
+			this.echangeables.put(p.getUrl(), p);
+			titresPosts[i] = p.getTitre();
+			i++;
+		}
+		
+		return titresPosts;
 	}
 }

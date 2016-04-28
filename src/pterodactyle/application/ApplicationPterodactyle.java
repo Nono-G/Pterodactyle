@@ -7,7 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
+import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
+import pterodactyle.echangeable.ExceptionEchangeableTagExistant;
 import pterodactyle.rmi.Client2;
+import pterodactyle.utilisateur.AdministrateurException;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -32,10 +36,16 @@ public class ApplicationPterodactyle {
 	/**
 	 * Launch the application.
 	 * @throws RemoteException 
+	 * @throws ExceptionEchangeablePasDeTag 
+	 * @throws ExceptionEchangeableMauvaisType 
+	 * @throws ExceptionEchangeableTagExistant 
+	 * @throws AdministrateurException 
 	 */
-	public static void main(String[] args) throws RemoteException {
+	public static void main(String[] args) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag, AdministrateurException, ExceptionEchangeableTagExistant {
 		Client2 client = new Client2("127.0.0.1");
 		app = client.recupererApp();
+		app.creerTag("compta", "admin", "admin");
+		app.creerPost("p1", "toto", "compta", "admin", "admin");
 		//System.out.println(app.test());
 
 		EventQueue.invokeLater(new Runnable() {

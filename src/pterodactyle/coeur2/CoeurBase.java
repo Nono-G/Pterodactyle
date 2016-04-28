@@ -162,6 +162,16 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		return ret;
 	}
 	
+	public Set<Tag> getTagsDroitCreation(String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		
+		Set<Tag> ret = new HashSet<Tag>();
+		
+		
+		return ret;
+	}
+	
 	
 	@Override
 	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType {
