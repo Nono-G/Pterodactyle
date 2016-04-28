@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 
 import pterodactyle.coeur2._ServicesCoeur;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
@@ -16,8 +17,11 @@ import pterodactyle.utilisateur.AdministrateurException;
 
 public class TestRmiEtCoeur {
 
-	public static void main(String[] args) {
-		String url = "rmi://192.168.137.228/app";		
+
+	public static void main(String[] args) throws RemoteException {
+		String url = "rmi://192.168.137.228/app";	
+		LocateRegistry.getRegistry("192.168.137.228", 1099);
+
 		try {
 			_ServicesCoeur r = (_ServicesCoeur) Naming.lookup(url);
 			System.out.println("lookups");

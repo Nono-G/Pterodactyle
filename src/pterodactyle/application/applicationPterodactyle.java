@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.rmi.Client2;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -23,23 +25,20 @@ public class applicationPterodactyle {
 
 	private JFrame frameConnection;
 	private JTextField textFieldLogin;
-	private static _ServicesCoeur app;
 	private boolean estConnecte = false;
 	private String loginCourant;
 	private String motDePasseCourant;
 	private JPasswordField passwordFieldMdp;
+	private static _ServicesCoeur app;
 
 	/**
 	 * Launch the application.
+	 * @throws RemoteException 
 	 */
-	public static void main(String[] args) {
-		String url = "rmi://127.0.0.1/app";
-		try {
-			app = (_ServicesCoeur) Naming.lookup(url);
-		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	public static void main(String[] args) throws RemoteException {
+		Client2 client = new Client2("rmi://127.0.0.1/app");
+		app = client.recupererApp();
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -67,8 +66,7 @@ public class applicationPterodactyle {
 		frameConnection.setFont(new Font("Book Antiqua", Font.BOLD, 12));
 		frameConnection.setForeground(new Color(11, 29, 62));
 		frameConnection.setTitle("Connection");
-		frameConnection.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(applicationPterodactyle.class.getResource("/pterodactyle/application/output.png")));
+		frameConnection.setIconImage(Toolkit.getDefaultToolkit().getImage(applicationPterodactyle.class.getResource("/pterodactyle/application/images/logoSizeSmileySkeleton.png")));
 		frameConnection.getContentPane().setBackground(new Color(244, 244, 243));
 		frameConnection.setBounds(100, 100, 345, 317);
 		frameConnection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +102,8 @@ public class applicationPterodactyle {
 
 			public void actionPerformed(ActionEvent e) {
 				String login = textFieldLogin.getText();
-				String mdp = passwordFieldMdp.getText();
+				char[] password = passwordFieldMdp.getPassword();
+				String mdp = new String(password);
 					try {
 						estConnecte = app.seConnecter(login, mdp);
 					} catch (RemoteException e1) {
