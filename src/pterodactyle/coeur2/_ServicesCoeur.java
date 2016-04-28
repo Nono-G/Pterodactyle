@@ -176,6 +176,15 @@ public interface _ServicesCoeur extends Remote {
 	 * Supprimer un utilisateur
 	 */
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle) throws RemoteException;
+	
+	
+	public Set<MessageInterne> releverMessages(String identificateur , String cle ) throws RemoteException;
+	
+	public void creerSpecifique(String urlEchangeable, String idBeneficiant , String identificateur , String cle) throws ExceptionEchangeableNonExistant ,RemoteException;
 
+	
+	public void supprimerSpecifique(String urlSpecifique, String idUtilisateur, String idAmin, String cle) throws RemoteException;
+
+	public void ajouterDroitsSpecifiques(String idUtilisateur,  String urlSpec, int numeroDroit, String idResponsable, String cle) throws ExceptionEchangeableNonExistant, RemoteException;
 }
 

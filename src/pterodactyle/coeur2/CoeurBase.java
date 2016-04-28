@@ -259,7 +259,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		Utilisateur victime   = utilisateurs.get(idVictime);
 		Utilisateur responsable = utilisateurs.get(idResponsable);
 		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
-		if( ! (verifAutorisation.droitTag(tags.get(tag), responsable, 2) && (verifAutorisation.droitTag(tags.get(tag), responsable, 2) ))) throw new ExceptionAutorisationManquante();
+		if( ! (verifAutorisation.droitTag(tags.get(tag), responsable, 2) && (verifAutorisation.droitTag(tags.get(tag), responsable, numeroDroit) ))) throw new ExceptionAutorisationManquante();
 		if( ! victime.aAutorisation(tags.get(tag))){
 			victime.ajouterAut(tags.get(tag));
 			victime.getDroits(tags.get(tag)).ajouterDroits(numeroDroit);
@@ -284,6 +284,50 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		utilisateurs.remove(idSupprime);
 	}
 
+	public Set<MessageInterne> releverMessages(String identificateur , String cle ){
+		Set<MessageInterne> messages = new HashSet<MessageInterne>() ; 
+		if( ! (verifIdentite.estUtilisateur(identificateur, cle, utilisateurs))) throw new UtilisateurException();
+		for(_Echangeable e : echangeables.values()){
+			if(e.getClass().getName() == "pterodactyle.echangeable.MessageInterne"){
+				messages.add((MessageInterne) e);
+			}
+		}
+		return messages;
+	}
+
+	
+	
+	public void creerSpecifique(String urlEchangeable, String idBeneficiant , String identificateur , String cle) throws ExceptionEchangeableNonExistant {
+		 if( ! (verifIdentite.estAdmin(identificateur, cle, utilisateurs))) throw new AdministrateurException();
+		 Utilisateur beneficiant = utilisateurs.get(idBeneficiant);
+		if( ! (beneficiant  != null)) throw new UtilisateurException("Bonjour");
+		 if ( ! echangeables.containsKey(urlEchangeable)) throw new ExceptionEchangeableNonExistant();
+		 Specifique specifique = new Specifique(urlEchangeable);
+		 utilisateurs.get(idBeneficiant).ajouterAut(specifique);
+	}
+	
+	
+	public void supprimerSpecifique(String urlSpecifique, String idUtilisateur, String idAmin, String cle){
+		 if( ! (verifIdentite.estAdmin(idAmin, cle, utilisateurs))) throw new AdministrateurException();
+		 if( ! (verifIdentite.estUtilisateur(idUtilisateur, cle, utilisateurs))) throw new UtilisateurException();
+		 utilisateurs.get(idUtilisateur).supprimerSpec(urlSpecifique);
+	}
+	
+	
+	
+	public void ajouterDroitsSpecifiques(String idUtilisateur,  String urlSpec, int numeroDroit, String idResponsable, String cle) throws ExceptionEchangeableNonExistant{
+		if(! verifIdentite.estAdmin(idResponsable, cle, utilisateurs)) throw new AdministrateurException();
+		Utilisateur utilisateur = utilisateurs.get(idUtilisateur);
+		if( ! (utilisateur  != null)) throw new UtilisateurException("Bonjour");
+		if( ! utilisateur.aSpecifique(urlSpec)){
+			this.creerSpecifique(urlSpec, idUtilisateur, idResponsable, cle);
+			System.out.println("Il ne l'a pas ");
+			utilisateur.getDroits(utilisateur.getSpecifique(urlSpec)).ajouterDroits(numeroDroit);
+		}else{
+			utilisateur.getDroits(utilisateur.getSpecifique(urlSpec)).ajouterDroits(numeroDroit);
+		}
+		
+	}
 	
 	
 }
