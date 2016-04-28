@@ -82,14 +82,14 @@ public interface _ServicesCoeur extends Remote {
 	 * @param cle de l'utilisateur à l'origine de la demande
 	 */
 	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle)
-			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType;
+			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType, RemoteException;
 
 	
 	public void creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
 	
 	
-	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType;
+	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType, RemoteException;
 	/**
 	 * ADMINISTRATEUR TAG
 	 */

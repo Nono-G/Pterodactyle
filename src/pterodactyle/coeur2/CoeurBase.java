@@ -21,19 +21,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.utilisateurs.put(identifiantSuperAdmin, new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true));
 	}
 	
-	public CoeurBase(String repertoire) throws RemoteException{
-		super();
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexTags")))){
-			this.tags = (Map<String,Tag>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexUtilisateurs")))){
-			this.utilisateurs = (Map<String,Utilisateur>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(repertoire+"/indexEchangeables")))){
-			this.echangeables = (Map<String, _Echangeable>)ois.readObject();
-		}catch(Exception e){e.printStackTrace();}
-	}
-	
 	public CoeurBase() throws RemoteException, ClassNotFoundException{
 		super();
 		File rep; File[] objets; String adresse;
