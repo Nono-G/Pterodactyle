@@ -24,7 +24,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 	}
 
 	@Override
-	public boolean ecriture($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
+	public boolean modification($EchangeableAvecTag echangeable, Utilisateur utilisateur) {
 		return aDroit(echangeable, utilisateur, 1);	
 	}
 
@@ -52,7 +52,7 @@ public class VerifAutorisation implements _VerifAutorisation {
 	}
 
 	@Override
-	public boolean ecritureTag(Tag tag, Utilisateur utilisateur) {
+	public boolean modificationTag(Tag tag, Utilisateur utilisateur) {
 		if(utilisateur.estAdmin()){
 			return true;
 		}

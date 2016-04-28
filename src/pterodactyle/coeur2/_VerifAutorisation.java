@@ -10,7 +10,7 @@ public interface _VerifAutorisation {
 
 	boolean lecture($EchangeableAvecTag echangeable, Utilisateur utilisateur);
 	
-	boolean ecriture($EchangeableAvecTag echangeable, Utilisateur utilisateur);
+	boolean modification($EchangeableAvecTag echangeable, Utilisateur utilisateur);
 	
 	boolean partage($EchangeableAvecTag echangeable, Utilisateur utilisateur);
 	
@@ -20,7 +20,7 @@ public interface _VerifAutorisation {
 	
 	boolean lectureTag(Tag tag, Utilisateur utilisateur);
 	
-	boolean ecritureTag(Tag tag, Utilisateur utilisateur);
+	boolean modificationTag(Tag tag, Utilisateur utilisateur);
 	
 	boolean partageTag(Tag tag, Utilisateur utilisateur);
 	

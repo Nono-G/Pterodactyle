@@ -47,7 +47,7 @@ public class TestGestionDroits {
 		//Test Fichier normal sans pere 
 		Fichier f =  Fichier.nouveauFichier("t.avi", anasse , null, comptabilite);
 		//f.ajouterTag(comptabilite);
-		System.out.println(V.ecriture(f, anasse));
+		System.out.println(V.modification(f, anasse));
 		System.out.println(V.lecture(f, anasse));
 		System.out.println(V.suppression(f, anasse));
 		

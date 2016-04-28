@@ -221,7 +221,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		_Echangeable ech = this.echangeables.get(url);
 		if( ! (ech instanceof Post)) throw new ExceptionEchangeableMauvaisType();
 		//Verification autorisation
-		if( ! verifAutorisation.ecriture((Post)ech, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		if( ! verifAutorisation.modification((Post)ech, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		
 		
 		((Post)ech).repondre(new MessagePost(utilisateurs.get(identificateur), contenu));
