@@ -237,10 +237,12 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification Droit
-		//verifAutorisation.
+		if ( ! verifAutorisation.aSpecifiqueSuppression(url, this.utilisateurs.get(identificateur))){
+			throw new ExceptionAutorisationManquante();
+		};
 		
 		_Echangeable ech = this.echangeables.get(url);
-		if( ! (ech!=null)){
+		if( ! (ech==null)){
 			ech.detruireSauvegarde();
 			this.echangeables.remove(url);
 		}
