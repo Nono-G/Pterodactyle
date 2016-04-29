@@ -41,6 +41,7 @@ public class ProfilUser extends JFrame {
 	 * Launch the application.
 	 */
 	public ProfilUser(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		setResizable(false);
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;

@@ -49,7 +49,6 @@ import java.awt.event.MouseAdapter;
 public class ApplicationUtilisateur extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
@@ -314,19 +313,8 @@ public class ApplicationUtilisateur extends JFrame {
 		JLabel lblAnnuaire = new JLabel("Annuaire");
 		lblAnnuaire.setForeground(new Color(11, 29, 62));
 		lblAnnuaire.setFont(new Font("Book Antiqua", Font.BOLD, 17));
-		lblAnnuaire.setBounds(698, 11, 95, 24);
+		lblAnnuaire.setBounds(745, 62, 95, 24);
 		contentPane.add(lblAnnuaire);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(630, 103, 210, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JLabel lblRechercheParLogin = new JLabel("Recherche par login :");
-		lblRechercheParLogin.setForeground(new Color(11, 29, 62));
-		lblRechercheParLogin.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
-		lblRechercheParLogin.setBounds(676, 78, 139, 24);
-		contentPane.add(lblRechercheParLogin);
 		
 		JButton btnGo = new JButton("Go !");
 		btnGo.addActionListener(new ActionListener() {
@@ -338,15 +326,8 @@ public class ApplicationUtilisateur extends JFrame {
 		btnGo.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnGo.setForeground(Color.WHITE);
 		btnGo.setBackground(new Color(11, 29, 62));
-		btnGo.setBounds(708, 44, 58, 23);
+		btnGo.setBounds(762, 102, 58, 23);
 		contentPane.add(btnGo);
-		
-		JButton btnOkRechercheUser = new JButton("OK");
-		btnOkRechercheUser.setForeground(Color.WHITE);
-		btnOkRechercheUser.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
-		btnOkRechercheUser.setBackground(new Color(11, 29, 62));
-		btnOkRechercheUser.setBounds(551, 102, 69, 23);
-		contentPane.add(btnOkRechercheUser);
 		tabbedPane.add("Administrer ",onglet3);
 		
 		JLabel lblCreerUserAdmin = new JLabel("Créer un utilisateur :");

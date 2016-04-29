@@ -42,6 +42,7 @@ public class AnnuaireIHM extends JFrame {
 	 * Launch the application.
 	 */
 	public AnnuaireIHM(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		setResizable(false);
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
