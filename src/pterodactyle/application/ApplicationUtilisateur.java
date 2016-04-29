@@ -271,6 +271,13 @@ public class ApplicationUtilisateur extends JFrame {
 		btnGo.setBounds(708, 44, 58, 23);
 		contentPane.add(btnGo);
 		
+		JButton btnOkRechercheUser = new JButton("OK");
+		btnOkRechercheUser.setForeground(Color.WHITE);
+		btnOkRechercheUser.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnOkRechercheUser.setBackground(new Color(11, 29, 62));
+		btnOkRechercheUser.setBounds(551, 102, 69, 23);
+		contentPane.add(btnOkRechercheUser);
+		
 	}
 	
 	protected String[] refreshPosts(){
