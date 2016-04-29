@@ -18,13 +18,17 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable._Echangeable;
+import pterodactyle.utilisateur.Utilisateur;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Toolkit;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class AnnuaireIHM extends JFrame {
 
@@ -32,7 +36,7 @@ public class AnnuaireIHM extends JFrame {
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
-	private Map<String, _Echangeable> echangeables;
+	private Map<String, Utilisateur> utilisateurs;
 
 	/**
 	 * Launch the application.
@@ -41,7 +45,7 @@ public class AnnuaireIHM extends JFrame {
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
-		this.echangeables = new HashMap<String, _Echangeable>();
+		this.utilisateurs = new HashMap<String, Utilisateur>();
 		initialisation();
 	}
 
@@ -107,17 +111,18 @@ public class AnnuaireIHM extends JFrame {
 		panel.setForeground(new Color(0, 0, 205));
 		scrollPane.setViewportView(panel);
 		
-		JList list = new JList();
+		JList<String> list = new JList<String>();
 		list.setBackground(new Color(211,210,250));
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Login user "};
+		list.setModel(new AbstractListModel<String>() {
+			String[] values = refreshUtilisateurs();
 			public int getSize() {
 				return values.length;
 			}
-			public Object getElementAt(int index) {
+			public String getElementAt(int index) {
 				return values[index];
 			}
 		});
+		
 		list.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -131,5 +136,26 @@ public class AnnuaireIHM extends JFrame {
 		panel.setLayout(gl_panel);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
+	}
+	
+	protected String[] refreshUtilisateurs(){
+		Map<String,Utilisateur> users = null;
+		int i = 0;
+		try {
+			users = app.recupererToutLesUtilisateurs(loginCourant, motDePasseCourant);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] nomsUtilisateurs = new String[users.size()];
+
+		for(String p : users.keySet()){
+			Utilisateur u = users.get(p);
+			this.utilisateurs.put(p, u);
+			nomsUtilisateurs[i] = u.getLogin()+" : "+u.toString();
+			i++;
+		}
+		
+		return nomsUtilisateurs;
 	}
 }
