@@ -25,17 +25,25 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+
 import pterodactyle.echangeable.*;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import pterodactyle.echangeable.Post;
+import pterodactyle.echangeable._Echangeable;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 
 public class ApplicationUtilisateur extends JFrame {
@@ -46,12 +54,15 @@ public class ApplicationUtilisateur extends JFrame {
 	private String loginCourant;
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
+	private List<String> tagsFiltre;
+
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
 		this.echangeables = new HashMap<String, _Echangeable>();
+		this.tagsFiltre = new ArrayList<String>();
 		initialisation();
 	}
 
@@ -145,34 +156,12 @@ public class ApplicationUtilisateur extends JFrame {
 		textField.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Endroit où on rajoute les tag");
+		JLabel lblNewLabel = new JLabel("Ajouter un tag");
 		lblNewLabel.setForeground(new Color(11,29,62));
 		lblNewLabel.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		lblNewLabel.setBounds(10, 42, 200, 21);
 		
-		JButton btnOk = new JButton("OK");
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String tag = textField.getText();
-				
-				for(String s : echangeables.keySet()){
-					_Echangeable ech =  echangeables.get(s);
-					String [] tags = (($EchangeableAvecTag)ech).voirTableauTags();
-					
-				}
-				
-			}
-		});
-		btnOk.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
-		btnOk.setBounds(220, 10, 69, 23);
-		btnOk.setBackground(new Color(11,29,62));
-		btnOk.setForeground(new Color(255, 255, 255));
-		
-		onglet1.setLayout(null);
-		onglet1.add(lblForum);
-		onglet1.add(textField);
-		onglet1.add(lblNewLabel);
-		onglet1.add(btnOk);
+
 		
 		JPanel panel_test = new JPanel();
 		panel_test.setBorder(new LineBorder(new Color(11,29,62), 3, true));
@@ -217,7 +206,8 @@ public class ApplicationUtilisateur extends JFrame {
 		list.setForeground(new Color(11, 29, 62));
 		list.setModel(new AbstractListModel<PaireTitreUrl>() {
 			
-			PaireTitreUrl[] values =  refreshPosts();;
+			PaireTitreUrl[] values =  refreshPosts();
+
 			public int getSize() {
 				return values.length;
 			}
@@ -225,6 +215,41 @@ public class ApplicationUtilisateur extends JFrame {
 				return values[index];
 			}
 		});
+		
+		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String tag = textField.getText();
+				lblNewLabel.setText("Trier sur le tag : "+tag);
+				PaireTitreUrl[] data = new PaireTitreUrl[echangeables.size()];
+				int i = 0;
+				for(String s : echangeables.keySet()){
+					_Echangeable ech =  echangeables.get(s);
+					Set<Tag> tags = (($EchangeableAvecTag)ech).getTags();
+					boolean containt = false;
+					for(Tag t : tags){
+						if(tag.equals(t.toString())){
+							data[i] = new PaireTitreUrl(((Post)ech).getTitre(), ech.getUrl());
+							i++;
+							}
+					}
+				}	
+				{list.setListData(data);}
+				
+			}
+		});
+		
+		
+		btnOk.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnOk.setBounds(220, 10, 69, 23);
+		btnOk.setBackground(new Color(11,29,62));
+		btnOk.setForeground(new Color(255, 255, 255));
+		
+		onglet1.setLayout(null);
+		onglet1.add(lblForum);
+		onglet1.add(textField);
+		onglet1.add(lblNewLabel);
+		onglet1.add(btnOk);
 		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
@@ -245,11 +270,19 @@ public class ApplicationUtilisateur extends JFrame {
 		onglet2.add(lblCloud);
 		tabbedPane.add("Forum ",onglet1);
 		
+
 		JButton btnRefresh = new JButton("");
 		btnRefresh.setBounds(793, 31, 32, 32);
 		onglet1.add(btnRefresh);
 		btnRefresh.setBackground(new Color(11,29,62));
 		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
+				fr.setVisible(true);
+			}
+		});
 		
 		JButton btnNewPost = new JButton("Nouveau post !");
 		btnNewPost.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
@@ -342,6 +375,15 @@ public class ApplicationUtilisateur extends JFrame {
 		
 	}
 	
+	protected PaireTitreUrl[] Arrayto(List<PaireTitreUrl> data2 ){
+		PaireTitreUrl[] data = new PaireTitreUrl[data2.size()];
+		int i = 0;
+		for(PaireTitreUrl p : data2){
+			data[i] = p;
+		}
+		return data;		
+	}
+	
 	protected PaireTitreUrl[] refreshPosts(){
 		Set<Post> posts = null;
 		int i = 0;
@@ -358,7 +400,6 @@ public class ApplicationUtilisateur extends JFrame {
 			titresPosts[i] = new PaireTitreUrl(p.getTitre(), p.getUrl());
 			i++;
 		}
-		
 		return titresPosts;
 	}
 }

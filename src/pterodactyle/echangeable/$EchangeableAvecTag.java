@@ -1,5 +1,6 @@
 package pterodactyle.echangeable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,15 +32,6 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 			ret += t.toString() + " | ";
 		}
 		return ret;
-	}
-	
-	public String[] voirTableauTags(){
-		String[] res = new String[]{};
-		int i = 0;
-		for(Tag t : tags){
-			res[i] = t.toString();
-		}
-		return res;
 	}
 	
 	public Set<Tag> getTags(){
