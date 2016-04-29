@@ -33,6 +33,15 @@ public abstract class $EchangeableAvecTag extends $Echangeable{
 		return ret;
 	}
 	
+	public String[] voirTableauTags(){
+		String[] res = new String[]{};
+		int i = 0;
+		for(Tag t : tags){
+			res[i] = t.toString();
+		}
+		return res;
+	}
+	
 	public Set<Tag> getTags(){
 		return tags;
 	}

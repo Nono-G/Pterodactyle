@@ -30,8 +30,7 @@ import java.util.Set;
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
-import pterodactyle.echangeable.Post;
-import pterodactyle.echangeable._Echangeable;
+import pterodactyle.echangeable.*;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -150,6 +149,18 @@ public class ApplicationUtilisateur extends JFrame {
 		lblNewLabel.setBounds(10, 42, 200, 21);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String tag = textField.getText();
+				
+				for(String s : echangeables.keySet()){
+					_Echangeable ech =  echangeables.get(s);
+					String [] tags = (($EchangeableAvecTag)ech).voirTableauTags();
+					
+				}
+				
+			}
+		});
 		btnOk.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnOk.setBounds(220, 10, 69, 23);
 		btnOk.setBackground(new Color(11,29,62));
