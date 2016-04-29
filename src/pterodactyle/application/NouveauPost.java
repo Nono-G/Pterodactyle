@@ -42,9 +42,6 @@ public class NouveauPost extends JFrame {
 	private String loginCourant;
 	private String motDePasseCourant;
 
-<<<<<<< HEAD
-	
-=======
 
 	public NouveauPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant) {
 		this.loginCourant = loginCourant;
@@ -52,7 +49,12 @@ public class NouveauPost extends JFrame {
 		this.app = app;
 		initialisation();
 	}
->>>>>>> b0ca34d37aa7d80f5852ef08f493ec3a113f2214
+
+	public NouveauPost() {
+		// TODO Auto-generated constructor stub
+		initialisation();
+	}
+
 	/**
 	 * Create the frame.
 	 */

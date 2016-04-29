@@ -44,6 +44,11 @@ public class ApplicationAdministrateur extends JFrame {
 		initialisation();
 	}
 
+	public ApplicationAdministrateur() {
+		// TODO Auto-generated constructor stub
+		initialisation();
+	}
+
 	/**
 	 * Create the frame.
 	 */
