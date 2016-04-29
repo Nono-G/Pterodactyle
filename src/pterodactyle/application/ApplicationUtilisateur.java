@@ -54,6 +54,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
 	private List<String> tagsFiltre;
+	private JTextField txtFiltrerParTagCloud;
 
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
@@ -262,9 +263,7 @@ public class ApplicationUtilisateur extends JFrame {
 		panel_1.setLayout(gl_panel_1);
 		panel_test.setLayout(gl_panel_test);
 		lblForum.setBounds(10, 11, 96, 21);
-		JLabel lblCloud = new JLabel("Cloud");
 		onglet1.add(lblForum);
-		onglet2.add(lblCloud);
 		tabbedPane.add("Forum ",onglet1);
 		
 
@@ -295,6 +294,81 @@ public class ApplicationUtilisateur extends JFrame {
 		btnSuppPostUser.setBounds(399, 41, 200, 23);
 		onglet1.add(btnSuppPostUser);
 		tabbedPane.add("Cloud ",onglet2);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 45, 805, 327);
+		panel_2.setForeground(new Color(11,29,62));
+		panel_2.setBorder(new LineBorder(new Color(11,29,62), 3, true));
+		panel_2.setBackground(new Color(244,244,243));
+		
+		JLabel label_1 = new JLabel("Filtrer par tags :");
+		label_1.setBounds(10, 11, 96, 21);
+		label_1.setForeground(new Color(11, 29, 62));
+		label_1.setFont(new Font("Book Antiqua", Font.BOLD, 12));
+		
+		txtFiltrerParTagCloud = new JTextField();
+		txtFiltrerParTagCloud.setBounds(102, 10, 108, 21);
+		txtFiltrerParTagCloud.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		txtFiltrerParTagCloud.setColumns(10);
+		
+		JButton btnOkFiltrerParTagCloud = new JButton("OK");
+		btnOkFiltrerParTagCloud.setBounds(220, 9, 69, 25);
+		btnOkFiltrerParTagCloud.setForeground(Color.WHITE);
+		btnOkFiltrerParTagCloud.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnOkFiltrerParTagCloud.setBackground(new Color(11, 29, 62));
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addComponent(scrollPane_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.TRAILING)
+				.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+		);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setForeground(new Color(11,29,62));
+		panel_3.setBackground(new Color(211,210,250));
+		scrollPane_1.setViewportView(panel_3);
+		
+		JList listFichiers = new JList();
+		listFichiers.setBackground(new Color(211,210,250));
+		listFichiers.setForeground(new Color(11,29,62));
+		listFichiers.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
+		gl_panel_3.setHorizontalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addComponent(listFichiers, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 797, Short.MAX_VALUE)
+		);
+		gl_panel_3.setVerticalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_3.createSequentialGroup()
+					.addComponent(listFichiers, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		panel_3.setLayout(gl_panel_3);
+		panel_2.setLayout(gl_panel_2);
+		onglet2.setLayout(null);
+		onglet2.add(label_1);
+		onglet2.add(txtFiltrerParTagCloud);
+		onglet2.add(btnOkFiltrerParTagCloud);
+		onglet2.add(panel_2);
+		
+		JButton btnUploadFichier = new JButton("Upload");
+		btnUploadFichier.setForeground(Color.WHITE);
+		btnUploadFichier.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnUploadFichier.setBackground(new Color(11, 29, 62));
+		btnUploadFichier.setBounds(532, 10, 132, 25);
+		onglet2.add(btnUploadFichier);
+		
+		JButton btnDownloadFichier = new JButton("Download");
+		btnDownloadFichier.setForeground(Color.WHITE);
+		btnDownloadFichier.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnDownloadFichier.setBackground(new Color(11, 29, 62));
+		btnDownloadFichier.setBounds(683, 10, 132, 25);
+		onglet2.add(btnDownloadFichier);
 		btnNewPost.addActionListener(new ActionListener(){
 
 			@Override
