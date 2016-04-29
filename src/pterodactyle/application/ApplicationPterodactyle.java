@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import javax.swing.JPasswordField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ApplicationPterodactyle {
 
@@ -108,6 +110,7 @@ public class ApplicationPterodactyle {
 		frameConnection.getContentPane().add(lblMdp);
 
 		JButton btnConnection = new JButton("Se connecter");
+
 		btnConnection.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {

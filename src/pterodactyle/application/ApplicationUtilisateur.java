@@ -12,6 +12,8 @@ import javax.swing.JList;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
@@ -32,6 +34,8 @@ import javax.swing.border.LineBorder;
 import pterodactyle.coeur2._ServicesCoeur;
 import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable._Echangeable;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 public class ApplicationUtilisateur extends JFrame {
 
@@ -181,21 +185,34 @@ public class ApplicationUtilisateur extends JFrame {
 		panel_1.setBackground(new Color(211,210,250));
 		scrollPane.setViewportView(panel_1);
 		
-		JList<String> list = new JList<String>();
+		JList<PaireTitreUrl> list = new JList<PaireTitreUrl>();
+		final JList<PaireTitreUrl> listPourClick = list;
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()>=2){
+					//listPourClick.getSelectedValue();
+					PaireTitreUrl titre = listPourClick.getModel().getElementAt(listPourClick.locationToIndex(e.getPoint()));
+					System.out.println(titre.getTitre()+"\n"+titre.getUrl());
+					System.out.println(echangeables.get(titre.url));
+				}
+			}
+		});
 		list.setBorder(null);
 		list.setFont(new Font("Book Antiqua", Font.BOLD, 14));
 		list.setBackground(new Color(211,210,250));
 		list.setForeground(new Color(11, 29, 62));
-		list.setModel(new AbstractListModel<String>() {
+		list.setModel(new AbstractListModel<PaireTitreUrl>() {
 			
-			String[] values =  refreshPosts();;
+			PaireTitreUrl[] values =  refreshPosts();;
 			public int getSize() {
 				return values.length;
 			}
-			public String getElementAt(int index) {
+			public PaireTitreUrl getElementAt(int index) {
 				return values[index];
 			}
 		});
+		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -312,7 +329,7 @@ public class ApplicationUtilisateur extends JFrame {
 		
 	}
 	
-	protected String[] refreshPosts(){
+	protected PaireTitreUrl[] refreshPosts(){
 		Set<Post> posts = null;
 		int i = 0;
 		try {
@@ -321,15 +338,30 @@ public class ApplicationUtilisateur extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String[] titresPosts = new String[posts.size()];
+		PaireTitreUrl[] titresPosts = new PaireTitreUrl[posts.size()];
 		
 		for(Post p : posts){
 			this.echangeables.put(p.getUrl(), p);
-			titresPosts[i] = p.getTitre();
+			titresPosts[i] = new PaireTitreUrl(p.getTitre(), p.getUrl());
 			i++;
 		}
 		
 		return titresPosts;
 	}
+}
+
+class PaireTitreUrl{
+	
+	String titre;
+	String url;
+	
+	public PaireTitreUrl (String titre, String url){
+		this.titre = titre;
+		this.url = url;
+	}
+	
+	public String toString() {return titre;}
+	public String getTitre() {return this.titre;}
+	public String getUrl() {return this.url;}
 }
 
