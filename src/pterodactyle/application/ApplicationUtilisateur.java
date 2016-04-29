@@ -328,6 +328,11 @@ public class ApplicationUtilisateur extends JFrame {
 		lblSupprimerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		JButton btnCreerUser = new JButton("Formulaire");
+		btnCreerUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnCreerUser.setBackground(new Color(11,29,62));
 		btnCreerUser.setForeground(new Color(255, 255, 255));
 		btnCreerUser.setFont(new Font("Book Antiqua", Font.BOLD, 13));

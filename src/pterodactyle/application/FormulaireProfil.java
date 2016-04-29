@@ -29,8 +29,8 @@ public class FormulaireProfil extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldCreationLogin;
 	private JTextField textFieldCreationMdp;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textFieldCreationPrenom;
+	private JTextField textFieldNomFamille;
 	private JButton btnValiderCreationProfil;
 	private _ServicesCoeur app;
 	private String loginCourant;
@@ -92,15 +92,15 @@ public class FormulaireProfil extends JFrame {
 		textFieldCreationMdp.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		textFieldCreationMdp.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setForeground(new Color(11, 29, 62));
-		textField.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		textField.setColumns(10);
+		textFieldCreationPrenom = new JTextField();
+		textFieldCreationPrenom.setForeground(new Color(11, 29, 62));
+		textFieldCreationPrenom.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textFieldCreationPrenom.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setForeground(new Color(11, 29, 62));
-		textField_1.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		textField_1.setColumns(10);
+		textFieldNomFamille = new JTextField();
+		textFieldNomFamille.setForeground(new Color(11, 29, 62));
+		textFieldNomFamille.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textFieldNomFamille.setColumns(10);
 		
 		JButton btnAnnulerCreationProfil = new JButton("Annuler");
 		btnAnnulerCreationProfil.addActionListener(new ActionListener() {
@@ -136,13 +136,13 @@ public class FormulaireProfil extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textFieldCreationPrenom, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+									.addComponent(textFieldNomFamille, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
 								.addComponent(btnAnnulerCreationProfil))
 							.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
 							.addComponent(btnValiderCreationProfil, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)))
@@ -162,11 +162,11 @@ public class FormulaireProfil extends JFrame {
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textFieldCreationPrenom, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textFieldNomFamille, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnValiderCreationProfil, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
