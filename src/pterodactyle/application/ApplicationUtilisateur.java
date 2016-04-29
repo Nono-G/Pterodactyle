@@ -42,8 +42,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
 
-<<<<<<< HEAD
-=======
+
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
@@ -52,7 +51,7 @@ public class ApplicationUtilisateur extends JFrame {
 		initialisation();
 	}
 
->>>>>>> b0ca34d37aa7d80f5852ef08f493ec3a113f2214
+
 	/**
 	 * Create the frame.
 	 * @return 
