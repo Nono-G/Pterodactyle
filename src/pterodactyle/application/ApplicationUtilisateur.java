@@ -193,8 +193,8 @@ public class ApplicationUtilisateur extends JFrame {
 				if(e.getClickCount()>=2){
 					//listPourClick.getSelectedValue();
 					PaireTitreUrl titre = listPourClick.getModel().getElementAt(listPourClick.locationToIndex(e.getPoint()));
-					System.out.println(titre.getTitre()+"\n"+titre.getUrl());
-					System.out.println(echangeables.get(titre.url));
+					EditionPost ep = new EditionPost((Post)echangeables.get(titre.url), app, loginCourant, loginCourant);
+					ep.setVisible(true);
 				}
 			}
 		});
