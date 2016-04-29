@@ -104,7 +104,7 @@ public class NouveauPost extends JFrame {
 		
 		JList<String> listTagAjoutes = new JList<String>();
 		AbstractListModel<String> almListTagsAjoutes = new AbstractListModel<String>() {
-			String[] values = new String[] {"toto"};
+			String[] values = new String[] {};
 			public int getSize() {
 				return values.length;
 			}
@@ -128,7 +128,8 @@ public class NouveauPost extends JFrame {
 		//final AbstractListModel almInBtnAddTagPost = almListTagsAjoutes;
 		btnAddTagPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tagEnAjout.add(ComboBoxInBtnAddTagPost.getSelectedItem().toString());
+				String ajout = ComboBoxInBtnAddTagPost.getSelectedItem().toString();
+				if( ! tagEnAjout.contains(ajout))tagEnAjout.add(ajout);
 				jListInBtnAddTagPost.setListData(refreshTagAjoute());
 			}
 		});
@@ -144,23 +145,24 @@ public class NouveauPost extends JFrame {
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String titre = textField.getText();
-				String url = System.currentTimeMillis()+titre;
-				try {
-					app.creerPost(url, titre, tagEnAjout.get(0), loginCourant, motDePasseCourant);
-					int i = 0;
-					while( i < tagEnAjout.size()){
-						try{
-						app.ajouterTagSurEchangeable(url, tagEnAjout.get(i), loginCourant, motDePasseCourant);
-						}catch(RemoteException re){//TODO
-							re.printStackTrace();
-						}catch(Exception exep){exep.printStackTrace();//Néant. Exception impossible compte tenu des verification précédentes}
-						i++;
+				if( titre.length() != 0){
+					String url = System.currentTimeMillis()+titre;
+					try {
+						app.creerPost(url, titre, tagEnAjout.get(0), loginCourant, motDePasseCourant);
+						int i = 1;
+						while( i < tagEnAjout.size()){
+							try{
+							app.ajouterTagSurEchangeable(url, tagEnAjout.get(i), loginCourant, motDePasseCourant);
+							}catch(RemoteException re){//TODO
+								re.printStackTrace();
+							}catch(Exception exep){exep.printStackTrace();/*Néant. Exception impossible compte tenu des verification précédentes*/}
+							i++;
 						}
-					}
-				} catch (RemoteException | ExceptionEchangeablePasDeTag e1) {e1.printStackTrace();}
-				dispose();
-				ApplicationUtilisateur acc = new ApplicationUtilisateur(app, loginCourant, motDePasseCourant);
-				acc.setVisible(true);
+					} catch (RemoteException | ExceptionEchangeablePasDeTag e1) {e1.printStackTrace();}
+					dispose();
+					ApplicationUtilisateur acc = new ApplicationUtilisateur(app, loginCourant, motDePasseCourant);
+					acc.setVisible(true);
+				}
 			}
 		});
 		

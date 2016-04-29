@@ -44,9 +44,9 @@ public class ApplicationPterodactyle {
 	public static void main(String[] args) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag, AdministrateurException, ExceptionEchangeableTagExistant {
 		Client2 client = new Client2("127.0.0.1");
 		app = client.recupererApp();
-		app.creerTag("compta", "admin", "admin");
-		app.creerTag("economie", "admin", "admin");
-		app.creerPost("p1", "toto", "compta", "admin", "admin");
+		//app.creerTag("compta", "admin", "admin");
+		//app.creerTag("economie", "admin", "admin");
+		//app.creerPost("p1", "toto", "compta", "admin", "admin");
 		//System.out.println(app.test());
 
 		EventQueue.invokeLater(new Runnable() {

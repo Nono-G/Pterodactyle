@@ -30,12 +30,16 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	
 	public CoeurBase() throws RemoteException, ClassNotFoundException{
 		super();
+		this.utilisateurs = new HashMap<String, Utilisateur>();
+		this.tags = new HashMap<String, Tag>();
+		this.echangeables = new HashMap<String, _Echangeable>();
 		File rep; File[] objets; String adresse;
 		//UTILISATEURS
 		adresse = "sauv/utilisateurs";
 		rep = new File(adresse);
 		objets = rep.listFiles();
 		for(File u : objets){
+			System.out.println(u.getName());
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
 				this.utilisateurs.put(u.getName(), (Utilisateur)ois.readObject());
 			}catch(IOException e){e.printStackTrace();}
@@ -45,6 +49,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		rep = new File(adresse);
 		objets = rep.listFiles();
 		for(File u : objets){
+			System.out.println(u.getName());
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
 				this.tags.put(u.getName(), (Tag)ois.readObject());
 			}catch(IOException e){e.printStackTrace();}
@@ -54,6 +59,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		rep = new File(adresse);
 		objets = rep.listFiles();
 		for(File u : objets){
+			System.out.println(u.getName());
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
 				this.echangeables.put(u.getName(), (_Echangeable)ois.readObject());
 			}catch(IOException e){e.printStackTrace();}
