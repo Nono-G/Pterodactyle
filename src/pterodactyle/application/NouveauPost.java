@@ -76,15 +76,15 @@ public class NouveauPost extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		JButton btnAjouter = new JButton("Creer");
+		btnAjouter.setBackground(new Color(11,29,62));
+		btnAjouter.setForeground(new Color(255,255,255));
+		btnAjouter.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.setBackground(new Color(11,29,62));
 		btnAnnuler.setForeground(new Color(255,255,255));
 		btnAnnuler.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		JButton btnAjouter = new JButton("Ajouter");
-		btnAjouter.setBackground(new Color(11,29,62));
-		btnAjouter.setForeground(new Color(255,255,255));
-		btnAjouter.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		JLabel lblTitreDeVotre = new JLabel("Titre de votre post :");
 		lblTitreDeVotre.setForeground(new Color(11,29,62));
@@ -139,8 +139,6 @@ public class NouveauPost extends JFrame {
 		lblListTagPres.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		
-		JPanel panel_1 = new JPanel();
 				
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -161,17 +159,15 @@ public class NouveauPost extends JFrame {
 									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnAddTagPost)))
-							.addGap(18)
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(2)
+							.addGap(30)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
 								.addComponent(lblListTagPres, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(10)
-							.addComponent(btnAjouter)
-							.addGap(244)
-							.addComponent(btnAnnuler)))
+							.addComponent(btnAnnuler)
+							.addPreferredGap(ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
+							.addComponent(btnAjouter, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -193,13 +189,11 @@ public class NouveauPost extends JFrame {
 								.addComponent(btnAddTagPost, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(2)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))))
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnAjouter)
-						.addComponent(btnAnnuler))
+						.addComponent(btnAnnuler)
+						.addComponent(btnAjouter))
 					.addGap(9))
 		);
 		
@@ -217,7 +211,7 @@ public class NouveauPost extends JFrame {
 		);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
-		btnAnnuler.addActionListener(new ActionListener(){
+		btnAjouter.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
