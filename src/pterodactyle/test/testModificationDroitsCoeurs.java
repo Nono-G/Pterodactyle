@@ -30,6 +30,12 @@ public class testModificationDroitsCoeurs {
 			c.partageDroits("Ba", "Comptabilite", 0, "Ng", "lol");
 			
 			c.supprimerDroits("Ba", "Comptabilite", 0, "Petry", "abc");
+			System.out.println(c.voirUtilisateur("Ng", "Petry", "abc"));
+			c.supprimerUtilisateur("Bo", "Petry", "abc");
+			System.out.println(c.voirUtilisateur("Ng", "Ba", "lol"));
+			
+			
+			
 			System.out.println(anasse.toStringDroits());	
 			
 		}catch(Exception e){e.printStackTrace();;}
