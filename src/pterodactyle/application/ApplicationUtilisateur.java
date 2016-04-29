@@ -125,6 +125,8 @@ public class ApplicationUtilisateur extends JFrame {
 		onglet1.setBackground(new Color(244, 244, 243));
 		JPanel onglet2 = new JPanel();
 		onglet2.setBackground(new Color(244, 244, 243));
+		JPanel onglet3 = new JPanel();
+		onglet3.setBackground(new Color(244, 244, 243));
 
 		
 		JLabel lblForum = new JLabel("Filtrer par tags :");
@@ -161,6 +163,7 @@ public class ApplicationUtilisateur extends JFrame {
 		panel_test.setBounds(10, 68, 815, 315);
 		onglet1.add(panel_test);
 		tabbedPane.add("Cloud ",onglet2);
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_panel_test = new GroupLayout(panel_test);
@@ -277,6 +280,35 @@ public class ApplicationUtilisateur extends JFrame {
 		btnOkRechercheUser.setBackground(new Color(11, 29, 62));
 		btnOkRechercheUser.setBounds(551, 102, 69, 23);
 		contentPane.add(btnOkRechercheUser);
+		tabbedPane.add("Administrer ",onglet3);
+		
+		JLabel lblCreerUserAdmin = new JLabel("Créer un utilisateur :");
+		lblCreerUserAdmin.setForeground(new Color(11,29,62));
+		lblCreerUserAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JLabel label = new JLabel("Créer un utilisateur :");
+		label.setForeground(new Color(11, 29, 62));
+		label.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
+		gl_onglet3.setHorizontalGroup(
+			gl_onglet3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_onglet3.createSequentialGroup()
+					.addGap(28)
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(637, Short.MAX_VALUE))
+		);
+		gl_onglet3.setVerticalGroup(
+			gl_onglet3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_onglet3.createSequentialGroup()
+					.addGap(28)
+					.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGap(58)
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(251, Short.MAX_VALUE))
+		);
+		onglet3.setLayout(gl_onglet3);
 		
 	}
 	
