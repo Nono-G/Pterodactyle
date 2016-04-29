@@ -20,7 +20,12 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.echangeables = new HashMap<String, _Echangeable>();
 		Utilisateur admin = new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true);
 		this.utilisateurs.put(identifiantSuperAdmin, admin);
+		new File("sauv/tags").mkdirs();
+		new File("sauv/echangeables").mkdir();
+		new File("sauv/utilisateurs").mkdir();
+		new File("sauv/fichiers").mkdir();
 		admin.sauver();
+		
 	}
 	
 	public CoeurBase() throws RemoteException, ClassNotFoundException{
