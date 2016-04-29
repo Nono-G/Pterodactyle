@@ -52,7 +52,7 @@ public class FormulaireCreationProfil extends JFrame {
 	 */
 	public void initialisation() {
 		setTitle("Créer un profil");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FormulaireProfil.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FormulaireCreationProfil.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 283);
 		contentPane = new JPanel();
