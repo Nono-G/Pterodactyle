@@ -9,40 +9,47 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
+
+import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable._Echangeable;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AnnuaireIHM extends JFrame {
 
 	private JPanel contentPane;
+	private _ServicesCoeur app;
+	private String loginCourant;
+	private String motDePasseCourant;
+	private Map<String, _Echangeable> echangeables;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AnnuaireIHM frame = new AnnuaireIHM();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public AnnuaireIHM(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		this.loginCourant= loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app =app;
+		this.echangeables = new HashMap<String, _Echangeable>();
+		initialisation();
 	}
 
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public AnnuaireIHM() {
+	public void initialisation() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AnnuaireIHM.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setTitle("Annuaire");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
