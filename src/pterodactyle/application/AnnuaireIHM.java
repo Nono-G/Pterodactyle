@@ -29,6 +29,8 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AnnuaireIHM extends JFrame {
 
@@ -37,6 +39,7 @@ public class AnnuaireIHM extends JFrame {
 	private String loginCourant;
 	private String motDePasseCourant;
 	private Map<String, Utilisateur> utilisateurs;
+	private JTextField txtRechercheLogin;
 
 	/**
 	 * Launch the application.
@@ -58,12 +61,12 @@ public class AnnuaireIHM extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AnnuaireIHM.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setTitle("Annuaire");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 577, 486);
+		setBounds(100, 100, 577, 488);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(244,244,243));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(11,29,62), 3, true));
 		
@@ -74,27 +77,53 @@ public class AnnuaireIHM extends JFrame {
 		
 		JLabel lblTitreAnnuaire = new JLabel("Annuaire");
 		lblTitreAnnuaire.setFont(new Font("Book Antiqua", Font.BOLD, 20));
+		
+		JButton btnOkSearch = new JButton("OK");
+		btnOkSearch.setForeground(Color.WHITE);
+		btnOkSearch.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnOkSearch.setBackground(new Color(11, 29, 62));
+		
+		JLabel lblNewLabel = new JLabel("Rechercher par login :");
+		lblNewLabel.setForeground(new Color(11,29,62));
+		lblNewLabel.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		txtRechercheLogin = new JTextField();
+		txtRechercheLogin.setColumns(10);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
-						.addComponent(btnNewButton, Alignment.TRAILING)
-						.addComponent(lblTitreAnnuaire, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblTitreAnnuaire, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+							.addGap(81)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(txtRechercheLogin, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnOkSearch, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+									.addComponent(btnNewButton)))))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblTitreAnnuaire)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnNewButton)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTitreAnnuaire)
+						.addComponent(lblNewLabel))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtRechercheLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnOkSearch, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
-					.addGap(10))
+					.addGap(30))
 		);
 		
 		JScrollPane scrollPane = new JScrollPane();
