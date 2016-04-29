@@ -300,3 +300,4 @@ public class ApplicationUtilisateur extends JFrame {
 		return titresPosts;
 	}
 }
+

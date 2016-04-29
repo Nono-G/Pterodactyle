@@ -49,6 +49,7 @@ public class NouveauPost extends JFrame {
 	private List<String> tagEnAjout;
 
 
+
 	public NouveauPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant) {
 		this.loginCourant = loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
@@ -129,7 +130,7 @@ public class NouveauPost extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String[] nouveau = new String[] {"tit", "de", "Lomont"};
 				tagEnAjout.add(ComboBoxInBtnAddTagPost.getSelectedItem().toString());
-				jListInBtnAddTagPost.setListData(nouveau);
+				jListInBtnAddTagPost.setListData(refreshTagsEcriture());
 			}
 		});
 		

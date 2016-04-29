@@ -232,6 +232,21 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		ech.sauver();
 		
 	}
+	
+	public void supprimerEchangeable(String url, String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		//Verification Droit
+		if ( ! verifAutorisation.aSpecifiqueSuppression(url, this.utilisateurs.get(identificateur))){
+			throw new ExceptionAutorisationManquante();
+		};
+		
+		_Echangeable ech = this.echangeables.get(url);
+		if( ! (ech==null)){
+			ech.detruireSauvegarde();
+			this.echangeables.remove(url);
+		}
+	}
 
 	
 	/**
@@ -356,7 +371,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			String cle) {
 		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
 		Utilisateur victime = utilisateurs.get(idVictime);
-		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
+		if( ! (victime != null)) throw new UtilisateurException("Utilisateur inexistant");
 		victime.getDroits(tags.get(tag)).supprimerDroits(numeroDroit);
 		victime.sauver();
 	}
@@ -364,7 +379,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	public void supprimerUtilisateur(String idSupprime, String idResponsable, String cle){
 		if( ! (verifIdentite.estAdmin(idResponsable, cle, utilisateurs))) throw new AdministrateurException();
 		Utilisateur victime = utilisateurs.get(idSupprime);
-		if( ! (victime != null)) throw new UtilisateurException("Bonjour");
+		if( ! (victime != null)) throw new UtilisateurException("Utilisateur inexistant");
 		utilisateurs.remove(idSupprime);
 	}
 
