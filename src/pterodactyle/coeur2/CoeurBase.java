@@ -232,6 +232,19 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		ech.sauver();
 		
 	}
+	
+	public void supprimerEchangeable(String url, String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		//Verification Droit
+		//verifAutorisation.
+		
+		_Echangeable ech = this.echangeables.get(url);
+		if( ! (ech!=null)){
+			ech.detruireSauvegarde();
+			this.echangeables.remove(url);
+		}
+	}
 
 	
 	/**
