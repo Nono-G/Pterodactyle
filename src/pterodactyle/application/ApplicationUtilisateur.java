@@ -224,6 +224,13 @@ public class ApplicationUtilisateur extends JFrame {
 		btnNewPost.setBackground(new Color(11, 29, 62));
 		btnNewPost.setBounds(614, 41, 171, 23);
 		onglet1.add(btnNewPost);
+		
+		JButton btnSuppPostUser = new JButton("Supprimer un post !");
+		btnSuppPostUser.setForeground(Color.WHITE);
+		btnSuppPostUser.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnSuppPostUser.setBackground(new Color(11, 29, 62));
+		btnSuppPostUser.setBounds(399, 41, 200, 23);
+		onglet1.add(btnSuppPostUser);
 		tabbedPane.add("Cloud ",onglet2);
 		btnNewPost.addActionListener(new ActionListener(){
 
