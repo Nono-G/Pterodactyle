@@ -13,6 +13,8 @@ import java.util.Scanner;
 
 import pterodactyle.coeur2.CoeurBase;
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.ExceptionEchangeableTagExistant;
+import pterodactyle.utilisateur.AdministrateurException;
 
 // rmic pterodactyle.rmi.ServicesRmiImpl
 
@@ -20,7 +22,7 @@ public class Serveur {
 	
 	private static String hostname = "127.0.0.1";
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, AdministrateurException, ExceptionEchangeableTagExistant {
 
 		// courant
 		String cwd = System.getProperty("user.dir");
@@ -37,6 +39,9 @@ public class Serveur {
 		System.out.println("policy = " + System.getProperty("java.security.policy"));
 
 		_ServicesCoeur skeleton = (_ServicesCoeur) new CoeurBase("admin","admin");
+		skeleton.creerTag("compta", "admin", "admin");
+		skeleton.creerTag("eco", "admin", "admin");
+		skeleton.creerTag("ihm", "admin", "admin");
 		LocateRegistry.createRegistry(1099);
 		Naming.rebind("app", skeleton); // publie notre instance
 
