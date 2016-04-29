@@ -18,17 +18,28 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		this.utilisateurs = new HashMap<String, Utilisateur>();
 		this.tags = new HashMap<String, Tag>();
 		this.echangeables = new HashMap<String, _Echangeable>();
-		this.utilisateurs.put(identifiantSuperAdmin, new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true));
+		Utilisateur admin = new Utilisateur("Administrateur", "Super", identifiantSuperAdmin, cleSuperAdmin, true);
+		this.utilisateurs.put(identifiantSuperAdmin, admin);
+		new File("sauv/tags").mkdirs();
+		new File("sauv/echangeables").mkdir();
+		new File("sauv/utilisateurs").mkdir();
+		new File("sauv/fichiers").mkdir();
+		admin.sauver();
+		
 	}
 	
 	public CoeurBase() throws RemoteException, ClassNotFoundException{
 		super();
+		this.utilisateurs = new HashMap<String, Utilisateur>();
+		this.tags = new HashMap<String, Tag>();
+		this.echangeables = new HashMap<String, _Echangeable>();
 		File rep; File[] objets; String adresse;
 		//UTILISATEURS
 		adresse = "sauv/utilisateurs";
 		rep = new File(adresse);
 		objets = rep.listFiles();
 		for(File u : objets){
+			System.out.println(u.getName());
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
 				this.utilisateurs.put(u.getName(), (Utilisateur)ois.readObject());
 			}catch(IOException e){e.printStackTrace();}
@@ -38,6 +49,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		rep = new File(adresse);
 		objets = rep.listFiles();
 		for(File u : objets){
+			System.out.println(u.getName());
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
 				this.tags.put(u.getName(), (Tag)ois.readObject());
 			}catch(IOException e){e.printStackTrace();}
@@ -47,6 +59,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		rep = new File(adresse);
 		objets = rep.listFiles();
 		for(File u : objets){
+			System.out.println(u.getName());
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
 				this.echangeables.put(u.getName(), (_Echangeable)ois.readObject());
 			}catch(IOException e){e.printStackTrace();}
@@ -195,6 +208,20 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}
 	}
 	
+	public void ajouterTagSurEchangeable(String urlEch, String urlTag, String identificateur, String cle) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		//Verif sémantique
+		_Echangeable ech = this.echangeables.get(urlEch);
+		if (! (ech instanceof $EchangeableAvecTag)){throw new ExceptionEchangeableMauvaisType();}
+		//Verif sémantique 2
+		if( ! (this.tags.get(urlTag) != null)){throw new ExceptionEchangeablePasDeTag();}
+		//Verification autorisation
+		if( ! verifAutorisation.creationTag(tags.get(urlTag), utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		
+		(($EchangeableAvecTag)ech).ajouterTag(this.tags.get(urlTag));
+	}
+	
 	/**
 	 * POST	
 	 */
@@ -231,6 +258,21 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		((Post)ech).repondre(new MessagePost(utilisateurs.get(identificateur), contenu));
 		ech.sauver();
 		
+	}
+	
+	public void supprimerEchangeable(String url, String identificateur, String cle) throws RemoteException{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		//Verification Droit
+		if ( ! verifAutorisation.aSpecifiqueSuppression(url, this.utilisateurs.get(identificateur))){
+			throw new ExceptionAutorisationManquante();
+		};
+		
+		_Echangeable ech = this.echangeables.get(url);
+		if( ! (ech==null)){
+			ech.detruireSauvegarde();
+			this.echangeables.remove(url);
+		}
 	}
 
 	

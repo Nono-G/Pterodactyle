@@ -24,7 +24,7 @@ public abstract class $Echangeable implements _Echangeable {
 		}
 		
 		//Recontruire un échangeable sérializé à partir de son nom.
-		public static $Echangeable charger (String nom){
+		public static _Echangeable charger (String nom){
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("sauv/"+nom)))){
 				$Echangeable a = ($Echangeable) ois.readObject();
 				return a;
@@ -44,6 +44,11 @@ public abstract class $Echangeable implements _Echangeable {
 			return this.url;
 		}
 		
+		public Utilisateur getAuteur(){
+			return this.auteur;
+		}
+		
+		public Date getDateCreation(){return this.dateCreation;}
 		public void detruireSauvegarde(){
 			new File("sauv/echangeables/"+url).delete();
 		}

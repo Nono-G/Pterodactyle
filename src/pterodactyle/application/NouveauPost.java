@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable.Tag;
 
@@ -51,16 +53,12 @@ public class NouveauPost extends JFrame {
 
 
 	public NouveauPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant) {
+		setResizable(false);
 		this.loginCourant = loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app = app;
 		initialisation();
 		tagEnAjout = new ArrayList<String>(3);
-	}
-
-	public NouveauPost() {
-		// TODO Auto-generated constructor stub
-		initialisation();
 	}
 
 	/**
@@ -70,7 +68,7 @@ public class NouveauPost extends JFrame {
 		setTitle("Ajout d'un post");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NouveauPost.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setBackground(new Color(244,244,243));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 466, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -81,10 +79,9 @@ public class NouveauPost extends JFrame {
 		btnAnnuler.setForeground(new Color(255,255,255));
 		btnAnnuler.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		JButton btnAjouter = new JButton("Ajouter");
-		btnAjouter.setBackground(new Color(11,29,62));
-		btnAjouter.setForeground(new Color(255,255,255));
-		btnAjouter.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textField = new JTextField();
+		textField.setColumns(10);
+		
 		
 		JLabel lblTitreDeVotre = new JLabel("Titre de votre post :");
 		lblTitreDeVotre.setForeground(new Color(11,29,62));
@@ -94,8 +91,7 @@ public class NouveauPost extends JFrame {
 		lblTagPost.setForeground(new Color(11, 29, 62));
 		lblTagPost.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setForeground(new Color(11,29,62));
@@ -104,7 +100,7 @@ public class NouveauPost extends JFrame {
 		
 		JList<String> listTagAjoutes = new JList<String>();
 		AbstractListModel<String> almListTagsAjoutes = new AbstractListModel<String>() {
-			String[] values = new String[] {"toto"};
+			String[] values = new String[] {};
 			public int getSize() {
 				return values.length;
 			}
@@ -128,15 +124,43 @@ public class NouveauPost extends JFrame {
 		//final AbstractListModel almInBtnAddTagPost = almListTagsAjoutes;
 		btnAddTagPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String[] nouveau = new String[] {"tit", "de", "Lomont"};
-				tagEnAjout.add(ComboBoxInBtnAddTagPost.getSelectedItem().toString());
-				jListInBtnAddTagPost.setListData(refreshTagsEcriture());
+				String ajout = ComboBoxInBtnAddTagPost.getSelectedItem().toString();
+				if( ! tagEnAjout.contains(ajout))tagEnAjout.add(ajout);
+				jListInBtnAddTagPost.setListData(refreshTagAjoute());
 			}
 		});
 		
 		JLabel lblListTagPres = new JLabel("Liste des tags ajoutés :");
 		lblListTagPres.setForeground(new Color(11, 29, 62));
 		lblListTagPres.setFont(new Font("Book Antiqua", Font.BOLD, 18));
+		
+		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setBackground(new Color(11,29,62));
+		btnAjouter.setForeground(new Color(255,255,255));
+		btnAjouter.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnAjouter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String titre = textField.getText();
+				if( titre.length() != 0){
+					String url = System.currentTimeMillis()+titre;
+					try {
+						app.creerPost(url, titre, tagEnAjout.get(0), loginCourant, motDePasseCourant);
+						int i = 1;
+						while( i < tagEnAjout.size()){
+							try{
+							app.ajouterTagSurEchangeable(url, tagEnAjout.get(i), loginCourant, motDePasseCourant);
+							}catch(RemoteException re){//TODO
+								re.printStackTrace();
+							}catch(Exception exep){exep.printStackTrace();/*Néant. Exception impossible compte tenu des verification précédentes*/}
+							i++;
+						}
+					} catch (RemoteException | ExceptionEchangeablePasDeTag e1) {e1.printStackTrace();}
+					dispose();
+					ApplicationUtilisateur acc = new ApplicationUtilisateur(app, loginCourant, motDePasseCourant);
+					acc.setVisible(true);
+				}
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 				
@@ -161,13 +185,13 @@ public class NouveauPost extends JFrame {
 									.addComponent(btnAddTagPost)))
 							.addGap(30)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-								.addComponent(lblListTagPres, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)))
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+								.addComponent(lblListTagPres, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(10)
-							.addComponent(btnAjouter)
-							.addGap(244)
-							.addComponent(btnAnnuler)))
+							.addComponent(btnAnnuler)
+							.addPreferredGap(ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
+							.addComponent(btnAjouter, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -183,17 +207,17 @@ public class NouveauPost extends JFrame {
 						.addComponent(lblListTagPres, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(2)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnAddTagPost, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(btnAddTagPost, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(2)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnAjouter)
-						.addComponent(btnAnnuler))
+						.addComponent(btnAnnuler)
+						.addComponent(btnAjouter))
 					.addGap(9))
 		);
 		
@@ -243,4 +267,15 @@ public class NouveauPost extends JFrame {
 		}
 		return nomsTags;
 	}
+	
+	protected String[] refreshTagAjoute(){
+		String[] nomsTags = new String[tagEnAjout.size()];
+		int i=0;
+		for(String t: tagEnAjout){
+			nomsTags[i] = t;
+			i++;
+		}
+		return nomsTags;
+	}
 }
+

@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import javax.swing.JPasswordField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ApplicationPterodactyle {
 
@@ -44,8 +46,9 @@ public class ApplicationPterodactyle {
 	public static void main(String[] args) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag, AdministrateurException, ExceptionEchangeableTagExistant {
 		Client2 client = new Client2("127.0.0.1");
 		app = client.recupererApp();
-		app.creerTag("compta", "admin", "admin");
-		app.creerPost("p1", "toto", "compta", "admin", "admin");
+		//app.creerTag("compta", "admin", "admin");
+		//app.creerTag("economie", "admin", "admin");
+		//app.creerPost("p1", "toto", "compta", "admin", "admin");
 		//System.out.println(app.test());
 
 		EventQueue.invokeLater(new Runnable() {
@@ -107,6 +110,7 @@ public class ApplicationPterodactyle {
 		frameConnection.getContentPane().add(lblMdp);
 
 		JButton btnConnection = new JButton("Se connecter");
+
 		btnConnection.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {

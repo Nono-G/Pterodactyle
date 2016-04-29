@@ -89,13 +89,20 @@ public interface _ServicesCoeur extends Remote {
 			throws ExceptionEchangeablePasDeTag, RemoteException;
 	
 	
-	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType, RemoteException;
+	public void enleverTag(String url, String tag, String identificateur, String cle)
+			throws ExceptionEchangeableMauvaisType, RemoteException;
 	
-	public Set<Post> getPosts(String identificateur, String cle) throws RemoteException;
+	public void ajouterTagSurEchangeable(String urlEch, String urlTag, String identificateur, String cle)
+			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	
-	public Set<Fichier> getFichier(String identificateur, String cle) throws RemoteException;
+	public Set<Post> getPosts(String identificateur, String cle)
+			throws RemoteException;
 	
-	public Set<Tag> getTagsDroitCreation(String identificateur, String cle) throws RemoteException;
+	public Set<Fichier> getFichier(String identificateur, String cle)
+			throws RemoteException;
+	
+	public Set<Tag> getTagsDroitCreation(String identificateur, String cle)
+			throws RemoteException;
 	
 	/**
 	 * ADMINISTRATEUR TAG
@@ -133,6 +140,9 @@ public interface _ServicesCoeur extends Remote {
 	 */
 	public void repondrePost(String url, String contenu, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
+	
+	public void supprimerEchangeable(String url, String identificateur, String cle)
+			throws RemoteException;
 	
 	/**
 	 * MESSAGERIE INTERNE
