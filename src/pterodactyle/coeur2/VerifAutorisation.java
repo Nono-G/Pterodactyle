@@ -124,9 +124,6 @@ public class VerifAutorisation implements _VerifAutorisation {
 		}
 		
 		return resultat;
-
-		
-		
 	}
 	
 	public boolean droitTag(Autorisation tag, Utilisateur utilisateur, int numeroDroit){

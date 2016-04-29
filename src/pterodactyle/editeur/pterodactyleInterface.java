@@ -23,6 +23,7 @@ public class pterodactyleInterface {
 
 	private JFrame framePtrodactyle;
 	private JTextField textField;
+	private String[] implementationUtilisateur;
 
 	/**
 	 * Launch the application.
