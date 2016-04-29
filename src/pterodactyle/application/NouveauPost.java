@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable.Tag;
 
@@ -59,7 +61,7 @@ public class NouveauPost extends JFrame {
 	}
 
 	public NouveauPost() {
-		// TODO Auto-generated constructor stub
+
 		initialisation();
 	}
 
@@ -81,10 +83,9 @@ public class NouveauPost extends JFrame {
 		btnAnnuler.setForeground(new Color(255,255,255));
 		btnAnnuler.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		JButton btnAjouter = new JButton("Ajouter");
-		btnAjouter.setBackground(new Color(11,29,62));
-		btnAjouter.setForeground(new Color(255,255,255));
-		btnAjouter.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textField = new JTextField();
+		textField.setColumns(10);
+		
 		
 		JLabel lblTitreDeVotre = new JLabel("Titre de votre post :");
 		lblTitreDeVotre.setForeground(new Color(11,29,62));
@@ -94,8 +95,7 @@ public class NouveauPost extends JFrame {
 		lblTagPost.setForeground(new Color(11, 29, 62));
 		lblTagPost.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setForeground(new Color(11,29,62));
@@ -128,15 +128,41 @@ public class NouveauPost extends JFrame {
 		//final AbstractListModel almInBtnAddTagPost = almListTagsAjoutes;
 		btnAddTagPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String[] nouveau = new String[] {"tit", "de", "Lomont"};
 				tagEnAjout.add(ComboBoxInBtnAddTagPost.getSelectedItem().toString());
-				jListInBtnAddTagPost.setListData(refreshTagsEcriture());
+				jListInBtnAddTagPost.setListData(refreshTagAjoute());
 			}
 		});
 		
 		JLabel lblListTagPres = new JLabel("Liste des tags ajoutés :");
 		lblListTagPres.setForeground(new Color(11, 29, 62));
 		lblListTagPres.setFont(new Font("Book Antiqua", Font.BOLD, 18));
+		
+		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setBackground(new Color(11,29,62));
+		btnAjouter.setForeground(new Color(255,255,255));
+		btnAjouter.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnAjouter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String titre = textField.getText();
+				String url = System.currentTimeMillis()+titre;
+				try {
+					app.creerPost(url, titre, tagEnAjout.get(0), loginCourant, motDePasseCourant);
+					int i = 0;
+					while( i < tagEnAjout.size()){
+						try{
+						app.ajouterTagSurEchangeable(url, tagEnAjout.get(i), loginCourant, motDePasseCourant);
+						}catch(RemoteException re){//TODO
+							re.printStackTrace();
+						}catch(Exception exep){exep.printStackTrace();//Néant. Exception impossible compte tenu des verification précédentes}
+						i++;
+						}
+					}
+				} catch (RemoteException | ExceptionEchangeablePasDeTag e1) {e1.printStackTrace();}
+				dispose();
+				ApplicationUtilisateur acc = new ApplicationUtilisateur(app, loginCourant, motDePasseCourant);
+				acc.setVisible(true);
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 				
@@ -239,6 +265,16 @@ public class NouveauPost extends JFrame {
 		
 		for(Tag p : tags){
 			nomsTags[i] = p.toString();
+			i++;
+		}
+		return nomsTags;
+	}
+	
+	protected String[] refreshTagAjoute(){
+		String[] nomsTags = new String[tagEnAjout.size()];
+		int i=0;
+		for(String t: tagEnAjout){
+			nomsTags[i] = t;
 			i++;
 		}
 		return nomsTags;

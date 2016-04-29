@@ -195,6 +195,20 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}
 	}
 	
+	public void ajouterTagSurEchangeable(String urlEch, String urlTag, String identificateur, String cle) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		//Verif sémantique
+		_Echangeable ech = this.echangeables.get(urlEch);
+		if (! (ech instanceof $EchangeableAvecTag)){throw new ExceptionEchangeableMauvaisType();}
+		//Verif sémantique 2
+		if( ! (this.tags.get(urlTag) != null)){throw new ExceptionEchangeablePasDeTag();}
+		//Verification autorisation
+		if( ! verifAutorisation.creationTag(tags.get(urlTag), utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		
+		(($EchangeableAvecTag)ech).ajouterTag(this.tags.get(urlTag));
+	}
+	
 	/**
 	 * POST	
 	 */
