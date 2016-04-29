@@ -35,7 +35,6 @@ public class FormulaireCreationProfil extends JFrame {
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
-	private Map<String, _Echangeable> echangeables;
 
 	/**
 	 * Launch the application.
@@ -44,7 +43,6 @@ public class FormulaireCreationProfil extends JFrame {
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
-		this.echangeables = new HashMap<String, _Echangeable>();
 		initialisation();
 	}
 
