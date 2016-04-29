@@ -329,6 +329,12 @@ public class ApplicationUtilisateur extends JFrame {
 		contentPane.add(lblRechercheParLogin);
 		
 		JButton btnGo = new JButton("Go !");
+		btnGo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnnuaireIHM annuaire = new AnnuaireIHM(app, loginCourant, motDePasseCourant);
+				annuaire.setVisible(true);
+			}
+		});
 		btnGo.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnGo.setForeground(Color.WHITE);
 		btnGo.setBackground(new Color(11, 29, 62));
