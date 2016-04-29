@@ -48,6 +48,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private String loginCourant;
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
+	private JTextField textFieldCreerTag;
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
@@ -318,27 +319,63 @@ public class ApplicationUtilisateur extends JFrame {
 		lblCreerUserAdmin.setForeground(new Color(11,29,62));
 		lblCreerUserAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		JLabel label = new JLabel("Créer un utilisateur :");
-		label.setForeground(new Color(11, 29, 62));
-		label.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		JLabel lblCrerUnTag = new JLabel("Créer un tag :");
+		lblCrerUnTag.setForeground(new Color(11, 29, 62));
+		lblCrerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JLabel lblSupprimerUnTag = new JLabel("Supprimer un tag :");
+		lblSupprimerUnTag.setForeground(new Color(11, 29, 62));
+		lblSupprimerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JButton btnCreerUser = new JButton("Formulaire");
+		btnCreerUser.setBackground(new Color(11,29,62));
+		btnCreerUser.setForeground(new Color(255, 255, 255));
+		btnCreerUser.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		textFieldCreerTag = new JTextField();
+		textFieldCreerTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textFieldCreerTag.setColumns(10);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setForeground(new Color(11,29,62));
+		comboBox.setBackground(new Color(244,244,243));
+		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
 		gl_onglet3.setHorizontalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(637, Short.MAX_VALUE))
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textFieldCreerTag, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnCreerUser)))
+					.addContainerGap(469, Short.MAX_VALUE))
 		);
 		gl_onglet3.setVerticalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
-					.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCreerUser))
 					.addGap(58)
-					.addComponent(label, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(251, Short.MAX_VALUE))
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textFieldCreerTag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(58)
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(168, Short.MAX_VALUE))
 		);
 		onglet3.setLayout(gl_onglet3);
 		
