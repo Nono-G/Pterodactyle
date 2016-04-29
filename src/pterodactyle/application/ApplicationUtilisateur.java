@@ -85,7 +85,7 @@ public class ApplicationUtilisateur extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBackground(new Color(135, 206, 250));
-		lblNewLabel_1.setIcon(new ImageIcon(ApplicationAdministrateur.class.getResource("/pterodactyle/application/ressourcesImages/SizedFunkySkeletoAppn.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/SizedFunkySkeletoAppn.png")));
 		lblNewLabel_1.setBounds(5, 5, 191, 96);
 		panelPresentation.add(lblNewLabel_1);
 		

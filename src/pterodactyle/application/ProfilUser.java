@@ -16,9 +16,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable._Echangeable;
+
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -26,27 +32,27 @@ import javax.swing.DefaultComboBoxModel;
 public class ProfilUser extends JFrame {
 
 	private JPanel contentPane;
+	private _ServicesCoeur app;
+	private String loginCourant;
+	private String motDePasseCourant;
+	private Map<String, _Echangeable> echangeables;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProfilUser frame = new ProfilUser();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public ProfilUser(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		this.loginCourant= loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app =app;
+		this.echangeables = new HashMap<String, _Echangeable>();
+		initialisation();
 	}
 
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public ProfilUser() {
+	public void initialisation() {
 		setTitle("Profil ");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ProfilUser.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

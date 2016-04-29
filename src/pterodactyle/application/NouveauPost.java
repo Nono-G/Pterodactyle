@@ -60,11 +60,6 @@ public class NouveauPost extends JFrame {
 		tagEnAjout = new ArrayList<String>(3);
 	}
 
-	public NouveauPost() {
-
-		initialisation();
-	}
-
 	/**
 	 * Create the frame.
 	 */

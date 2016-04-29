@@ -6,12 +6,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable._Echangeable;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -27,26 +33,27 @@ public class EditionPost extends JFrame {
 
 	private JPanel contentPane;
 
+	private _ServicesCoeur app;
+	private String loginCourant;
+	private String motDePasseCourant;
+	private Map<String, _Echangeable> echangeables;
+
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EditionPost frame = new EditionPost();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public EditionPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+		this.loginCourant= loginCourant;
+		this.motDePasseCourant = motDePasseCourant;
+		this.app =app;
+		this.echangeables = new HashMap<String, _Echangeable>();
+		initialisation();
 	}
 
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public EditionPost() {
+	public void initialisation()  {
 		setTitle("Post");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditionPost.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
