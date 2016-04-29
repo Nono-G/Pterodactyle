@@ -141,6 +141,9 @@ public interface _ServicesCoeur extends Remote {
 	public void repondrePost(String url, String contenu, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
+	public void supprimerEchangeable(String url, String identificateur, String cle)
+			throws RemoteException;
+	
 	/**
 	 * MESSAGERIE INTERNE
 	 */
