@@ -60,7 +60,7 @@ public class EditionPost extends JFrame {
 	public void initialisation()  {
 		setTitle("Post");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditionPost.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1000, 720);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(11,29,62));

@@ -53,7 +53,7 @@ public class FormulaireCreationProfil extends JFrame {
 	public void initialisation() {
 		setTitle("Créer un profil");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FormulaireCreationProfil.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 283);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(244,244,243));
@@ -103,6 +103,11 @@ public class FormulaireCreationProfil extends JFrame {
 		JButton btnAnnulerCreationProfil = new JButton("Annuler");
 		btnAnnulerCreationProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					dispose();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		btnAnnulerCreationProfil.setBackground(new Color(11,29,62));

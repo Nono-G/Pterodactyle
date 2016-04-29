@@ -60,7 +60,6 @@ public class AnnuaireIHM extends JFrame {
 	public void initialisation() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AnnuaireIHM.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setTitle("Annuaire");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 577, 488);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(244,244,243));

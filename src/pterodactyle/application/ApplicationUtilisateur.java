@@ -55,6 +55,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private Map<String, _Echangeable> echangeables;
 	private List<String> tagsFiltre;
 	private JTextField txtFiltrerParTagCloud;
+	private JTextField textField_1;
 
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
@@ -274,7 +275,6 @@ public class ApplicationUtilisateur extends JFrame {
 		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
 				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
 				fr.setVisible(true);
 			}
@@ -374,7 +374,6 @@ public class ApplicationUtilisateur extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					dispose();
 					NouveauPost np = new NouveauPost(app,loginCourant,motDePasseCourant);
 					np.setVisible(true);
 				} catch (Exception ex) {
@@ -387,7 +386,7 @@ public class ApplicationUtilisateur extends JFrame {
 		JLabel lblAnnuaire = new JLabel("Annuaire");
 		lblAnnuaire.setForeground(new Color(11, 29, 62));
 		lblAnnuaire.setFont(new Font("Book Antiqua", Font.BOLD, 17));
-		lblAnnuaire.setBounds(745, 62, 95, 24);
+		lblAnnuaire.setBounds(755, 62, 95, 24);
 		contentPane.add(lblAnnuaire);
 		
 		JButton btnGo = new JButton("Go !");
@@ -408,27 +407,101 @@ public class ApplicationUtilisateur extends JFrame {
 		lblCreerUserAdmin.setForeground(new Color(11,29,62));
 		lblCreerUserAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		JLabel label = new JLabel("Créer un utilisateur :");
-		label.setForeground(new Color(11, 29, 62));
-		label.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		JLabel lblCrerUnTag = new JLabel("Créer un tag :");
+		lblCrerUnTag.setForeground(new Color(11, 29, 62));
+		lblCrerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JLabel lblSupprimerUnTag = new JLabel("Supprimer un tag :");
+		lblSupprimerUnTag.setForeground(new Color(11, 29, 62));
+		lblSupprimerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JButton btnFormulaireCreerProfil = new JButton("Formulaire");
+		btnFormulaireCreerProfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FormulaireCreationProfil fcp = new FormulaireCreationProfil(app,loginCourant,motDePasseCourant);
+					fcp.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnFormulaireCreerProfil.setForeground(new Color(255, 255, 255));
+		btnFormulaireCreerProfil.setBackground(new Color(11,29,62));
+		btnFormulaireCreerProfil.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		textField_1 = new JTextField();
+		textField_1.setForeground(new Color(11,29,62));
+		textField_1.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textField_1.setColumns(10);
+		
+		JButton btnCreerUnTag = new JButton("OK");
+		btnCreerUnTag.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCreerUnTag.setForeground(Color.WHITE);
+		btnCreerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnCreerUnTag.setBackground(new Color(11,29,62));
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"tag"}));
+		comboBox.setBackground(new Color(244,244,243));
+		comboBox.setForeground(new Color(11,29,62));
+		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JButton btnSuppTagOk = new JButton("OK");
+		btnSuppTagOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSuppTagOk.setForeground(Color.WHITE);
+		btnSuppTagOk.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnSuppTagOk.setBackground(new Color(11,29,62));
 		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
 		gl_onglet3.setHorizontalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
 					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(637, Short.MAX_VALUE))
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_onglet3.createSequentialGroup()
+								.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(comboBox, 0, 135, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnSuppTagOk, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_onglet3.createSequentialGroup()
+								.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnFormulaireCreerProfil, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+								.addGap(76))))
+					.addGap(422))
 		);
 		gl_onglet3.setVerticalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
-					.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-					.addGap(58)
-					.addComponent(label, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(251, Short.MAX_VALUE))
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnFormulaireCreerProfil))
+					.addGap(114)
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addGap(115)
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSuppTagOk, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(55, Short.MAX_VALUE))
 		);
 		onglet3.setLayout(gl_onglet3);
 		
