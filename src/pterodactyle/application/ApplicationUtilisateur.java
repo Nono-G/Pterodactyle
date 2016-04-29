@@ -24,20 +24,26 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+
 import pterodactyle.echangeable.*;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import pterodactyle.echangeable.Post;
+import pterodactyle.echangeable._Echangeable;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 
 public class ApplicationUtilisateur extends JFrame {
@@ -48,13 +54,15 @@ public class ApplicationUtilisateur extends JFrame {
 	private String loginCourant;
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
-	private JTextField textFieldCreerTag;
+	private List<String> tagsFiltre;
+
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
 		this.echangeables = new HashMap<String, _Echangeable>();
+		this.tagsFiltre = new ArrayList<String>();
 		initialisation();
 	}
 
@@ -144,34 +152,12 @@ public class ApplicationUtilisateur extends JFrame {
 		textField.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Endroit où on rajoute les tag");
+		JLabel lblNewLabel = new JLabel("Ajouter un tag");
 		lblNewLabel.setForeground(new Color(11,29,62));
 		lblNewLabel.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		lblNewLabel.setBounds(10, 42, 200, 21);
 		
-		JButton btnOk = new JButton("OK");
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String tag = textField.getText();
-				
-				for(String s : echangeables.keySet()){
-					_Echangeable ech =  echangeables.get(s);
-					String [] tags = (($EchangeableAvecTag)ech).voirTableauTags();
-					
-				}
-				
-			}
-		});
-		btnOk.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
-		btnOk.setBounds(220, 10, 69, 23);
-		btnOk.setBackground(new Color(11,29,62));
-		btnOk.setForeground(new Color(255, 255, 255));
-		
-		onglet1.setLayout(null);
-		onglet1.add(lblForum);
-		onglet1.add(textField);
-		onglet1.add(lblNewLabel);
-		onglet1.add(btnOk);
+
 		
 		JPanel panel_test = new JPanel();
 		panel_test.setBorder(new LineBorder(new Color(11,29,62), 3, true));
@@ -198,6 +184,7 @@ public class ApplicationUtilisateur extends JFrame {
 		scrollPane.setViewportView(panel_1);
 		
 		JList<PaireTitreUrl> list = new JList<PaireTitreUrl>();
+
 		final JList<PaireTitreUrl> listPourClick = list;
 		list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -209,6 +196,7 @@ public class ApplicationUtilisateur extends JFrame {
 					ep.setVisible(true);
 				}
 			}
+
 		});
 		list.setBorder(null);
 		list.setFont(new Font("Book Antiqua", Font.BOLD, 14));
@@ -216,7 +204,8 @@ public class ApplicationUtilisateur extends JFrame {
 		list.setForeground(new Color(11, 29, 62));
 		list.setModel(new AbstractListModel<PaireTitreUrl>() {
 			
-			PaireTitreUrl[] values =  refreshPosts();;
+			PaireTitreUrl[] values =  refreshPosts();
+
 			public int getSize() {
 				return values.length;
 			}
@@ -224,6 +213,41 @@ public class ApplicationUtilisateur extends JFrame {
 				return values[index];
 			}
 		});
+		
+		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String tag = textField.getText();
+				lblNewLabel.setText("Trier sur le tag : "+tag);
+				PaireTitreUrl[] data = new PaireTitreUrl[echangeables.size()];
+				int i = 0;
+				for(String s : echangeables.keySet()){
+					_Echangeable ech =  echangeables.get(s);
+					Set<Tag> tags = (($EchangeableAvecTag)ech).getTags();
+					boolean containt = false;
+					for(Tag t : tags){
+						if(tag.equals(t.toString())){
+							data[i] = new PaireTitreUrl(((Post)ech).getTitre(), ech.getUrl());
+							i++;
+							}
+					}
+				}	
+				{list.setListData(data);}
+				
+			}
+		});
+		
+		
+		btnOk.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnOk.setBounds(220, 10, 69, 23);
+		btnOk.setBackground(new Color(11,29,62));
+		btnOk.setForeground(new Color(255, 255, 255));
+		
+		onglet1.setLayout(null);
+		onglet1.add(lblForum);
+		onglet1.add(textField);
+		onglet1.add(lblNewLabel);
+		onglet1.add(btnOk);
 		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
@@ -244,11 +268,19 @@ public class ApplicationUtilisateur extends JFrame {
 		onglet2.add(lblCloud);
 		tabbedPane.add("Forum ",onglet1);
 		
+
 		JButton btnRefresh = new JButton("");
 		btnRefresh.setBounds(793, 31, 32, 32);
 		onglet1.add(btnRefresh);
 		btnRefresh.setBackground(new Color(11,29,62));
 		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
+				fr.setVisible(true);
+			}
+		});
 		
 		JButton btnNewPost = new JButton("Nouveau post !");
 		btnNewPost.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
@@ -315,94 +347,39 @@ public class ApplicationUtilisateur extends JFrame {
 		lblCreerUserAdmin.setForeground(new Color(11,29,62));
 		lblCreerUserAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		JLabel lblCrerUnTag = new JLabel("Créer un tag :");
-		lblCrerUnTag.setForeground(new Color(11, 29, 62));
-		lblCrerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		JLabel lblSupprimerUnTag = new JLabel("Supprimer un tag :");
-		lblSupprimerUnTag.setForeground(new Color(11, 29, 62));
-		lblSupprimerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		JButton btnCreerUser = new JButton("Formulaire");
-		btnCreerUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCreerUser.setBackground(new Color(11,29,62));
-		btnCreerUser.setForeground(new Color(255, 255, 255));
-		btnCreerUser.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		textFieldCreerTag = new JTextField();
-		textFieldCreerTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		textFieldCreerTag.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setForeground(new Color(11,29,62));
-		comboBox.setBackground(new Color(244,244,243));
-		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		JButton btnOKAjoutTag = new JButton("OK");
-		btnOKAjoutTag.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnOKAjoutTag.setForeground(Color.WHITE);
-		btnOKAjoutTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		btnOKAjoutTag.setBackground(new Color(11, 29, 62));
-		
-		JButton btnOKSuppAdmin = new JButton("OK");
-		btnOKSuppAdmin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnOKSuppAdmin.setForeground(Color.WHITE);
-		btnOKSuppAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		btnOKSuppAdmin.setBackground(new Color(11, 29, 62));
+		JLabel label = new JLabel("Créer un utilisateur :");
+		label.setForeground(new Color(11, 29, 62));
+		label.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
 		gl_onglet3.setHorizontalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_onglet3.createSequentialGroup()
-							.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(gl_onglet3.createSequentialGroup()
-							.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textFieldCreerTag, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_onglet3.createSequentialGroup()
-							.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnCreerUser, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnOKAjoutTag, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnOKSuppAdmin, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(388, Short.MAX_VALUE))
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(637, Short.MAX_VALUE))
 		);
 		gl_onglet3.setVerticalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnCreerUser))
+					.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 					.addGap(58)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldCreerTag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnOKAjoutTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(58)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnOKSuppAdmin, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(168, Short.MAX_VALUE))
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(251, Short.MAX_VALUE))
 		);
 		onglet3.setLayout(gl_onglet3);
 		
+	}
+	
+	protected PaireTitreUrl[] Arrayto(List<PaireTitreUrl> data2 ){
+		PaireTitreUrl[] data = new PaireTitreUrl[data2.size()];
+		int i = 0;
+		for(PaireTitreUrl p : data2){
+			data[i] = p;
+		}
+		return data;		
 	}
 	
 	protected PaireTitreUrl[] refreshPosts(){
@@ -421,10 +398,11 @@ public class ApplicationUtilisateur extends JFrame {
 			titresPosts[i] = new PaireTitreUrl(p.getTitre(), p.getUrl());
 			i++;
 		}
-		
 		return titresPosts;
 	}
 }
+
+
 
 class PaireTitreUrl{
 	
@@ -440,4 +418,3 @@ class PaireTitreUrl{
 	public String getTitre() {return this.titre;}
 	public String getUrl() {return this.url;}
 }
-
