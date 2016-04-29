@@ -42,13 +42,17 @@ public class ApplicationUtilisateur extends JFrame {
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
 
-
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
 		this.echangeables = new HashMap<String, _Echangeable>();
 		initialisation();
+	}
+
+	public ApplicationUtilisateur() {
+		initialisation();
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -221,6 +225,13 @@ public class ApplicationUtilisateur extends JFrame {
 		btnNewPost.setBackground(new Color(11, 29, 62));
 		btnNewPost.setBounds(614, 41, 171, 23);
 		onglet1.add(btnNewPost);
+		
+		JButton btnSuppPostUser = new JButton("Supprimer un post !");
+		btnSuppPostUser.setForeground(Color.WHITE);
+		btnSuppPostUser.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		btnSuppPostUser.setBackground(new Color(11, 29, 62));
+		btnSuppPostUser.setBounds(399, 41, 200, 23);
+		onglet1.add(btnSuppPostUser);
 		tabbedPane.add("Cloud ",onglet2);
 		btnNewPost.addActionListener(new ActionListener(){
 

@@ -57,6 +57,12 @@ public class NouveauPost extends JFrame {
 		initialisation();
 		tagEnAjout = new ArrayList<String>(3);
 	}
+
+	public NouveauPost() {
+		// TODO Auto-generated constructor stub
+		initialisation();
+	}
+
 	/**
 	 * Create the frame.
 	 */
