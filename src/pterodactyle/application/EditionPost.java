@@ -78,14 +78,14 @@ public class EditionPost extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JButton btnNewButton = new JButton("Répondre");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnRepondrePost = new JButton("Répondre");
+		btnRepondrePost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBackground(new Color(11,29,62));
-		btnNewButton.setForeground(new Color(255,255,255));
-		btnNewButton.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnRepondrePost.setBackground(new Color(11,29,62));
+		btnRepondrePost.setForeground(new Color(255,255,255));
+		btnRepondrePost.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		JComboBox comboAddTag = new JComboBox();
 		comboAddTag.setModel(new DefaultComboBoxModel(new String[] {"test", "test", "test", "test", "test", "test", "tytu"}));
@@ -130,6 +130,40 @@ public class EditionPost extends JFrame {
 		lblMasquetags.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		
+		JLabel lblSupprimerUnPost = new JLabel("Supprimer un tag du post ?");
+		lblSupprimerUnPost.setForeground(new Color(11, 29, 62));
+		lblSupprimerUnPost.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JComboBox comboBoxSuppressionTag = new JComboBox();
+		comboBoxSuppressionTag.setModel(new DefaultComboBoxModel(new String[] {"test", "tag", "tag"}));
+		comboBoxSuppressionTag.setForeground(new Color(11, 29, 62));
+		comboBoxSuppressionTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JButton btnSuppressionTag = new JButton("OK");
+		btnSuppressionTag.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSuppressionTag.setForeground(Color.WHITE);
+		btnSuppressionTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnSuppressionTag.setBackground(new Color(11, 29, 62));
+		
+		JButton btnAnnulerEdition = new JButton("Annuler");
+		btnAnnulerEdition.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					dispose();
+					ApplicationUtilisateur ap = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
+					ap.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnAnnulerEdition.setForeground(Color.WHITE);
+		btnAnnulerEdition.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnAnnulerEdition.setBackground(new Color(11, 29, 62));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -152,26 +186,39 @@ public class EditionPost extends JFrame {
 									.addComponent(labelTags)
 									.addPreferredGap(ComponentPlacement.RELATED))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(btnNewButton)
+									.addComponent(btnRepondrePost)
 									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(122)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNewLabel_1)
+										.addComponent(lblMasqueauteur, GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+										.addComponent(lblMasquedate, GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+										.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
 										.addGroup(gl_contentPane.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(comboAddTag, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)))
-									.addGap(18)
-									.addComponent(btnAddTagPost))
-								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblMasquedate, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(lblMasquetags, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(lblMasqueauteur, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)))
-							.addGap(2018))
+											.addComponent(lblMasquetags, GroupLayout.PREFERRED_SIZE, 867, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGap(122)
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblNewLabel_1)
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addComponent(comboAddTag, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+													.addGap(34)
+													.addComponent(btnAddTagPost, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
+											.addGap(39)
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addComponent(comboBoxSuppressionTag, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+													.addGap(35)
+													.addComponent(btnSuppressionTag, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+												.addComponent(lblSupprimerUnPost, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
+											.addGap(262)))
+									.addGap(10))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnAnnulerEdition, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(scrollPane, Alignment.LEADING)
+							.addComponent(scrollPane, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
@@ -198,17 +245,23 @@ public class EditionPost extends JFrame {
 					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(lblSupprimerUnPost, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnNewButton)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnRepondrePost)
+								.addComponent(btnAnnulerEdition, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 							.addGap(1))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel_1)
-							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnAddTagPost, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(comboAddTag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(comboAddTag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboBoxSuppressionTag, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnSuppressionTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 							.addGap(49))))
 		);
 		
@@ -216,7 +269,9 @@ public class EditionPost extends JFrame {
 		scrollPane.setViewportView(panel);
 		
 		JTextArea textAreaRéponse = new JTextArea();
-		textAreaRéponse.setBackground(new Color(138, 43, 226));
+		textAreaRéponse.setForeground(new Color(11,29,62));
+		textAreaRéponse.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textAreaRéponse.setBackground(new Color(211,210,250));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)

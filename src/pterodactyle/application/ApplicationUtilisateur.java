@@ -58,10 +58,6 @@ public class ApplicationUtilisateur extends JFrame {
 		initialisation();
 	}
 
-	public ApplicationUtilisateur() {
-		initialisation();
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * Create the frame.
