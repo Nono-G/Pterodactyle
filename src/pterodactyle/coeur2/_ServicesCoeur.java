@@ -95,6 +95,7 @@ public interface _ServicesCoeur extends Remote {
 	
 	public Set<Fichier> getFichier(String identificateur, String cle) throws RemoteException;
 	
+	public Set<Tag> getTagsDroitCreation(String identificateur, String cle) throws RemoteException;
 	
 	/**
 	 * ADMINISTRATEUR TAG

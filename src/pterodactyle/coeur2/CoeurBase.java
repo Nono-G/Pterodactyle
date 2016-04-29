@@ -165,10 +165,14 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	public Set<Tag> getTagsDroitCreation(String identificateur, String cle) throws RemoteException{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
-		
+
 		Set<Tag> ret = new HashSet<Tag>();
-		
-		
+		for(String tag : this.tags.keySet()){
+			Tag t = this.tags.get(tag);
+			if(verifAutorisation.creationTag(t, this.utilisateurs.get(identificateur))){
+				ret.add(t);
+			}
+		}
 		return ret;
 	}
 	
