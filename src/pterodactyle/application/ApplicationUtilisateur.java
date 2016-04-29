@@ -12,6 +12,8 @@ import javax.swing.JList;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
@@ -35,6 +37,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+
 public class ApplicationUtilisateur extends JFrame {
 
 	private JPanel contentPane;
@@ -43,7 +46,6 @@ public class ApplicationUtilisateur extends JFrame {
 	private String loginCourant;
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
-	private JTextField textField_2;
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
@@ -196,21 +198,34 @@ public class ApplicationUtilisateur extends JFrame {
 		panel_1.setBackground(new Color(211,210,250));
 		scrollPane.setViewportView(panel_1);
 		
-		JList<String> list = new JList<String>();
+		JList<PaireTitreUrl> list = new JList<PaireTitreUrl>();
+		final JList<PaireTitreUrl> listPourClick = list;
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()>=2){
+					//listPourClick.getSelectedValue();
+					PaireTitreUrl titre = listPourClick.getModel().getElementAt(listPourClick.locationToIndex(e.getPoint()));
+					EditionPost ep = new EditionPost((Post)echangeables.get(titre.url), app, loginCourant, loginCourant);
+					ep.setVisible(true);
+				}
+			}
+		});
 		list.setBorder(null);
 		list.setFont(new Font("Book Antiqua", Font.BOLD, 14));
 		list.setBackground(new Color(211,210,250));
 		list.setForeground(new Color(11, 29, 62));
-		list.setModel(new AbstractListModel<String>() {
+		list.setModel(new AbstractListModel<PaireTitreUrl>() {
 			
-			String[] values =  refreshPosts();;
+			PaireTitreUrl[] values =  refreshPosts();;
 			public int getSize() {
 				return values.length;
 			}
-			public String getElementAt(int index) {
+			public PaireTitreUrl getElementAt(int index) {
 				return values[index];
 			}
 		});
+		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -301,84 +316,33 @@ public class ApplicationUtilisateur extends JFrame {
 		lblCreerUserAdmin.setForeground(new Color(11,29,62));
 		lblCreerUserAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		JLabel lblCrerUnTag = new JLabel("Créer un tag :");
-		lblCrerUnTag.setForeground(new Color(11, 29, 62));
-		lblCrerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		JLabel lblSupprimerUnTag = new JLabel("Supprimer un tag :");
-		lblSupprimerUnTag.setForeground(new Color(11, 29, 62));
-		lblSupprimerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		JButton btnNewButton = new JButton("Formulaire");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setBackground(new Color(11,29,62));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		
-		textField_2 = new JTextField();
-		textField_2.setForeground(new Color(135, 206, 250));
-		textField_2.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		textField_2.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"tag1", "tag2", "tag3"}));
-		comboBox.setBackground(new Color(244,244,243));
-		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		comboBox.setForeground(new Color(11,29,62));
-		
-		JButton btnOkSuppTagAdmin = new JButton("Supprimer");
-		btnOkSuppTagAdmin.setForeground(Color.WHITE);
-		btnOkSuppTagAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		btnOkSuppTagAdmin.setBackground(new Color(11, 29, 62));
+		JLabel label = new JLabel("Créer un utilisateur :");
+		label.setForeground(new Color(11, 29, 62));
+		label.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
 		gl_onglet3.setHorizontalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnOkSuppTagAdmin, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(gl_onglet3.createSequentialGroup()
-								.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGroup(gl_onglet3.createSequentialGroup()
-								.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_onglet3.createSequentialGroup()
-								.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-					.addContainerGap(507, Short.MAX_VALUE))
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(637, Short.MAX_VALUE))
 		);
 		gl_onglet3.setVerticalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
 					.addGap(28)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton))
+					.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 					.addGap(58)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(56)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(28)
-					.addComponent(btnOkSuppTagAdmin, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(117, Short.MAX_VALUE))
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(251, Short.MAX_VALUE))
 		);
 		onglet3.setLayout(gl_onglet3);
 		
 	}
 	
-	protected String[] refreshPosts(){
+	protected PaireTitreUrl[] refreshPosts(){
 		Set<Post> posts = null;
 		int i = 0;
 		try {
@@ -387,15 +351,30 @@ public class ApplicationUtilisateur extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String[] titresPosts = new String[posts.size()];
+		PaireTitreUrl[] titresPosts = new PaireTitreUrl[posts.size()];
 		
 		for(Post p : posts){
 			this.echangeables.put(p.getUrl(), p);
-			titresPosts[i] = p.getTitre();
+			titresPosts[i] = new PaireTitreUrl(p.getTitre(), p.getUrl());
 			i++;
 		}
 		
 		return titresPosts;
 	}
+}
+
+class PaireTitreUrl{
+	
+	String titre;
+	String url;
+	
+	public PaireTitreUrl (String titre, String url){
+		this.titre = titre;
+		this.url = url;
+	}
+	
+	public String toString() {return titre;}
+	public String getTitre() {return this.titre;}
+	public String getUrl() {return this.url;}
 }
 

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable._Echangeable;
 
 import javax.swing.GroupLayout;
@@ -37,14 +38,16 @@ public class EditionPost extends JFrame {
 	private String loginCourant;
 	private String motDePasseCourant;
 	private Map<String, _Echangeable> echangeables;
+	private Post post;
 
 	/**
 	 * Launch the application.
 	 */
-	public EditionPost(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+	public EditionPost(Post post, _ServicesCoeur app, String loginCourant, String motDePasseCourant){
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
+		this.post = post;
 		this.echangeables = new HashMap<String, _Echangeable>();
 		initialisation();
 	}
@@ -68,7 +71,7 @@ public class EditionPost extends JFrame {
 		lblEditPost.setForeground(new Color(11,29,62));
 		lblEditPost.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
-		JLabel lblNewLabel = new JLabel("ICI TITRE POST");
+		JLabel lblNewLabel = new JLabel(post.getTitre());
 		lblNewLabel.setForeground(new Color(11,29,62));
 		lblNewLabel.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
