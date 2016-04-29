@@ -328,6 +328,10 @@ public class ApplicationUtilisateur extends JFrame {
 		lblSupprimerUnTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		JButton btnCreerUser = new JButton("Formulaire");
+		btnCreerUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnCreerUser.setBackground(new Color(11,29,62));
 		btnCreerUser.setForeground(new Color(255, 255, 255));
 		btnCreerUser.setFont(new Font("Book Antiqua", Font.BOLD, 13));
@@ -340,6 +344,24 @@ public class ApplicationUtilisateur extends JFrame {
 		comboBox.setForeground(new Color(11,29,62));
 		comboBox.setBackground(new Color(244,244,243));
 		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
+		JButton btnOKAjoutTag = new JButton("OK");
+		btnOKAjoutTag.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnOKAjoutTag.setForeground(Color.WHITE);
+		btnOKAjoutTag.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnOKAjoutTag.setBackground(new Color(11, 29, 62));
+		
+		JButton btnOKSuppAdmin = new JButton("OK");
+		btnOKSuppAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnOKSuppAdmin.setForeground(Color.WHITE);
+		btnOKSuppAdmin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		btnOKSuppAdmin.setBackground(new Color(11, 29, 62));
 		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
 		gl_onglet3.setHorizontalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
@@ -357,8 +379,12 @@ public class ApplicationUtilisateur extends JFrame {
 						.addGroup(gl_onglet3.createSequentialGroup()
 							.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnCreerUser)))
-					.addContainerGap(469, Short.MAX_VALUE))
+							.addComponent(btnCreerUser, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnOKAjoutTag, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnOKSuppAdmin, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(388, Short.MAX_VALUE))
 		);
 		gl_onglet3.setVerticalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
@@ -370,11 +396,13 @@ public class ApplicationUtilisateur extends JFrame {
 					.addGap(58)
 					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldCreerTag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textFieldCreerTag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnOKAjoutTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 					.addGap(58)
 					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnOKSuppAdmin, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(168, Short.MAX_VALUE))
 		);
 		onglet3.setLayout(gl_onglet3);

@@ -63,46 +63,55 @@ public class FormulaireProfil extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Login :");
+		lblNewLabel.setBounds(15, 16, 90, 21);
 		lblNewLabel.setBackground(new Color(244,244,243));
 		lblNewLabel.setForeground(new Color(11,29,62));
 		lblNewLabel.setFont(new Font("Book Antiqua", Font.BOLD, 17));
 		
-		JLabel label = new JLabel("Login :");
-		label.setForeground(new Color(11, 29, 62));
-		label.setFont(new Font("Book Antiqua", Font.BOLD, 17));
-		label.setBackground(new Color(244, 244, 243));
+		JLabel lblMotDePasse = new JLabel("Mot de passe :");
+		lblMotDePasse.setBounds(15, 57, 127, 23);
+		lblMotDePasse.setForeground(new Color(11, 29, 62));
+		lblMotDePasse.setFont(new Font("Book Antiqua", Font.BOLD, 17));
+		lblMotDePasse.setBackground(new Color(244, 244, 243));
 		
-		JLabel label_1 = new JLabel("Login :");
-		label_1.setForeground(new Color(11, 29, 62));
-		label_1.setFont(new Font("Book Antiqua", Font.BOLD, 17));
-		label_1.setBackground(new Color(244, 244, 243));
+		JLabel lblNom = new JLabel("Nom :");
+		lblNom.setBounds(15, 99, 90, 23);
+		lblNom.setForeground(new Color(11, 29, 62));
+		lblNom.setFont(new Font("Book Antiqua", Font.BOLD, 17));
+		lblNom.setBackground(new Color(244, 244, 243));
 		
-		JLabel label_2 = new JLabel("Login :");
-		label_2.setForeground(new Color(11, 29, 62));
-		label_2.setFont(new Font("Book Antiqua", Font.BOLD, 17));
-		label_2.setBackground(new Color(244, 244, 243));
+		JLabel lblPrnom = new JLabel("Prénom :");
+		lblPrnom.setBounds(15, 141, 90, 23);
+		lblPrnom.setForeground(new Color(11, 29, 62));
+		lblPrnom.setFont(new Font("Book Antiqua", Font.BOLD, 17));
+		lblPrnom.setBackground(new Color(244, 244, 243));
 		
 		textFieldCreationLogin = new JTextField();
+		textFieldCreationLogin.setBounds(152, 17, 151, 22);
 		textFieldCreationLogin.setForeground(new Color(11,29,62));
 		textFieldCreationLogin.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		textFieldCreationLogin.setColumns(10);
 		
 		textFieldCreationMdp = new JTextField();
+		textFieldCreationMdp.setBounds(152, 59, 151, 22);
 		textFieldCreationMdp.setForeground(new Color(11,29,62));
 		textFieldCreationMdp.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		textFieldCreationMdp.setColumns(10);
 		
 		textField = new JTextField();
+		textField.setBounds(152, 101, 151, 22);
 		textField.setForeground(new Color(11, 29, 62));
 		textField.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setBounds(152, 143, 151, 22);
 		textField_1.setForeground(new Color(11, 29, 62));
 		textField_1.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		textField_1.setColumns(10);
 		
 		JButton btnAnnulerCreationProfil = new JButton("Annuler");
+		btnAnnulerCreationProfil.setBounds(15, 203, 83, 25);
 		btnAnnulerCreationProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -112,6 +121,7 @@ public class FormulaireProfil extends JFrame {
 		btnAnnulerCreationProfil.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		btnValiderCreationProfil = new JButton("Valider");
+		btnValiderCreationProfil.setBounds(341, 203, 83, 25);
 		btnValiderCreationProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -119,60 +129,16 @@ public class FormulaireProfil extends JFrame {
 		btnValiderCreationProfil.setForeground(Color.WHITE);
 		btnValiderCreationProfil.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnValiderCreationProfil.setBackground(new Color(11, 29, 62));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textFieldCreationLogin, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(label, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textFieldCreationMdp, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-								.addComponent(btnAnnulerCreationProfil))
-							.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-							.addComponent(btnValiderCreationProfil, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(textFieldCreationLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldCreationMdp, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnValiderCreationProfil, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnAnnulerCreationProfil))
-					.addContainerGap())
-		);
-		contentPane.setLayout(gl_contentPane);
+		contentPane.setLayout(null);
+		contentPane.add(lblNewLabel);
+		contentPane.add(textFieldCreationLogin);
+		contentPane.add(lblMotDePasse);
+		contentPane.add(textFieldCreationMdp);
+		contentPane.add(lblNom);
+		contentPane.add(textField);
+		contentPane.add(lblPrnom);
+		contentPane.add(textField_1);
+		contentPane.add(btnAnnulerCreationProfil);
+		contentPane.add(btnValiderCreationProfil);
 	}
 }
