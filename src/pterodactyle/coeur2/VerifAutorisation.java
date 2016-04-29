@@ -135,5 +135,14 @@ public class VerifAutorisation implements _VerifAutorisation {
 		}
 		return  utilisateur.getDroits(tag).getDroits()[numeroDroit] == true;
 	}
+	
+	
+	public boolean aSpecifiqueSuppression(String urlEchangeable , Utilisateur utilisateur){
+		if(utilisateur.aSpecifique(urlEchangeable)){
+			return this.droitTag(utilisateur.getSpecifique(urlEchangeable), utilisateur, 4);
+		}
+		return false ;
+	}
+
 
 }

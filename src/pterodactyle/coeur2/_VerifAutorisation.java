@@ -43,6 +43,11 @@ public interface _VerifAutorisation {
 	public boolean aDroit($EchangeableAvecTag echangeable, Utilisateur utilisateur, int numeroDroit);
 	
 	public boolean droitTag(Autorisation tag, Utilisateur utilisateur, int numeroDroit);
+
+	public boolean aSpecifiqueSuppression(String urlEchangeable , Utilisateur utilisateur);
+	
+	
+	
 	
 	
 }
