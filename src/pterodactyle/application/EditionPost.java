@@ -60,18 +60,18 @@ public class EditionPost extends JFrame {
 		setTitle("Post");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditionPost.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 596, 496);
+		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(11,29,62));
 		contentPane.setBackground(new Color(244,244,243));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel lblEditPost = new JLabel("Post : ");
-		lblEditPost.setForeground(new Color(11,29,62));
-		lblEditPost.setFont(new Font("Book Antiqua", Font.BOLD, 18));
+		JLabel labelTitre = new JLabel("Titre :");
+		labelTitre.setForeground(new Color(11,29,62));
+		labelTitre.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
-		JLabel lblNewLabel = new JLabel(post.getTitre());
+		JLabel lblNewLabel = new JLabel(post.getTitre());//ICI LE TITRE DU POST S'AFFICHE EN HAUT
 		lblNewLabel.setForeground(new Color(11,29,62));
 		lblNewLabel.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
@@ -83,6 +83,11 @@ public class EditionPost extends JFrame {
 		btnNewButton.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		JButton btnEditCancel = new JButton("Annuler");
+		btnEditCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		btnEditCancel.setBackground(new Color(11,29,62));
 		btnEditCancel.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnEditCancel.setForeground(new Color(255,255,255));
@@ -114,55 +119,103 @@ public class EditionPost extends JFrame {
 		btnSupprTagPost.setForeground(Color.WHITE);
 		btnSupprTagPost.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnSupprTagPost.setBackground(new Color(11, 29, 62));
+		
+		JLabel labelAuteur = new JLabel("Auteur :");
+		labelAuteur.setForeground(new Color(11, 29, 62));
+		labelAuteur.setFont(new Font("Dialog", Font.BOLD, 18));
+		
+		JLabel labelDate = new JLabel("Date :");
+		labelDate.setForeground(new Color(11, 29, 62));
+		labelDate.setFont(new Font("Dialog", Font.BOLD, 18));
+		
+		JLabel labelTags = new JLabel("Tags :");
+		labelTags.setForeground(new Color(11, 29, 62));
+		labelTags.setFont(new Font("Dialog", Font.BOLD, 18));
+		
+		JLabel lblMasqueauteur = new JLabel(post.getAuteur().toString()); //ICI l'AUTEUR DU POST S'AFFICHE EN HAUT
+		lblMasqueauteur.setForeground(new Color(11, 29, 62));
+		lblMasqueauteur.setFont(new Font("Dialog", Font.BOLD, 18));
+		
+		JLabel lblMasquedate = new JLabel(post.getDateCreation().toString()); //ICI LA DATE DE CREATION DU POST S'AFFICHE EN HAUT
+		lblMasquedate.setForeground(new Color(11, 29, 62));
+		lblMasquedate.setFont(new Font("Dialog", Font.BOLD, 18));
+		
+		JLabel lblMasquetags = new JLabel(post.voirTags()); //ICI LES TAGS DU POST S'AFFICHE EN HAUT
+		lblMasquetags.setForeground(new Color(11, 29, 62));
+		lblMasquetags.setFont(new Font("Dialog", Font.BOLD, 18));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(lblEditPost)
-					.addGap(18)
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(btnNewButton)
-					.addContainerGap(521, Short.MAX_VALUE))
+					.addContainerGap(882, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(scrollPane, 0, 0, Short.MAX_VALUE)
+					.addGap(57)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel_1)
+						.addComponent(comboAddTag, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(btnAddTagPost)
+					.addGap(64)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(73)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblNewLabel_1)
-									.addGap(2))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(comboAddTag, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)))
-							.addComponent(btnAddTagPost)
-							.addGap(64)
+							.addComponent(comboBoxSuppTag, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(labelSupp, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(comboBoxSuppTag, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnSupprTagPost)
-										.addComponent(btnEditCancel))))))
+								.addComponent(btnSupprTagPost)
+								.addComponent(btnEditCancel)))
+						.addComponent(labelSupp, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
 					.addGap(45))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(scrollPane, 0, 0, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(labelTags, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(labelAuteur, Alignment.LEADING)
+						.addComponent(labelTitre, Alignment.LEADING)
+						.addComponent(labelDate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+					.addGap(8)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+							.addComponent(lblMasquedate, GroupLayout.PREFERRED_SIZE, 548, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblMasqueauteur, GroupLayout.PREFERRED_SIZE, 548, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblMasquetags, GroupLayout.PREFERRED_SIZE, 548, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEditPost)
-						.addComponent(lblNewLabel))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(labelTitre)
+								.addComponent(lblNewLabel))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(labelAuteur, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblMasqueauteur, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(labelDate, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap(68, Short.MAX_VALUE)
+							.addComponent(lblMasquedate, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblMasquetags, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(labelTags, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)
+					.addGap(110)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_1)
 						.addComponent(labelSupp, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnAddTagPost, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBoxSuppTag, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
@@ -178,7 +231,7 @@ public class EditionPost extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(211,210,250));
 		panel.setForeground(new Color(11,29,62));
-		scrollPane.setViewportView(panel);
+		scrollPane.setColumnHeaderView(panel);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setFont(new Font("Book Antiqua", Font.PLAIN, 15));
@@ -188,12 +241,15 @@ public class EditionPost extends JFrame {
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 563, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 613, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(30, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(317, Short.MAX_VALUE)
+					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);

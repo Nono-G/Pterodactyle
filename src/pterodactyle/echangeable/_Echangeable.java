@@ -2,6 +2,8 @@ package pterodactyle.echangeable;
 
 import java.io.Serializable;
 
+import pterodactyle.utilisateur.Utilisateur;
+
 //Interface définissant les méthodes attendues sur un échangeable
 public interface _Echangeable extends Serializable{
 	
@@ -12,5 +14,6 @@ public interface _Echangeable extends Serializable{
 	
 	public String getUrl();
 	
+	public Utilisateur getAuteur();
 	
 }
