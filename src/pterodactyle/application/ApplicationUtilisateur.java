@@ -188,6 +188,7 @@ public class ApplicationUtilisateur extends JFrame {
 		scrollPane.setViewportView(panel_1);
 		
 		JList<PaireTitreUrl> list = new JList<PaireTitreUrl>();
+
 		final JList<PaireTitreUrl> listPourClick = list;
 		list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -199,6 +200,7 @@ public class ApplicationUtilisateur extends JFrame {
 					ep.setVisible(true);
 				}
 			}
+
 		});
 		list.setBorder(null);
 		list.setFont(new Font("Book Antiqua", Font.BOLD, 14));
@@ -404,6 +406,8 @@ public class ApplicationUtilisateur extends JFrame {
 	}
 }
 
+
+
 class PaireTitreUrl{
 	
 	String titre;
@@ -418,4 +422,3 @@ class PaireTitreUrl{
 	public String getTitre() {return this.titre;}
 	public String getUrl() {return this.url;}
 }
-

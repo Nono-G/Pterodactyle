@@ -44,6 +44,11 @@ public abstract class $Echangeable implements _Echangeable {
 			return this.url;
 		}
 		
+		public Utilisateur getAuteur(){
+			return this.auteur;
+		}
+		
+		public Date getDateCreation(){return this.dateCreation;}
 		public void detruireSauvegarde(){
 			new File("sauv/echangeables/"+url).delete();
 		}
