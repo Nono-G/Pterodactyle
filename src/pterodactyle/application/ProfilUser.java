@@ -19,6 +19,7 @@ import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
 import pterodactyle.echangeable._Echangeable;
+import pterodactyle.utilisateur.Utilisateur;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
@@ -35,7 +36,9 @@ public class ProfilUser extends JFrame {
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
-	private Map<String, _Echangeable> echangeables;
+	private String nomUtilisateur;
+	private String prenomUtilisateur;
+	private Map<String, Utilisateur> utilisateurs;
 
 	/**
 	 * Launch the application.
@@ -45,7 +48,7 @@ public class ProfilUser extends JFrame {
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
-		this.echangeables = new HashMap<String, _Echangeable>();
+		this.utilisateurs=new HashMap<String,Utilisateur>();
 		initialisation();
 	}
 

@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class AnnuaireIHM extends JFrame {
@@ -149,6 +151,29 @@ public class AnnuaireIHM extends JFrame {
 			}
 			public String getElementAt(int index) {
 				return values[index];
+			}
+		});
+		/*list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()>=2){
+					//listPourClick.getSelectedValue();
+					String titre = list.getModel().getElementAt(list.locationToIndex(e.getPoint()));
+					ProfilUser pu = new ProfilUser(app, loginCourant, loginCourant);
+					pu.setVisible(true);
+				}
+			}
+
+		});*/
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(list.getSelectedValue()!=null){
+					String titre = list.getSelectedValue();
+					ProfilUser pu = new ProfilUser(app, loginCourant, loginCourant);
+					pu.setVisible(true);
+				}
+
 			}
 		});
 		

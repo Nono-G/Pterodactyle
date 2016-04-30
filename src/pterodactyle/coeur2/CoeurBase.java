@@ -281,10 +281,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	 */
 	
 	//Auteur : Fanny
-	/** UNICITÉ URL ? Vérifier que l'Url ne fais pas déjà partie de la liste des MessagesInterne? 
-	 * if((this.echangeables.get(url))!=null) throw new Exception 
-	 * 
-	 * */
 	@Override
 	public void envoieMessageInterne(String contenu, String objet, String identificateur, String cle,
 		String identificateurDestinataire) throws RemoteException, UtilisateurException {
