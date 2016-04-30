@@ -98,12 +98,14 @@ public interface _ServicesCoeur extends Remote {
 	public Set<Post> getPosts(String identificateur, String cle)
 			throws RemoteException;
 	
-	public Set<Fichier> getFichier(String identificateur, String cle)
+	public Set<Fichier> getFichiers(String identificateur, String cle)
 			throws RemoteException;
 	
 	public Set<Tag> getTagsDroitCreation(String identificateur, String cle)
 			throws RemoteException;
 	
+	public _Echangeable getEchangeable(String url, String identificateur, String cle)
+			throws RemoteException, ExceptionEchangeableInexistant;
 	/**
 	 * ADMINISTRATEUR TAG
 	 */

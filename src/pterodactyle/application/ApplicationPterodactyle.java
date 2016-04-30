@@ -50,6 +50,8 @@ public class ApplicationPterodactyle {
 		//app.creerTag("economie", "admin", "admin");
 		//app.creerPost("p1", "toto", "compta", "admin", "admin");
 		//System.out.println(app.test());
+		//app.creerFichier("fich1", null, "ihm", "admin", "admin");
+		//app.creerFichier("fich2", null, "ihm", "admin", "admin");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

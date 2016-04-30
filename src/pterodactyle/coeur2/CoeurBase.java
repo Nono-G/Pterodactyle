@@ -167,7 +167,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	//Auteur : Nono
-	public Set<Fichier> getFichier(String identificateur, String cle) throws RemoteException{
+	public Set<Fichier> getFichiers(String identificateur, String cle) throws RemoteException{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -187,6 +187,20 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 			}
 		}
 		return ret;
+	}
+	
+	public _Echangeable getEchangeable(String url, String identificateur, String cle) throws RemoteException, ExceptionEchangeableInexistant{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		Utilisateur utilisateur = utilisateurs.get(identificateur);
+		//VerifExistance
+		_Echangeable ech = this.echangeables.get(url);
+		if(! (ech !=null)){throw new ExceptionEchangeableInexistant();}
+		//VerifAutorisation
+		if(ech instanceof $EchangeableAvecTag && (! verifAutorisation.lecture(($EchangeableAvecTag)ech, utilisateur))){System.out.println("Qu'est ce que tu fais ici ?");throw new ExceptionAutorisationManquante();}
+		if(ech instanceof MessageInterne && (! ((MessageInterne)ech).getDestinataire().equals(utilisateur))){System.out.println("Qu'est ce que tu fais là ?");throw new ExceptionAutorisationManquante();}
+		
+		return ech;
 	}
 	
 	
