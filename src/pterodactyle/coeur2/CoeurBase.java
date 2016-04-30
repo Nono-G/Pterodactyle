@@ -189,6 +189,20 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		return ret;
 	}
 	
+	public _Echangeable getEchangeable(String url, String identificateur, String cle) throws RemoteException, ExceptionEchangeableInexistant{
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		Utilisateur utilisateur = utilisateurs.get(identificateur);
+		//VerifExistance
+		_Echangeable ech = this.echangeables.get(url);
+		if(! (ech !=null)){throw new ExceptionEchangeableInexistant();}
+		//VerifAutorisation
+		if(! (ech instanceof $EchangeableAvecTag && verifAutorisation.lecture(($EchangeableAvecTag)ech, utilisateur))){throw new ExceptionAutorisationManquante();}
+		if(! (ech instanceof MessageInterne && ((MessageInterne)ech).getDestinataire().equals(utilisateur))){throw new ExceptionAutorisationManquante();}
+		
+		return ech;
+	}
+	
 	
 	@Override
 	public void enleverTag(String url, String tag, String identificateur, String cle) throws ExceptionEchangeableMauvaisType {

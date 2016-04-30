@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.ExceptionEchangeableInexistant;
+import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
 import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable._Echangeable;
 
@@ -17,6 +19,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +71,18 @@ public class EditionPost extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		JTextArea textAreaReponse = new JTextArea();
+		textAreaReponse.setForeground(new Color(11,29,62));
+		textAreaReponse.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textAreaReponse.setBackground(new Color(211,210,250));
+		
+		JTextPane txtpnJJJ = new JTextPane();
+		txtpnJJJ.setBackground(new Color(211,210,250));
+		txtpnJJJ.setForeground(new Color(11,29,62));
+		txtpnJJJ.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		txtpnJJJ.setEditable(false);
+		txtpnJJJ.setText(post.toString());
+		
 		JLabel labelTitre = new JLabel("Titre :");
 		labelTitre.setForeground(new Color(11,29,62));
 		labelTitre.setFont(new Font("Book Antiqua", Font.BOLD, 18));
@@ -81,6 +96,23 @@ public class EditionPost extends JFrame {
 		JButton btnRepondrePost = new JButton("Répondre");
 		btnRepondrePost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String contenu = textAreaReponse.getText();
+				if(contenu.length() != 0){
+					try {
+						app.repondrePost(post.getUrl(), contenu, loginCourant, motDePasseCourant);
+						post = (Post)app.getEchangeable(post.getUrl(), loginCourant, motDePasseCourant);
+						txtpnJJJ.setText(post.toString());
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ExceptionEchangeableMauvaisType e1) {
+						//Exception impossible
+						e1.printStackTrace();
+					} catch (ExceptionEchangeableInexistant e1) {
+						//Exception impossible
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 		btnRepondrePost.setBackground(new Color(11,29,62));
@@ -268,37 +300,30 @@ public class EditionPost extends JFrame {
 		JPanel panel = new JPanel();
 		scrollPane.setViewportView(panel);
 		
-		JTextArea textAreaRéponse = new JTextArea();
-		textAreaRéponse.setForeground(new Color(11,29,62));
-		textAreaRéponse.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		textAreaRéponse.setBackground(new Color(211,210,250));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(textAreaRéponse, GroupLayout.DEFAULT_SIZE, 972, Short.MAX_VALUE)
+				.addComponent(textAreaReponse, GroupLayout.DEFAULT_SIZE, 972, Short.MAX_VALUE)
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(textAreaRéponse, GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+				.addComponent(textAreaReponse, GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
 		);
 		panel.setLayout(gl_panel);
 		
 		JPanel panel_1 = new JPanel();
 		scrollPane_1.setViewportView(panel_1);
 		
-		JTextPane txtpnJJJ = new JTextPane();
-		txtpnJJJ.setBackground(new Color(211,210,250));
-		txtpnJJJ.setForeground(new Color(11,29,62));
-		txtpnJJJ.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		txtpnJJJ.setEditable(false);
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addComponent(txtpnJJJ, GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
+				.addComponent(txtpnJJJ, GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addComponent(txtpnJJJ, GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addComponent(txtpnJJJ, GroupLayout.PREFERRED_SIZE, 223, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(61, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
