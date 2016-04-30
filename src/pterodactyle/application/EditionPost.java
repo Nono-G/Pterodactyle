@@ -186,8 +186,6 @@ public class EditionPost extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					ApplicationUtilisateur ap = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
-					ap.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -321,9 +319,7 @@ public class EditionPost extends JFrame {
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addComponent(txtpnJJJ, GroupLayout.PREFERRED_SIZE, 223, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(61, Short.MAX_VALUE))
+				.addComponent(txtpnJJJ, GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
