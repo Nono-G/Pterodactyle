@@ -241,8 +241,6 @@ public class NouveauPost extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					ApplicationUtilisateur ap = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
-					ap.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
