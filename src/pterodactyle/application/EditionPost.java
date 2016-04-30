@@ -81,7 +81,7 @@ public class EditionPost extends JFrame {
 		txtpnJJJ.setForeground(new Color(11,29,62));
 		txtpnJJJ.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		txtpnJJJ.setEditable(false);
-		txtpnJJJ.setText(post.toString());
+		txtpnJJJ.setText(post.affichage2());
 		
 		JLabel labelTitre = new JLabel("Titre :");
 		labelTitre.setForeground(new Color(11,29,62));
@@ -101,7 +101,7 @@ public class EditionPost extends JFrame {
 					try {
 						app.repondrePost(post.getUrl(), contenu, loginCourant, motDePasseCourant);
 						post = (Post)app.getEchangeable(post.getUrl(), loginCourant, motDePasseCourant);
-						txtpnJJJ.setText(post.toString());
+						txtpnJJJ.setText(post.affichage2());
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
