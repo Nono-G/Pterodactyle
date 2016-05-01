@@ -40,9 +40,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-import pterodactyle.echangeable.Post;
-import pterodactyle.echangeable._Echangeable;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.awt.event.MouseAdapter;
 
 
@@ -50,9 +52,10 @@ public class ApplicationUtilisateur extends JFrame {
 
 	private JPanel contentPane;
 	private _ServicesCoeur app;
-	private String loginCourant;
-	private String motDePasseCourant;
-	private Map<String, _Echangeable> echangeables;
+	private static String loginCourant;
+	private static String motDePasseCourant;
+	private Map<String, Post> posts;
+	private Map<String, Fichier> fichiers;
 	private List<String> tagsFiltre;
 	private JTextField txtFiltrerParTagCloud;
 	private JTextField textField_1;
@@ -62,8 +65,10 @@ public class ApplicationUtilisateur extends JFrame {
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
-		this.echangeables = new HashMap<String, _Echangeable>();
+		this.posts = new HashMap<String, Post>();
+		this.fichiers = new HashMap<String, Fichier>();
 		this.tagsFiltre = new ArrayList<String>();
+		new File("FunkySkeletonTelechargements").mkdir();
 		initialisation();
 	}
 
@@ -193,7 +198,7 @@ public class ApplicationUtilisateur extends JFrame {
 				if(e.getClickCount()>=2){
 					//listPourClick.getSelectedValue();
 					PaireTitreUrl titre = listPourClick.getModel().getElementAt(listPourClick.locationToIndex(e.getPoint()));
-					EditionPost ep = new EditionPost((Post)echangeables.get(titre.url), app, loginCourant, loginCourant);
+					EditionPost ep = new EditionPost((Post)posts.get(titre.url), app, loginCourant, loginCourant);
 					ep.setVisible(true);
 				}
 			}
@@ -220,10 +225,10 @@ public class ApplicationUtilisateur extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String tag = textField.getText();
 				lblNewLabel.setText("Trier sur le tag : "+tag);
-				PaireTitreUrl[] data = new PaireTitreUrl[echangeables.size()];
+				PaireTitreUrl[] data = new PaireTitreUrl[posts.size()];
 				int i = 0;
-				for(String s : echangeables.keySet()){
-					_Echangeable ech =  echangeables.get(s);
+				for(String s : posts.keySet()){
+					_Echangeable ech =  posts.get(s);
 					Set<Tag> tags = (($EchangeableAvecTag)ech).getTags();
 					boolean containt = false;
 					for(Tag t : tags){
@@ -333,10 +338,22 @@ public class ApplicationUtilisateur extends JFrame {
 		panel_3.setBackground(new Color(211,210,250));
 		scrollPane_1.setViewportView(panel_3);
 		
-		JList listFichiers = new JList();
+		JList<String> listFichiers = new JList<String>();
 		listFichiers.setBackground(new Color(211,210,250));
 		listFichiers.setForeground(new Color(11,29,62));
 		listFichiers.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		listFichiers.setModel(new AbstractListModel<String>() {
+			
+			String[] values =  refreshFichiers();
+
+			public int getSize() {
+				return values.length;
+			}
+			public String getElementAt(int index) {
+				return values[index];
+			}
+		});
+		
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -357,6 +374,10 @@ public class ApplicationUtilisateur extends JFrame {
 		onglet2.add(panel_2);
 		
 		JButton btnUploadFichier = new JButton("Upload");
+		btnUploadFichier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnUploadFichier.setForeground(Color.WHITE);
 		btnUploadFichier.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnUploadFichier.setBackground(new Color(11, 29, 62));
@@ -364,6 +385,16 @@ public class ApplicationUtilisateur extends JFrame {
 		onglet2.add(btnUploadFichier);
 		
 		JButton btnDownloadFichier = new JButton("Download");
+		btnDownloadFichier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String url = listFichiers.getSelectedValue();
+				long temps = System.currentTimeMillis();
+				download(("FunkySkeletonTelechargements/"+url), url, 10000, app);
+				temps = System.currentTimeMillis() - temps;
+				ConfirmationTelech conf = new ConfirmationTelech((int)temps/1000, url);
+				conf.setVisible(true);
+			}
+		});
 		btnDownloadFichier.setForeground(Color.WHITE);
 		btnDownloadFichier.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnDownloadFichier.setBackground(new Color(11, 29, 62));
@@ -528,12 +559,68 @@ public class ApplicationUtilisateur extends JFrame {
 		PaireTitreUrl[] titresPosts = new PaireTitreUrl[posts.size()];
 		
 		for(Post p : posts){
-			this.echangeables.put(p.getUrl(), p);
+			this.posts.put(p.getUrl(), p);
 			titresPosts[i] = new PaireTitreUrl(p.getTitre(), p.getUrl());
 			i++;
 		}
 		return titresPosts;
 	}
+
+	protected String[] refreshFichiers(){
+		Set<Fichier> fichiersloc = null;
+		int i = 0;
+		try {
+			fichiersloc = app.getFichiers(loginCourant, motDePasseCourant);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] nomsFichiers = new String[posts.size()];
+		
+		for(Fichier f : fichiersloc){
+			this.fichiers.put(f.getUrl(), f);
+			nomsFichiers[i] = f.getUrl();
+			i++;
+		}
+		return nomsFichiers;
+	}
+	
+	private static void upload(String urlLocal, String urlServeur, int tailleBuffer, _ServicesCoeur c) throws ExceptionEchangeableMauvaisType{
+		long i=0;
+		File local = new File(urlLocal);
+		try(FileInputStream fis = new FileInputStream(local)){
+			Object[] data = new Object[2];
+			byte[] buffer = new byte[tailleBuffer];
+			i = (local.length()/tailleBuffer)+1;
+			while(i != 0){
+				data[0] = fis.read(buffer);
+				data[1] = buffer;
+				c.ecrireTranche(data, urlServeur, loginCourant, motDePasseCourant);
+				i--;
+				System.out.println(""+data[0]);
+			}
+		}catch(IOException e){e.printStackTrace();}
+	}
+	
+	private static void download(String urlLocal, String urlServeur, int tailleBuffer, _ServicesCoeur c){
+		File local = new File(urlLocal);
+		try(FileOutputStream fos = new FileOutputStream(local)){
+			Object[] data;
+			byte[] buffer;
+			int n=0;
+			while(true){
+				try{
+					try {
+						data = c.trancheFichier(urlServeur, n, tailleBuffer, loginCourant, motDePasseCourant);
+						buffer = (byte[]) data[1];
+						fos.write(buffer, 0, (int)data[0]);
+						n++;
+					}catch(ExceptionEchangeableMauvaisType e) {e.printStackTrace();}
+				}catch(ExceptionEchangeableFichierFini e){break;}
+			}
+		}catch(IOException e){System.out.println("Fichier local erreur");e.printStackTrace();};
+	}
+	
 }
 
 

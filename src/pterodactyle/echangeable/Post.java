@@ -48,6 +48,15 @@ public class Post extends $EchangeableAvecTag {
 		return ret;
 	}
 	
+	public String affichage2(){
+		String ret = "";
+		for(MessagePost m : messages ){
+			//ret += m.affichage2();
+			ret+= m.toString();
+		}
+		return ret;
+	}
+	
 	public String getTitre(){
 		return this.titre;
 	}
