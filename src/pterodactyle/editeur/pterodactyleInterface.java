@@ -18,17 +18,21 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class pterodactyleInterface {
 
 	private JFrame framePtrodactyle;
 	private JTextField textField;
 	private String[] implementationUtilisateur;
+	private static Editeur editeur;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		editeur = new Editeur();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -118,6 +122,7 @@ public class pterodactyleInterface {
 		checkBox5.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 13));
 		checkBox5.setBackground(Color.WHITE);
 		
+
 		JLabel lblOptions = new JLabel("Options générales");
 		lblOptions.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 14));
 		lblOptions.setBounds(10, 11, 137, 27);
@@ -130,6 +135,7 @@ public class pterodactyleInterface {
 		panel_1.setBounds(30, 390, 528, 121);
 		framePtrodactyle.getContentPane().add(panel_1);
 		
+		//Les implementations
 		JLabel labellzjfl = new JLabel("Options d'implémentation");
 		labellzjfl.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 14));
 		labellzjfl.setBounds(10, 11, 178, 27);
@@ -141,7 +147,7 @@ public class pterodactyleInterface {
 		panel_1.add(lblImplmentationDunUtilisateur);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Défaut>", "Specific user implementation"}));
+		comboBox.setModel(new DefaultComboBoxModel(editeur.implementation("utilisateur")));
 		comboBox.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		comboBox.setBounds(10, 74, 178, 20);
 		panel_1.add(comboBox);
@@ -158,7 +164,7 @@ public class pterodactyleInterface {
 		panel_1.add(lblMoteur);
 		
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"<Défaut>", "Mot de passe", "Session"}));
+		comboBox_2.setModel(new DefaultComboBoxModel(editeur.implementation("coeur")));
 		comboBox_2.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		comboBox_2.setBounds(207, 74, 146, 20);
 		panel_1.add(comboBox_2);
@@ -171,6 +177,20 @@ public class pterodactyleInterface {
 		JButton btnNewButton = new JButton("Valider");
 		btnNewButton.setFont(new Font("Book Antiqua", Font.BOLD, 12));
 		btnNewButton.setBounds(250, 560, 89, 23);
+		btnNewButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editeur.creerS(textField.getText(), (String)comboBox_2.getSelectedItem() );
+				System.out.println((String)comboBox.getSelectedItem());
+				editeur.creerC(textField.getText(), (String)comboBox.getSelectedItem() );
+				System.out.println((String)comboBox_2.getSelectedItem());
+			}
+			
+		});
+		
+		
+		
 		framePtrodactyle.getContentPane().add(btnNewButton);
 		framePtrodactyle.setBackground(Color.WHITE);
 		framePtrodactyle.setTitle("Ptérodactyle");

@@ -7,17 +7,12 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public class Utilisateur implements Serializable {
+public class Utilisateur extends $Utilisateur implements Serializable {
 	
 	private static final long serialVersionUID = 3755293297347406031L;
 	
 	//Attributs de base de l'utilisateur
-	protected String nom; 
-	protected String prenom; 
-	protected String login; 
-	protected String motDePasse; 
-	protected boolean admin; 
-	protected HashMap< Autorisation , Droits > listeDroits = new HashMap< Autorisation , Droits >();
+
 	
 	
 	/*
@@ -29,11 +24,7 @@ public class Utilisateur implements Serializable {
 	 * @param admin un boolean pour definir si cette personne peut etre admin
 	 */
 	public Utilisateur(String nom, String prenom, String login, String motDePasse, boolean admin){
-		this.nom = nom;
-		this.prenom = prenom; 
-		this.login = login; 
-		this.motDePasse = motDePasse; 
-		this.admin = admin;
+		super(motDePasse, motDePasse, motDePasse, motDePasse, admin);
 	}
 	
 	/*
