@@ -373,7 +373,7 @@ public class ApplicationUtilisateur extends JFrame {
 		onglet2.add(btnOkFiltrerParTagCloud);
 		onglet2.add(panel_2);
 		
-		JButton btnUploadFichier = new JButton("Upload");
+		JButton btnUploadFichier = new JButton("Nouveau fichier !");
 		btnUploadFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -381,7 +381,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnUploadFichier.setForeground(Color.WHITE);
 		btnUploadFichier.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnUploadFichier.setBackground(new Color(11, 29, 62));
-		btnUploadFichier.setBounds(532, 10, 132, 25);
+		btnUploadFichier.setBounds(479, 10, 185, 25);
 		onglet2.add(btnUploadFichier);
 		
 		JButton btnDownloadFichier = new JButton("Download");
