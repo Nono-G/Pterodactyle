@@ -20,6 +20,8 @@ import javax.swing.border.LineBorder;
 import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.Tag;
 import pterodactyle.echangeable._Echangeable;
+import pterodactyle.utilisateur.Autorisation;
+import pterodactyle.utilisateur.Droits;
 import pterodactyle.utilisateur.Utilisateur;
 
 import javax.swing.JScrollPane;
@@ -43,6 +45,8 @@ public class ProfilUser extends JFrame {
 	private String prenomUtilisateur;
 	private Utilisateur utilisateurCourant;
 	private Map<String, Utilisateur> utilisateurs;
+	private String[] arrayDroits = new String[50];
+	private int i = 0;
 
 	/**
 	 * Launch the application.
@@ -88,6 +92,7 @@ public class ProfilUser extends JFrame {
 		JButton btnNewButton = new JButton("Retour");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		btnNewButton.setBackground(new Color(11,29,62));
@@ -130,6 +135,23 @@ public class ProfilUser extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}		
+		JList list = new JList();
+		list.setBackground(new Color(211,210,250));
+		list.setForeground(new Color(11,29,62));
+		list.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		HashMap<Autorisation,Droits> droits = utilisateurCourant.recupererTousLesDroits();
+		
+
+		for(Autorisation a : droits.keySet()){
+			boolean[] d = droits.get(a).getDroits();
+			System.out.println(d.length);
+			if(d[0]){arrayDroits[i] = a.toString()+ "   lecture";i++;}
+			if(d[1]){arrayDroits[i] = a.toString()+ "   modification";i++;}
+			if(d[2]){arrayDroits[i] = a.toString()+ "   partage";i++;}
+			if(d[3]){arrayDroits[i] = a.toString()+ "   creation";i++;}
+			if(d[4]){arrayDroits[i] = a.toString()+ "   suppression";i++;}
+		}
+		list.setListData(arrayDroits);
 		
 		
 		JComboBox comboBoxListeDroits = new JComboBox();
@@ -146,7 +168,7 @@ public class ProfilUser extends JFrame {
 				if(droit.equals("lecture")){try {
 					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}}
 				if(droit.equals("modification")){try {
@@ -173,6 +195,9 @@ public class ProfilUser extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}}
+				dispose();
+				ProfilUser us = new ProfilUser(app, utilisateurCourant, loginCourant, motDePasseCourant);
+				us.setVisible(true);
 			}
 		});
 		btnOkAddDroit.setForeground(Color.WHITE);
@@ -274,10 +299,7 @@ public class ProfilUser extends JFrame {
 		panel.setBackground(new Color(211,210,250));
 		scrollPane.setViewportView(panel);
 		
-		JList list = new JList();
-		list.setBackground(new Color(211,210,250));
-		list.setForeground(new Color(11,29,62));
-		list.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)

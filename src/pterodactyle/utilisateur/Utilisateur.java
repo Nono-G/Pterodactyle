@@ -120,6 +120,10 @@ public class Utilisateur extends $Utilisateur implements Serializable {
 		return listeDroits.get(autorisation);
 	}
 	
+	public HashMap<Autorisation,Droits> recupererTousLesDroits(){
+		return listeDroits;
+	}
+	
 	
 	
 	/*
