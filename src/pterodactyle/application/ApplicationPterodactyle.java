@@ -131,7 +131,7 @@ public class ApplicationPterodactyle {
 						System.out.println("Correct");
 						
 						frameConnection.dispose();
-						ApplicationUtilisateur acc = new ApplicationUtilisateur(app, mdp, mdp);
+						ApplicationUtilisateur acc = new ApplicationUtilisateur(app, loginCourant, motDePasseCourant);
 						acc.setVisible(true);
 					}else{
 						textFieldLogin.setBackground(new Color(255, 0, 0));
