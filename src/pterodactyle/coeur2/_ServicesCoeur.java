@@ -54,7 +54,7 @@ public interface _ServicesCoeur extends Remote {
 	 */
 	public Map<String, Utilisateur> recupererToutLesUtilisateurs(String identificateur, String cle) throws RemoteException;
 
-	/*
+	/**
 	 * @author Nono
 	 * Renvoie une tranche (cf mÃ©thode dans la classe pterodactyle.echangeable.Fichier) du fichier dÃ©signÃ© par url,
 	 * Sous rÃ©serve que le couple identificateur, cle corresponde Ã  un utilisateur existant et autorisÃ© Ã  LIRE cet echangeable
@@ -70,12 +70,12 @@ public interface _ServicesCoeur extends Remote {
 	public Object[] trancheFichier(String url, int n, int tailleTampon, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableFichierFini, ExceptionEchangeableMauvaisType;
 
-	/*
+	/**
 	 * @author Nono
 	 * Ã©crit une tranche d'octets (objet composÃ© d'un entier reprÃ©sentant le nombre d'octets et du tableau d'octets)
 	 * dans le fichier dÃ©signÃ© sur le serveur par l'url.
 	 * Sous rÃ©serve que identificateur-cle corrensponde Ã  un utilisateur reconnu.
-	 * @require droit ECRITURE si le fichier n'existe pas, droit modification si il existe.
+	 * @require droit MODIFICATION.
 	 * @param tranche un couple : le premier est le nombre d'octets effectivement prÃ©sents, le second est le tableau d'octets de la tranche
 	 * @param url du fichier cÃ´tÃ© serveur dont on veut une part
 	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
@@ -84,30 +84,110 @@ public interface _ServicesCoeur extends Remote {
 	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle)
 			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType, RemoteException;
 
+	/**
+	 * @author Nono
+	 * Ã©crit une tranche d'octets (objet composÃ© d'un entier reprÃ©sentant le nombre d'octets et du tableau d'octets)
+	 * dans le fichier dÃ©signÃ© sur le serveur par l'url.
+	 * Sous rÃ©serve que identificateur-cle corrensponde Ã  un utilisateur reconnu et que la cléCreation corresponde à la clé de création générée lors de la création d'un fichier.
+	 * @require droit CREATION.
+	 * @param tranche un couple : le premier est le nombre d'octets effectivement prÃ©sents, le second est le tableau d'octets de la tranche
+	 * @param url du fichier cÃ´tÃ© serveur dont on veut une part
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 */
 	public void ecrireTranche(Object[] tranche, String fich, int cleCreation, String identificateur, String cle)
 			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType;
-		
+	
+	/**
+	 * @author Nono
+	 * Crée un nouvel Echangeable de type Fichier dans le serveur, celui-ci est vide avant son remplissage avec ecrireTranche.
+	 * @param url du fichier côté serveur.
+	 * @param pere du fichier (un Dossier ou null)
+	 * @param tag que porte le fichier. Il faut en fournir un à la création puis ajouter les autres ensuite.
+	 * @require tag doit correspondre à un tag existant côté serveur.
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @return la clé de création générée pour permettre d'utiliser ecrireTranche avec le droit de creation mais pas de modification.
+	 */
 	public int creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
 	
-	
+	/**
+	 * @author Nono
+	 * Retire le tag passé en paramètre de l'échangeable dont l'url est passé en paramètre.
+	 * @param url du fichier côté serveur.
+	 * @param tag que l'on souhaite retirer. (Si celui n'existe pas ou n'est pas porté par l'échangeable, il ne se passe rien)
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @throws ExceptionEchangeableMauvaisType si l'url ne correspond pas à un Echangeable avec Tag ($EchangeableAvecTag)
+	 * @throws RemoteException
+	 */
 	public void enleverTag(String url, String tag, String identificateur, String cle)
 			throws ExceptionEchangeableMauvaisType, RemoteException;
 	
+	/**
+	 * @author Nono
+	 * Ajoute le tag dont le nom est passé en paramètre aux tags portés par l'échangeable dont l'url figure en paramètre.
+	 * @param urlEch url serveur de l'échangeable manipulé.
+	 * @param urlTag nom du tag manipulé
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @throws RemoteException RMI
+	 * @throws ExceptionEchangeableMauvaisType si l'url ne correspond pas à un Echangeable avec Tag ($EchangeableAvecTag)
+	 * @throws ExceptionEchangeablePasDeTag si le tag n'existe pas.
+	 */
 	public void ajouterTagSurEchangeable(String urlEch, String urlTag, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag;
 	
+	/**
+	 * @author Nono
+	 * renvoie l'ensemble des posts que l'utilisateur à le droit de LIRE.
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @return l'ensemble des posts
+	 * @throws RemoteException RMI
+	 */
 	public Set<Post> getPosts(String identificateur, String cle)
 			throws RemoteException;
 	
+	/**
+	 * @author Nono
+	 * renvoie l'ensemble des fichiers que l'utilisateur à le droit de LIRE.
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @return l'ensemble des fichiers
+	 * @throws RemoteException RMI
+	 */
 	public Set<Fichier> getFichiers(String identificateur, String cle)
 			throws RemoteException;
 	
+	/**
+	 * @author Nono
+	 * renvoie l'ensemble des tags sur lesquels l'utilisateur a le droit CREATION, c'est à dire
+	 * l'ensemble des tags que l'utilisateur à le droit d'aposer à un Echangeable Avec Tag.
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @return l'ensemble de tags
+	 * @throws RemoteException RMI
+	 */
 	public Set<Tag> getTagsDroitCreation(String identificateur, String cle)
 			throws RemoteException;
 	
+	/**
+	 * @author Nono
+	 * Renvoie l'échangeable désigné par le paramètre url, à condition que l'utilisateur ait le droit le LECTURE sur cet échangeable
+	 * si il s'agit d'un échangeable avec tag ou qu'il en soit le destinataire si il s'agit d'un message interne.
+	 * @param url serveur de l'échangeable
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @return l'échangeable désigné par l'url.
+	 * @throws RemoteException
+	 * @throws ExceptionEchangeableInexistant si l'url est inconnu
+	 * @throws ExceptionAutorisationManquante si l'utilisateur n'as pas le droit de LECTURE ou n'est pas destinataire
+	 */
 	public _Echangeable getEchangeable(String url, String identificateur, String cle)
-			throws RemoteException, ExceptionEchangeableInexistant;
+			throws RemoteException, ExceptionEchangeableInexistant, ExceptionAutorisationManquante;
+			
 	/**
 	 * ADMINISTRATEUR TAG
 	 */
@@ -139,14 +219,34 @@ public interface _ServicesCoeur extends Remote {
 
 	public void creerPost(String url, String titre, String urlTag, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeablePasDeTag;
-	/*
-	 * 
+	
+	/**
+	 * Permet de rajouter un message en réponse à la suite des messages d'un post à condition qu'on ait le droit de MODIFICATION dessus.
+	 * @require Droit MODIFICATION sur url
+	 * @param url du post concerné
+	 * @param contenu du message
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @throws RemoteException RMI
+	 * @throws ExceptionEchangeableMauvaisType si l'url ne désigne pas un post.
+	 * @throws ExceptionAutorisationManquante si l'utilisateur n'as pas le droit de modification sur le post.
 	 */
 	public void repondrePost(String url, String contenu, String identificateur, String cle)
-			throws RemoteException, ExceptionEchangeableMauvaisType;
+			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionAutorisationManquante;
 	
+	/**
+	 * Permet la supression de l'échangeable désigné par l'url. Conformément à la description des droits, cette action nécéssite
+	 * une autorisation SPECIFIQUE de SUPRESSION sur l'élément. Dans l'absence de ce droit la supression devra se faire en enlevant le dernier
+	 * tag que portera l'echangeable.
+	 * @require Droit SPECIFIQUE de SUPRESSION
+	 * @param url de l'échangeable concerné
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @throws RemoteException RMI
+	 * @throws ExceptionAutorisationManquante si l'utilisateur n'as pas le droit SPECIFIQUE de SUPRESSION  sur l'élément.
+	 */
 	public void supprimerEchangeable(String url, String identificateur, String cle)
-			throws RemoteException;
+			throws RemoteException, ExceptionAutorisationManquante;
 	
 	/**
 	 * MESSAGERIE INTERNE
@@ -180,7 +280,18 @@ public interface _ServicesCoeur extends Remote {
 	public void reponseMessage(String url, String contenu, String objet, String identificateur, String cle)
 			throws RemoteException, ExceptionEchangeableMauvaisType;
 	
-	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException;
+	/**
+	 * @author Nono
+	 * Renvoie l'ensemble des echangeables avec tag portant un tag donné, à condition que l'on ait le droit LECTURE dessus.
+	 * @require droit LECTURE sur le tag
+	 * @param urlTag nom du tag
+	 * @param identificateur de l'utilisateur Ã  l'origine de la demande
+	 * @param cle de l'utilisateur Ã  l'origine de la demande
+	 * @return l'ensemble d'échangeables avec tag décrit ci-dessus.
+	 * @throws RemoteException RMI
+	 * @throws ExceptionAutorisationManquante si l'on ne dspose pas du droit LECTURE
+	 */
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException, ExceptionAutorisationManquante;
 	
 	
 	/*
