@@ -17,15 +17,6 @@ public class ConfirmationTelech extends JFrame{
 	String nomFichier;
 	
 	public ConfirmationTelech(int temps, String nomFichier) {
-		getContentPane().setForeground(new Color(11,29,62));
-		getContentPane().setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ConfirmationTelech.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
-		setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setAlwaysOnTop(true);
-		getContentPane().setBackground(new Color(244,244,243));
-		setBackground(new Color(244,244,243));
-		setResizable(false);
 		this.temps=temps;
 		this.nomFichier = nomFichier;
 		initialisation();
@@ -34,9 +25,17 @@ public class ConfirmationTelech extends JFrame{
 		public void initialisation() {
 			setTitle("T\u00E9l\u00E9chargement termin\u00E9");
 			getContentPane().setLayout(null);
+			getContentPane().setForeground(new Color(11,29,62));
+			getContentPane().setFont(new Font("Book Antiqua", Font.BOLD, 13));
+			setIconImage(Toolkit.getDefaultToolkit().getImage(ConfirmationTelech.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
+			setFont(new Font("Book Antiqua", Font.BOLD, 13));
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setAlwaysOnTop(true);
+			getContentPane().setBackground(new Color(244,244,243));
+			setBackground(new Color(244,244,243));
 			
 			JLabel lblLabelmessageconfirmation = new JLabel("Votre téléchargement du fichier"+nomFichier+" ");
-			lblLabelmessageconfirmation.setBounds(39, 70, 395, 320);
+			lblLabelmessageconfirmation.setBounds(39, 56, 395, 32);
 			lblLabelmessageconfirmation.setBackground(new Color(244,244,243));
 			lblLabelmessageconfirmation.setForeground(new Color(11,29,62));
 			lblLabelmessageconfirmation.setFont(new Font("Book Antiqua", Font.BOLD, 18));
