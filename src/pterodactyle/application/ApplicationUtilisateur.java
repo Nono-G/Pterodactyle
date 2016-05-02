@@ -36,6 +36,8 @@ import javax.swing.border.LineBorder;
 import pterodactyle.coeur2._ServicesCoeur;
 
 import pterodactyle.echangeable.*;
+import pterodactyle.utilisateur.AdministrateurException;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -58,7 +60,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private Map<String, Fichier> fichiers;
 	private List<String> tagsFiltre;
 	private JTextField txtFiltrerParTagCloud;
-	private JTextField textField_1;
+	private JTextField textFieldTagCreation;
 	private JButton btnRefreshCloud;
 	private JButton btnResfreshAdmin;
 
@@ -79,6 +81,7 @@ public class ApplicationUtilisateur extends JFrame {
 	 * Create the frame.
 	 * @return 
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void initialisation() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setResizable(false);
@@ -282,9 +285,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
-				fr.setVisible(true);
+				refresh();
 			}
 		});
 		
@@ -409,9 +410,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnRefreshCloud = new JButton("");
 		btnRefreshCloud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
-				fr.setVisible(true);
+				refresh();
 			}
 		});
 		btnRefreshCloud.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
@@ -479,14 +478,22 @@ public class ApplicationUtilisateur extends JFrame {
 		btnFormulaireCreerProfil.setBackground(new Color(11,29,62));
 		btnFormulaireCreerProfil.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		textField_1 = new JTextField();
-		textField_1.setForeground(new Color(11,29,62));
-		textField_1.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		textField_1.setColumns(10);
+		textFieldTagCreation = new JTextField();
+		textFieldTagCreation.setForeground(new Color(11,29,62));
+		textFieldTagCreation.setFont(new Font("Book Antiqua", Font.BOLD, 13));
+		textFieldTagCreation.setColumns(10);
 		
 		JButton btnCreerUnTag = new JButton("OK");
 		btnCreerUnTag.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String tag = textFieldTagCreation.getText();
+				try {
+					app.creerTag(tag, loginCourant, motDePasseCourant);
+					btnResfreshAdmin.doClick();
+				} catch (RemoteException | AdministrateurException | ExceptionEchangeableTagExistant e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnCreerUnTag.setForeground(Color.WHITE);
@@ -494,7 +501,24 @@ public class ApplicationUtilisateur extends JFrame {
 		btnCreerUnTag.setBackground(new Color(11,29,62));
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"tag"}));
+		Set<Tag> tags;
+		String[] tagsArray;
+		
+		try {
+			tags = app.getTagsDroitCreation(loginCourant, motDePasseCourant);
+			tagsArray = new String[tags.size()];
+			int i = 0;
+			for(Tag t : tags){
+				tagsArray[i] = t.toString();
+				i++;
+			}
+			comboBox.setModel(new DefaultComboBoxModel(tagsArray));
+		} catch (RemoteException e1) {
+
+		}
+		
+		
+		
 		comboBox.setBackground(new Color(244,244,243));
 		comboBox.setForeground(new Color(11,29,62));
 		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
@@ -502,6 +526,14 @@ public class ApplicationUtilisateur extends JFrame {
 		JButton btnSuppTagOk = new JButton("OK");
 		btnSuppTagOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String tagSelect = (String) comboBox.getSelectedItem();
+				try {
+					app.supprimerTag(tagSelect, loginCourant, motDePasseCourant);
+					btnRefresh.doClick();
+				} catch (RemoteException | AdministrateurException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnSuppTagOk.setForeground(Color.WHITE);
@@ -511,9 +543,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnResfreshAdmin = new JButton("");
 		btnResfreshAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
-				fr.setVisible(true);
+				refresh();
 			}
 		});
 		btnResfreshAdmin.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
@@ -527,7 +557,7 @@ public class ApplicationUtilisateur extends JFrame {
 						.addGroup(gl_onglet3.createSequentialGroup()
 							.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textFieldTagCreation, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
@@ -558,7 +588,7 @@ public class ApplicationUtilisateur extends JFrame {
 							.addGap(114)
 							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldTagCreation, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 							.addGap(115)
 							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
@@ -569,6 +599,7 @@ public class ApplicationUtilisateur extends JFrame {
 							.addContainerGap()
 							.addComponent(btnResfreshAdmin, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(51, Short.MAX_VALUE))
+
 		);
 		onglet3.setLayout(gl_onglet3);
 		
@@ -636,6 +667,12 @@ public class ApplicationUtilisateur extends JFrame {
 				System.out.println(""+data[0]);
 			}
 		}catch(IOException e){e.printStackTrace();}
+	}
+	
+	private void refresh(){
+		dispose();
+		ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
+		fr.setVisible(true);
 	}
 	
 	private static void download(String urlLocal, String urlServeur, int tailleBuffer, _ServicesCoeur c){
