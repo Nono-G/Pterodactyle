@@ -265,7 +265,6 @@ public class UploadFichier extends JFrame {
 				data[1] = buffer;
 				c.ecrireTranche(data, urlServeur, log, mdp);
 				i--;
-				System.out.println(""+data[0]);
 			}
 		}catch(IOException e){e.printStackTrace();}
 	}

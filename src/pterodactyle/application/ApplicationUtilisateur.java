@@ -393,12 +393,14 @@ public class ApplicationUtilisateur extends JFrame {
 		JButton btnDownloadFichier = new JButton("Download");
 		btnDownloadFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String url = listFichiers.getSelectedValue();
-				long temps = System.currentTimeMillis();
-				download(("FunkySkeletonTelechargements/"+url), url, 10000, app);
-				temps = System.currentTimeMillis() - temps;
-				ConfirmationTelech conf = new ConfirmationTelech((int)temps/1000, url);
-				conf.setVisible(true);
+				if(listFichiers.getSelectedIndex() != -1){
+					String url = listFichiers.getSelectedValue();
+					long temps = System.currentTimeMillis();
+					download(("FunkySkeletonTelechargements/"+url), url, 10000, app);
+					temps = System.currentTimeMillis() - temps;
+					ConfirmationTelech conf = new ConfirmationTelech((int)temps/1000, url);
+					conf.setVisible(true);
+				}
 			}
 		});
 		btnDownloadFichier.setForeground(Color.WHITE);
