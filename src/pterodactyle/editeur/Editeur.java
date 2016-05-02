@@ -30,7 +30,6 @@ public class Editeur {
 		f.mkdir();
 		corps = "";
 		constcorps(nomProjet, "Serveur", ajout);
-		//System.out.println("Dossier cree");
 		copieNouveau(chemin+"/Reseau/Serveur.java", corps);
 		
 
@@ -39,7 +38,6 @@ public class Editeur {
 	public void creerC(String nomProjet, String ajout){
 		corps = "";
 		constcorps(nomProjet, "Client", ajout);
-		//System.out.println("Dossier cree");
 		copieNouveau(chemin+"/Reseau/Client.java", corps);
 		nomClient = "" ;
 		chemin = "src/";
@@ -68,10 +66,8 @@ public class Editeur {
 		corps = corps.replaceFirst("pterodactyle", nomProjet+".Reseau");
 		corps = corps.replaceFirst(".rmi", "");
 		if( ! (ajout.equals("<Defaut>")) && chemin.equals("Serveur")){
-			System.out.println(chemin+" "+ajout);
 			corps = corps.replaceFirst("pterodactyle.coeur2.CoeurBase", ajout);
 			corps = corps.replaceAll("CoeurBase", buffer2);
-			System.out.println(buffer2);
 		}
 		
 	}
@@ -92,36 +88,7 @@ public class Editeur {
 		File repertoire = new File("src/"+nomClient+"/" +nom);
 		return repertoire.exists();
 	}
-	/*
-	 * 	public String[] choixImpl(String impl){
-		int i = 0; 
-		int j = 0;
-		String[] nomImpl;
-		File repertoire = new File("src/"+nomClient+"/"+impl);
-		//System.out.println(repertoireUtilisateur.listFiles().length);
-		if(repertoireExiste(impl) && repertoire.listFiles().length != 0 ){
-			nomImpl = new String[repertoire.listFiles().length - fichierCache(repertoire) + 1] ;
-			System.out.println(repertoire.listFiles().length );
-			System.out.println(repertoire.listFiles().length - fichierCache(repertoire) + 1);
-			nomImpl[j] = "<Default>";
-			while( i < (repertoire.listFiles().length) && repertoire.listFiles()[i].isFile()){
-				if(repertoire.listFiles()[i].getName().charAt(0) != '.'){
-					j++;
-					nomImpl[j] = repertoire.listFiles()[i].getName();
-				}
-				System.out.println(repertoire.listFiles()[i].getName());
-				i++;
-			}
-			return nomImpl;
-		}else{
-			nomImpl = new String[1];
-			nomImpl[0] = "<Default>";
-			return nomImpl;
-		}
 
-	}
-	 */
-	
 	
 	public ArrayList<String> recupImpl(String implementation){
 		int i = 0 ;
@@ -132,7 +99,7 @@ public class Editeur {
 		File src = new File("src");
 		while(i < src.listFiles().length){
 			j = 0 ;
-			while(  src.listFiles()[i].isDirectory() && j <src.listFiles()[i].listFiles().length ){
+			while( src.listFiles()[i].isDirectory() && j <src.listFiles()[i].listFiles().length ){
 				if(src.listFiles()[i].listFiles()[j].getName().equals(implementation) && !(src.listFiles()[i].getPath().equals("src/pterodactyle") )){
 					k =0;
 					while( k < src.listFiles()[i].listFiles()[j].listFiles().length){
@@ -140,7 +107,6 @@ public class Editeur {
 							buff = src.listFiles()[i].listFiles()[j].listFiles()[k].getPath().replace('/', '.');
 							buff = buff.replaceAll("src.", "");
 							buff = buff.replaceAll(src.listFiles()[i].listFiles()[j].listFiles()[k].getName(), "*");
-							//System.out.println(implementation +" "+buff);
 							impls.add(buff);
 							buffer2 = src.listFiles()[i].listFiles()[j].listFiles()[k].getName().replaceAll(".java", "");
 
@@ -167,11 +133,7 @@ public class Editeur {
 		}
 		return impl;
 	}
-	
-	
-	
-	
-	
+
 	}
 	
 

@@ -153,18 +153,19 @@ public class AnnuaireIHM extends JFrame {
 				return values[index];
 			}
 		});
-		/*list.addMouseListener(new MouseAdapter() {
+		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount()>=2){
 					//listPourClick.getSelectedValue();
 					String titre = list.getModel().getElementAt(list.locationToIndex(e.getPoint()));
-					ProfilUser pu = new ProfilUser(app, loginCourant, loginCourant);
+					System.out.println(titre);
+					ProfilUser pu = new ProfilUser(app,loginCourant,loginCourant);
 					pu.setVisible(true);
 				}
 			}
 
-		});*/
+		});
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

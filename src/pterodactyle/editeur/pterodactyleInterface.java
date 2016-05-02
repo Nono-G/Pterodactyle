@@ -25,7 +25,6 @@ public class pterodactyleInterface {
 
 	private JFrame framePtrodactyle;
 	private JTextField textField;
-	private String[] implementationUtilisateur;
 	private static Editeur editeur;
 
 	/**
@@ -79,60 +78,11 @@ public class pterodactyleInterface {
 		lblNomDeVotre.setBounds(30, 203, 138, 20);
 		framePtrodactyle.getContentPane().add(lblNomDeVotre);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(30, 235, 528, 127);
-		framePtrodactyle.getContentPane().add(panel);
-		panel.setLayout(null);
-		
-		JCheckBox chckbxSelectionnerToutesLes = new JCheckBox("Toutes les options");
-		chckbxSelectionnerToutesLes.setBounds(6, 45, 199, 23);
-		panel.add(chckbxSelectionnerToutesLes);
-		chckbxSelectionnerToutesLes.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 13));
-		chckbxSelectionnerToutesLes.setBackground(Color.WHITE);
-		
-		JCheckBox checkBox2 = new JCheckBox("Échange de fichiers");
-		checkBox2.setBounds(6, 71, 253, 23);
-		panel.add(checkBox2);
-		checkBox2.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 13));
-		checkBox2.setBackground(Color.WHITE);
-		
-		JCheckBox chckbxSelectionnerLoptionMessagerie = new JCheckBox("Messagerie interne");
-		chckbxSelectionnerLoptionMessagerie.setBounds(6, 97, 253, 23);
-		panel.add(chckbxSelectionnerLoptionMessagerie);
-		chckbxSelectionnerLoptionMessagerie.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 13));
-		chckbxSelectionnerLoptionMessagerie.setBackground(Color.WHITE);
-		
-		JCheckBox checkBox3 = new JCheckBox("Prise de rendez-vous");
-		checkBox3.setBounds(261, 45, 159, 23);
-		panel.add(checkBox3);
-		checkBox3.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 13));
-		checkBox3.setBackground(Color.WHITE);
-		
-		JCheckBox chckbxSelectionnerLoptionForum = new JCheckBox("Forum");
-		chckbxSelectionnerLoptionForum.setBounds(261, 71, 178, 23);
-		panel.add(chckbxSelectionnerLoptionForum);
-		chckbxSelectionnerLoptionForum.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 13));
-		chckbxSelectionnerLoptionForum.setBackground(Color.WHITE);
-		
-		JCheckBox checkBox5 = new JCheckBox("Annuaire");
-		checkBox5.setBounds(261, 97, 159, 23);
-		panel.add(checkBox5);
-		checkBox5.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 13));
-		checkBox5.setBackground(Color.WHITE);
-		
-
-		JLabel lblOptions = new JLabel("Options générales");
-		lblOptions.setFont(new Font("Book Antiqua", Font.BOLD | Font.ITALIC, 14));
-		lblOptions.setBounds(10, 11, 137, 27);
-		panel.add(lblOptions);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(30, 390, 528, 121);
+		panel_1.setBounds(30, 264, 528, 126);
 		framePtrodactyle.getContentPane().add(panel_1);
 		
 		//Les implementations
@@ -153,7 +103,7 @@ public class pterodactyleInterface {
 		panel_1.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"SQL", "XML"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(editeur.implementation("coeur")));
 		comboBox_1.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		comboBox_1.setBounds(371, 74, 116, 20);
 		panel_1.add(comboBox_1);
@@ -164,7 +114,7 @@ public class pterodactyleInterface {
 		panel_1.add(lblMoteur);
 		
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(editeur.implementation("coeur")));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"<Defaut>","Login, MotDePasse", "Session"}));
 		comboBox_2.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		comboBox_2.setBounds(207, 74, 146, 20);
 		panel_1.add(comboBox_2);
@@ -176,15 +126,15 @@ public class pterodactyleInterface {
 		
 		JButton btnNewButton = new JButton("Valider");
 		btnNewButton.setFont(new Font("Book Antiqua", Font.BOLD, 12));
-		btnNewButton.setBounds(250, 560, 89, 23);
+		btnNewButton.setBounds(250, 414, 89, 23);
 		btnNewButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editeur.creerS(textField.getText(), (String)comboBox_2.getSelectedItem() );
+				editeur.creerS(textField.getText(), (String)comboBox_1.getSelectedItem() );
 				System.out.println((String)comboBox.getSelectedItem());
 				editeur.creerC(textField.getText(), (String)comboBox.getSelectedItem() );
-				System.out.println((String)comboBox_2.getSelectedItem());
+				System.out.println((String)comboBox_1.getSelectedItem());
 			}
 			
 		});
@@ -194,7 +144,7 @@ public class pterodactyleInterface {
 		framePtrodactyle.getContentPane().add(btnNewButton);
 		framePtrodactyle.setBackground(Color.WHITE);
 		framePtrodactyle.setTitle("Ptérodactyle");
-		framePtrodactyle.setBounds(100, 100, 621, 633);
+		framePtrodactyle.setBounds(100, 100, 621, 490);
 		framePtrodactyle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
