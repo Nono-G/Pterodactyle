@@ -10,6 +10,6 @@ public class TestClient {
 	public static void main(String[] args) throws RemoteException {
 		Client2 client = new Client2("rmi://127.0.0.1/app");
 		_ServicesCoeur app = client.recupererApp();
-		System.out.println(app.test());
+
 	}
 }

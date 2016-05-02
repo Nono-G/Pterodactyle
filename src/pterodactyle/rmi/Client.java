@@ -37,7 +37,6 @@ public class Client {
 		try {
 			stub = (_ServicesCoeur) Naming.lookup("rmi://"+adresseIPServeur+"/app");
 			System.out.println(stub);
-			System.out.println(stub.test());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,13 +48,6 @@ public class Client {
 			e.printStackTrace();
 		}
 		
-		try {
-			System.out.println(stub.test());
-			System.out.println("Client connecté!");					
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

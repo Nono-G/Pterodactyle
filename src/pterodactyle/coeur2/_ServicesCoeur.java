@@ -11,7 +11,6 @@ import pterodactyle.utilisateur.*;
 
 public interface _ServicesCoeur extends Remote {
 	
-	public String test()throws RemoteException;
 
 	/**
 	 * @author MaximeSilvestre
