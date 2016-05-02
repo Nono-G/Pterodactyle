@@ -25,6 +25,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
 public class FormulaireCreationProfil extends JFrame {
 
@@ -37,6 +38,7 @@ public class FormulaireCreationProfil extends JFrame {
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
+	private JLabel lblEstAdministrateur;
 
 	/**
 	 * Launch the application.
@@ -56,7 +58,7 @@ public class FormulaireCreationProfil extends JFrame {
 		setTitle("Créer un profil");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FormulaireCreationProfil.class.getResource("/pterodactyle/application/ressourcesImages/logoSizeFunkySkeleton.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 283);
+		setBounds(100, 100, 450, 338);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(244,244,243));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -137,33 +139,44 @@ public class FormulaireCreationProfil extends JFrame {
 		btnValiderCreationProfil.setForeground(Color.WHITE);
 		btnValiderCreationProfil.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnValiderCreationProfil.setBackground(new Color(11, 29, 62));
+		
+		lblEstAdministrateur = new JLabel("Est administrateur :");
+		lblEstAdministrateur.setForeground(new Color(11, 29, 62));
+		lblEstAdministrateur.setFont(new Font("Book Antiqua", Font.BOLD, 17));
+		lblEstAdministrateur.setBackground(new Color(244, 244, 243));
+		
+		JCheckBox chckbxEstAdmin = new JCheckBox("administrateur");
+		chckbxEstAdmin.setForeground(new Color(11,29,62));
+		chckbxEstAdmin.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(lblNom, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+							.addComponent(textFieldCreationNom, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(lblMotDePasse, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textFieldCreationMdp, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+							.addComponent(textFieldCreationLogin, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblPrnom, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnAnnulerCreationProfil))
-							.addPreferredGap(ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnValiderCreationProfil, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textFieldCreationPrenom, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(lblNom, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(textFieldCreationNom, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-							.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-								.addComponent(lblMotDePasse, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(textFieldCreationMdp, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
-								.addComponent(textFieldCreationLogin, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(btnAnnulerCreationProfil)
+								.addComponent(lblEstAdministrateur, GroupLayout.PREFERRED_SIZE, 182, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(chckbxEstAdmin)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+									.addComponent(btnValiderCreationProfil, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textFieldCreationPrenom, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)))))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -185,7 +198,11 @@ public class FormulaireCreationProfil extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPrnom, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textFieldCreationPrenom, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblEstAdministrateur, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxEstAdmin))
+					.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnValiderCreationProfil, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnAnnulerCreationProfil))
