@@ -297,6 +297,11 @@ public class ApplicationUtilisateur extends JFrame {
 		onglet1.add(btnNewPost);
 		
 		JButton btnSuppPostUser = new JButton("Supprimer un post !");
+		btnSuppPostUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnSuppPostUser.setForeground(Color.WHITE);
 		btnSuppPostUser.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnSuppPostUser.setBackground(new Color(11, 29, 62));

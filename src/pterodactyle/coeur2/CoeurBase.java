@@ -13,6 +13,13 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	protected Map<String, Utilisateur> utilisateurs;
 	protected Map<String, _Echangeable> echangeables;
 
+	/**
+	 * Constructeur permttant de générer un coeur en partant de zéro. Il ne contient alors aucun échangeables, seulement un compte utilisateur
+	 * dont les identifiant et cle sont passés en paramètres.
+	 * @param identifiantSuperAdmin
+	 * @param cleSuperAdmin
+	 * @throws RemoteException
+	 */
 	public CoeurBase(String identifiantSuperAdmin, String cleSuperAdmin) throws RemoteException{
 		super();
 		this.utilisateurs = new HashMap<String, Utilisateur>();
@@ -28,6 +35,12 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		
 	}
 	
+	/**
+	 * Constructeur permettant de générer un coeur à partir de sauvegardes précédentes se trouvant dans le repertoire "sauv".
+	 * Ce coeur contiendra tous les utilisateurs, les tags, les echangeables, les fichiers bruts, laissés par les coeurs précédents.
+	 * @throws RemoteException
+	 * @throws ClassNotFoundException
+	 */
 	public CoeurBase() throws RemoteException, ClassNotFoundException{
 		super();
 		this.utilisateurs = new HashMap<String, Utilisateur>();
@@ -141,7 +154,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	//Auteur : Nono
-	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException{
+	public Set<$EchangeableAvecTag> listeEchangeableParTag(String urlTag, String identificateur, String cle)throws RemoteException, ExceptionAutorisationManquante{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification autorisation
@@ -203,7 +216,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		return ret;
 	}
 	
-	public _Echangeable getEchangeable(String url, String identificateur, String cle) throws RemoteException, ExceptionEchangeableInexistant{
+	public _Echangeable getEchangeable(String url, String identificateur, String cle) throws RemoteException, ExceptionEchangeableInexistant, ExceptionAutorisationManquante{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		Utilisateur utilisateur = utilisateurs.get(identificateur);
@@ -211,8 +224,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		_Echangeable ech = this.echangeables.get(url);
 		if(! (ech !=null)){throw new ExceptionEchangeableInexistant();}
 		//VerifAutorisation
-		if(ech instanceof $EchangeableAvecTag && (! verifAutorisation.lecture(($EchangeableAvecTag)ech, utilisateur))){System.out.println("Qu'est ce que tu fais ici ?");throw new ExceptionAutorisationManquante();}
-		if(ech instanceof MessageInterne && (! ((MessageInterne)ech).getDestinataire().equals(utilisateur))){System.out.println("Qu'est ce que tu fais lï¿½ ?");throw new ExceptionAutorisationManquante();}
+		if(ech instanceof $EchangeableAvecTag && (! verifAutorisation.lecture(($EchangeableAvecTag)ech, utilisateur))){throw new ExceptionAutorisationManquante();}
+		if(ech instanceof MessageInterne && (! ((MessageInterne)ech).getDestinataire().equals(utilisateur))){throw new ExceptionAutorisationManquante();}
 		
 		return ech;
 	}
@@ -273,7 +286,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	//Auteur : Nono
 	@Override
 	public void repondrePost(String url, String contenu, String identificateur, String cle)
-			throws RemoteException, ExceptionEchangeableMauvaisType {
+			throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionAutorisationManquante {
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification sÃ©mantique
@@ -288,7 +301,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		
 	}
 	
-	public void supprimerEchangeable(String url, String identificateur, String cle) throws RemoteException{
+	public void supprimerEchangeable(String url, String identificateur, String cle) throws RemoteException, ExceptionAutorisationManquante{
 		//Verification identite
 		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
 		//Verification Droit

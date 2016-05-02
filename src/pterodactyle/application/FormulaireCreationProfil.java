@@ -118,6 +118,10 @@ public class FormulaireCreationProfil extends JFrame {
 		btnAnnulerCreationProfil.setForeground(new Color(255, 255, 255));
 		btnAnnulerCreationProfil.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
+		JCheckBox chckbxEstAdmin = new JCheckBox("administrateur");
+		chckbxEstAdmin.setForeground(new Color(11,29,62));
+		chckbxEstAdmin.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
+		
 		btnValiderCreationProfil = new JButton("Valider");
 		btnValiderCreationProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,7 +129,8 @@ public class FormulaireCreationProfil extends JFrame {
 				String mdp = textFieldCreationMdp.getText();
 				String nom = textFieldCreationNom.getText();
 				String prenom = textFieldCreationPrenom.getText();
-				Utilisateur nouveau = new Utilisateur(nom, prenom, login, mdp, false);
+				boolean admin = chckbxEstAdmin.isSelected();
+				Utilisateur nouveau = new Utilisateur(nom, prenom, login, mdp, admin);
 				try {
 					app.creerUtilisateur(nouveau, loginCourant, motDePasseCourant);
 					dispose();
@@ -145,9 +150,6 @@ public class FormulaireCreationProfil extends JFrame {
 		lblEstAdministrateur.setFont(new Font("Book Antiqua", Font.BOLD, 17));
 		lblEstAdministrateur.setBackground(new Color(244, 244, 243));
 		
-		JCheckBox chckbxEstAdmin = new JCheckBox("administrateur");
-		chckbxEstAdmin.setForeground(new Color(11,29,62));
-		chckbxEstAdmin.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
