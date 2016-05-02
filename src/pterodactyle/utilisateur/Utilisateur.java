@@ -24,7 +24,7 @@ public class Utilisateur extends $Utilisateur implements Serializable {
 	 * @param admin un boolean pour definir si cette personne peut etre admin
 	 */
 	public Utilisateur(String nom, String prenom, String login, String motDePasse, boolean admin){
-		super(motDePasse, motDePasse, motDePasse, motDePasse, admin);
+		super(nom, prenom, login, motDePasse, admin);
 	}
 	
 	/*

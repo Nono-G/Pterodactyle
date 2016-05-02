@@ -198,7 +198,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if(! (ech !=null)){throw new ExceptionEchangeableInexistant();}
 		//VerifAutorisation
 		if(ech instanceof $EchangeableAvecTag && (! verifAutorisation.lecture(($EchangeableAvecTag)ech, utilisateur))){System.out.println("Qu'est ce que tu fais ici ?");throw new ExceptionAutorisationManquante();}
-		if(ech instanceof MessageInterne && (! ((MessageInterne)ech).getDestinataire().equals(utilisateur))){System.out.println("Qu'est ce que tu fais là ?");throw new ExceptionAutorisationManquante();}
+		if(ech instanceof MessageInterne && (! ((MessageInterne)ech).getDestinataire().equals(utilisateur))){System.out.println("Qu'est ce que tu fais lï¿½ ?");throw new ExceptionAutorisationManquante();}
 		
 		return ech;
 	}
