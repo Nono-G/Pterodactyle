@@ -60,6 +60,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private JTextField txtFiltrerParTagCloud;
 	private JTextField textField_1;
 	private JButton btnRefreshCloud;
+	private JButton btnResfreshAdmin;
 
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
@@ -506,6 +507,17 @@ public class ApplicationUtilisateur extends JFrame {
 		btnSuppTagOk.setForeground(Color.WHITE);
 		btnSuppTagOk.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnSuppTagOk.setBackground(new Color(11,29,62));
+		
+		btnResfreshAdmin = new JButton("");
+		btnResfreshAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
+				fr.setVisible(true);
+			}
+		});
+		btnResfreshAdmin.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		btnResfreshAdmin.setBackground(new Color(11, 29, 62));
 		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
 		gl_onglet3.setHorizontalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
@@ -530,26 +542,33 @@ public class ApplicationUtilisateur extends JFrame {
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(btnFormulaireCreerProfil, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
 								.addGap(76))))
-					.addGap(422))
+					.addGap(380)
+					.addComponent(btnResfreshAdmin, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		gl_onglet3.setVerticalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
-					.addGap(28)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnFormulaireCreerProfil))
-					.addGap(114)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(115)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnSuppTagOk, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(55, Short.MAX_VALUE))
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addGap(28)
+							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnFormulaireCreerProfil))
+							.addGap(114)
+							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+							.addGap(115)
+							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnSuppTagOk, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnResfreshAdmin, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(51, Short.MAX_VALUE))
 		);
 		onglet3.setLayout(gl_onglet3);
 		
