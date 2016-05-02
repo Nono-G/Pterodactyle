@@ -11,8 +11,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-import pterodactyle.coeur2.CoeurBase;
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur.CoeurBase;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.ExceptionEchangeableTagExistant;
 import pterodactyle.utilisateur.AdministrateurException;
 
@@ -24,12 +24,10 @@ public class Serveur {
 
 	public static void main(String[] args) throws IOException, AdministrateurException, ExceptionEchangeableTagExistant {
 
-		// courant
+
 		String cwd = System.getProperty("user.dir");
 		System.out.println("PWD = " + cwd);
 
-		// Crée 2 arraylist , une pour les zones d'échange instanciés et une
-		// autre pour les acteurs instanciés
 
 		System.setProperty("java.rmi.server.hostname", hostname); 
 		System.setProperty("java.rmi.server.codebase", "file:/" + cwd + "/bin");
@@ -43,23 +41,7 @@ public class Serveur {
 		skeleton.creerTag("eco", "admin", "admin");
 		skeleton.creerTag("ihm", "admin", "admin");
 		LocateRegistry.createRegistry(1099);
-		Naming.rebind("app", skeleton); // publie notre instance
-
-
-		/*
-		 * String cwd = System.getProperty("user.dir");
-		 * 
-		 * System.setProperty("java.rmi.server.hostname", "193.48.34.19");
-		 * System.setProperty("java.rmi.server.codebase", "file://" + cwd +
-		 * "/"); System.setProperty("java.security.policy", "file://" + cwd +
-		 * "/bin/policy");
-		 * 
-		 * CoeurBase app = new CoeurBase("silvemax", "12345");
-		 * LocateRegistry.createRegistry(1099); try { System.out.println(
-		 * "Lancement serveur"); Naming.rebind("App", app); System.out.println(
-		 * "serveur lancé"); } catch (RemoteException | MalformedURLException e)
-		 * { e.printStackTrace(); }
-		 */
+		Naming.rebind("app", skeleton);
 
 	}
 }

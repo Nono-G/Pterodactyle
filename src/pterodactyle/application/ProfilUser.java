@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.Tag;
 import pterodactyle.echangeable._Echangeable;
 import pterodactyle.utilisateur.Utilisateur;
@@ -150,25 +150,25 @@ public class ProfilUser extends JFrame {
 					e1.printStackTrace();
 				}}
 				if(droit.equals("modification")){try {
-					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 1, loginCourant, motDePasseCourant);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}}
 				if(droit.equals("partage")){try {
-					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 2, loginCourant, motDePasseCourant);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}}
 				if(droit.equals("creation")){try {
-					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 3, loginCourant, motDePasseCourant);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}}
 				if(droit.equals("suppression")){try {
-					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 4, loginCourant, motDePasseCourant);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

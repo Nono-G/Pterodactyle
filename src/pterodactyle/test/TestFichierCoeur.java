@@ -3,7 +3,7 @@ package pterodactyle.test;
 import java.io.*;
 import java.rmi.*;
 
-import pterodactyle.coeur2.*;
+import pterodactyle.coeur.*;
 import pterodactyle.echangeable.ExceptionEchangeableFichierFini;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
 import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;

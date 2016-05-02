@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
 import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.Post;

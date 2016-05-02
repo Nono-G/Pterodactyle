@@ -1,6 +1,6 @@
 package pterodactyle.test;
 
-import pterodactyle.coeur2.CoeurBase;
+import pterodactyle.coeur.CoeurBase;
 import pterodactyle.echangeable.Tag;
 import pterodactyle.utilisateur.Droits;
 import pterodactyle.utilisateur.Utilisateur;

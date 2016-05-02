@@ -1,6 +1,5 @@
 package pterodactyle.rmi;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -8,35 +7,35 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import pterodactyle.coeur2._ServicesCoeur;
-
+import pterodactyle.coeur._ServicesCoeur;
 
 public class Client {
-	
-	private static String adresseIPServeur = "127.0.0.1";
-	private static _ServicesCoeur stub;
 
+	private String adresseIPServeur;
+	private _ServicesCoeur stub;
+	String url;
+	_ServicesCoeur r;
 
-	public static void main(String[] args) throws NotBoundException, IOException {
-		
+	public Client(String ip) throws RemoteException {
+		this.adresseIPServeur = ip;
 		String cwd = System.getProperty("user.dir");
 		System.out.println("PWD = " + cwd);
-		
-		System.setProperty ("java.security.policy", "file:/"+cwd+"/policy_file");
-		System.out.println("policy = " + System.getProperty ("java.security.policy"));
 
-		//Connexion au serveur
+		System.setProperty("java.security.policy", "file:/" + cwd + "/policy_file");
+		System.out.println("policy = " + System.getProperty("java.security.policy"));
+
+		// Connexion au serveur
 		try {
-			Registry registry = LocateRegistry.getRegistry(adresseIPServeur,1099);
+			Registry registry = LocateRegistry.getRegistry(adresseIPServeur, 1099);
 			System.out.println(registry);
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		try {
-			stub = (_ServicesCoeur) Naming.lookup("rmi://"+adresseIPServeur+"/app");
-			System.out.println(stub);
+			this.r = (_ServicesCoeur) Naming.lookup("rmi://" + adresseIPServeur + "/app");
+			System.out.println(this.r);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +46,14 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+
+	public _ServicesCoeur recupererApp() {
+		return r;
+	}
+
+	public String recupererUrl() {
+		return this.url;
 	}
 
 }

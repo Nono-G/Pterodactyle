@@ -33,8 +33,7 @@ import java.util.Set;
 
 import javax.swing.border.LineBorder;
 
-import pterodactyle.coeur2._ServicesCoeur;
-
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.AdministrateurException;
 

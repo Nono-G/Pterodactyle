@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable.Tag;

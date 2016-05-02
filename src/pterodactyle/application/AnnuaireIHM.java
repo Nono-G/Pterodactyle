@@ -17,7 +17,7 @@ import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.Post;
 import pterodactyle.echangeable._Echangeable;
 import pterodactyle.utilisateur.Utilisateur;

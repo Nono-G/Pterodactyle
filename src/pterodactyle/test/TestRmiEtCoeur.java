@@ -9,7 +9,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
 import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.ExceptionEchangeableTagExistant;

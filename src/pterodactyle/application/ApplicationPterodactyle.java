@@ -6,11 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
 import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.ExceptionEchangeableTagExistant;
-import pterodactyle.rmi.Client2;
+import pterodactyle.rmi.Client;
 import pterodactyle.utilisateur.AdministrateurException;
 
 import javax.swing.JLabel;
@@ -44,7 +44,7 @@ public class ApplicationPterodactyle {
 	 * @throws AdministrateurException 
 	 */
 	public static void main(String[] args) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag, AdministrateurException, ExceptionEchangeableTagExistant {
-		Client2 client = new Client2("127.0.0.1");
+		Client client = new Client("127.0.0.1");
 		app = client.recupererApp();
 		//app.creerTag("compta", "admin", "admin");
 		//app.creerTag("economie", "admin", "admin");

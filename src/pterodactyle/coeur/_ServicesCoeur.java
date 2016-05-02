@@ -1,4 +1,4 @@
-package pterodactyle.coeur2;
+package pterodactyle.coeur;
 
 
 import java.rmi.Remote;

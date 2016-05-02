@@ -2,9 +2,8 @@ package pterodactyle.test;
 
 import java.rmi.RemoteException;
 
-import pterodactyle.coeur.Utilisateurs;
-import pterodactyle.coeur2.CoeurBase;
-import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.coeur.CoeurBase;
+import pterodactyle.coeur._ServicesCoeur;
 import pterodactyle.echangeable.Tag;
 import pterodactyle.utilisateur.Droits;
 import pterodactyle.utilisateur.Utilisateur;

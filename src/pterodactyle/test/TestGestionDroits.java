@@ -1,6 +1,6 @@
 package pterodactyle.test;
 
-import pterodactyle.coeur2.VerifAutorisation;
+import pterodactyle.coeur.VerifAutorisation;
 import pterodactyle.echangeable.Dossier;
 import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.Fichier;

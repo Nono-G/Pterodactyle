@@ -1,4 +1,4 @@
-package pterodactyle.coeur2;
+package pterodactyle.coeur;
 
 import pterodactyle.echangeable.Tag;
 import pterodactyle.echangeable._Echangeable;

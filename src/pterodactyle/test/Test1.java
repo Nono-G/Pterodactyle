@@ -3,7 +3,7 @@ package pterodactyle.test;
 import java.rmi.RemoteException;
 import java.util.Set;
 
-import pterodactyle.coeur2.*;
+import pterodactyle.coeur.*;
 import pterodactyle.echangeable.*;
 import pterodactyle.utilisateur.AdministrateurException;
 
