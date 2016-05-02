@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
 import pterodactyle.echangeable._Echangeable;
+import pterodactyle.utilisateur.Utilisateur;
 
 import java.awt.Toolkit;
 import javax.swing.GroupLayout;
@@ -20,6 +21,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
@@ -117,6 +119,19 @@ public class FormulaireCreationProfil extends JFrame {
 		btnValiderCreationProfil = new JButton("Valider");
 		btnValiderCreationProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String login = textFieldCreationLogin.getText();
+				String mdp = textFieldCreationMdp.getText();
+				String nom = textFieldCreationNom.getText();
+				String prenom = textFieldCreationPrenom.getText();
+				Utilisateur nouveau = new Utilisateur(nom, prenom, login, mdp, false);
+				try {
+					app.creerUtilisateur(nouveau, loginCourant, motDePasseCourant);
+					dispose();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btnValiderCreationProfil.setForeground(Color.WHITE);

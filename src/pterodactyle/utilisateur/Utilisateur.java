@@ -183,5 +183,7 @@ public class Utilisateur extends $Utilisateur implements Serializable {
 			oos.writeObject(this);
 		}catch(IOException e){e.printStackTrace();}
 	}
+	
+
 
 }

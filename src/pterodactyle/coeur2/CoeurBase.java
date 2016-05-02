@@ -41,7 +41,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		for(File u : objets){
 			System.out.println(u.getName());
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(adresse+"/"+u.getName())))){
-				this.utilisateurs.put(u.getName(), (Utilisateur)ois.readObject());
+				Utilisateur utilisateur = (Utilisateur)ois.readObject();
+				this.utilisateurs.put(utilisateur.getLogin(), utilisateur);
 			}catch(IOException e){e.printStackTrace();}
 		}
 		//TAGS
