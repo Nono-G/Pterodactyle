@@ -156,8 +156,6 @@ public class NouveauPost extends JFrame {
 						}
 					} catch (RemoteException | ExceptionEchangeablePasDeTag e1) {e1.printStackTrace();}
 					dispose();
-					ApplicationUtilisateur acc = new ApplicationUtilisateur(app, loginCourant, motDePasseCourant);
-					acc.setVisible(true);
 				}
 			}
 		});
