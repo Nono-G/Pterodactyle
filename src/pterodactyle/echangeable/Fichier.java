@@ -8,9 +8,11 @@ public class Fichier extends $DossierOuFichier{
 
 	private static final long serialVersionUID = 4875854715778443691L;
 
+	private int cleCreation;
 	
 	private Fichier(String nom, Utilisateur ut, Dossier pere, Tag t) {
 		super(nom, ut, pere, t);
+		this.cleCreation = (int)(System.currentTimeMillis()*Math.random());
 	}
 	
 	//Constructeur
@@ -45,6 +47,10 @@ public class Fichier extends $DossierOuFichier{
 	@Override
 	public boolean estDossier() {
 		return false;
+	}
+	
+	public int getCleCreation(){
+		return cleCreation;
 	}
 	
 	@Override

@@ -36,7 +36,7 @@ public class ConfirmationTelech extends JFrame{
 			getContentPane().setLayout(null);
 			
 			JLabel lblLabelmessageconfirmation = new JLabel("Votre téléchargement du fichier"+nomFichier+" ");
-			lblLabelmessageconfirmation.setBounds(39, 70, 395, 32);
+			lblLabelmessageconfirmation.setBounds(10, 66, 424, 32);
 			lblLabelmessageconfirmation.setBackground(new Color(244,244,243));
 			lblLabelmessageconfirmation.setForeground(new Color(11,29,62));
 			lblLabelmessageconfirmation.setFont(new Font("Book Antiqua", Font.BOLD, 18));

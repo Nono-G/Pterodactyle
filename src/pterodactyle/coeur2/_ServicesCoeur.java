@@ -84,8 +84,10 @@ public interface _ServicesCoeur extends Remote {
 	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle)
 			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType, RemoteException;
 
-	
-	public void creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
+	public void ecrireTranche(Object[] tranche, String fich, int cleCreation, String identificateur, String cle)
+			throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType;
+		
+	public int creerFichier(String url, Dossier pere, String tag, String identificateur, String cle) 
 			throws ExceptionEchangeablePasDeTag, RemoteException;
 	
 	

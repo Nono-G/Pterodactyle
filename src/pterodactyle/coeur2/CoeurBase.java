@@ -106,6 +106,18 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		return ((Fichier)ech).obtenirTranche(n, tailleTampon);
 	}
 	
+	public void ecrireTranche(Object[] tranche, String fich, int cleCreation, String identificateur, String cle) throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType {
+		//Verification identite
+		verifIdentite.verificationIdentiteUtilisateur(identificateur, cle, utilisateurs);
+		//Verification fichier existe
+		_Echangeable fichier = this.echangeables.get(fich);
+		if( ! (fichier != null && this.echangeables.get(fich) instanceof Fichier))throw new ExceptionEchangeableMauvaisType();
+		//Verification autorisation
+		if(! (verifAutorisation.creation((Fichier)fichier, utilisateurs.get(identificateur)) && ((Fichier)fichier).getCleCreation() == cleCreation))throw new ExceptionAutorisationManquante();
+		
+		((Fichier)fichier).ecrireTranche(tranche);
+	}
+	
 	//Auteur : Nono
 	@Override
 	public void ecrireTranche(Object[] tranche, String fich, String identificateur, String cle) throws FileNotFoundException, IOException, ExceptionEchangeableMauvaisType {
@@ -115,15 +127,16 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		_Echangeable fichier = this.echangeables.get(fich);
 		if( ! (fichier != null && this.echangeables.get(fich) instanceof Fichier))throw new ExceptionEchangeableMauvaisType();
 		//Verification autorisation
-		if(! verifAutorisation.creation((Fichier)fichier, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
+		if(! verifAutorisation.modification((Fichier)fichier, utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		
 		((Fichier)fichier).ecrireTranche(tranche);
 	}
 	
-	public void creerFichier(String url, Dossier pere, String t, String identificateur, String cle) throws ExceptionEchangeablePasDeTag{
+	public int creerFichier(String url, Dossier pere, String t, String identificateur, String cle) throws ExceptionEchangeablePasDeTag{
 		Fichier f = Fichier.nouveauFichier(url, utilisateurs.get(identificateur), pere, this.tags.get(t));
 		this.echangeables.put(url, f);
 		f.sauver();
+		return f.getCleCreation();
 	}
 	
 	//Auteur : Nono

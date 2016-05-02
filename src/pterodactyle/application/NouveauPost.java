@@ -57,8 +57,8 @@ public class NouveauPost extends JFrame {
 		this.loginCourant = loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app = app;
-		initialisation();
 		tagEnAjout = new ArrayList<String>(3);
+		initialisation();
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class NouveauPost extends JFrame {
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String titre = textField.getText();
-				if( titre.length() != 0){
+				if( titre.length() != 0 && tagEnAjout.size()!=0){
 					String url = System.currentTimeMillis()+titre;
 					try {
 						app.creerPost(url, titre, tagEnAjout.get(0), loginCourant, motDePasseCourant);

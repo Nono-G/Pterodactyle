@@ -8,7 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.ExceptionEchangeableMauvaisType;
+import pterodactyle.echangeable.ExceptionEchangeablePasDeTag;
 import pterodactyle.echangeable.Post;
+import pterodactyle.echangeable.Tag;
 import pterodactyle.echangeable._Echangeable;
 
 import java.awt.Toolkit;
@@ -19,9 +22,18 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.awt.event.ActionEvent;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
@@ -41,6 +53,7 @@ public class UploadFichier extends JFrame {
 	private _ServicesCoeur app;
 	private String loginCourant;
 	private String motDePasseCourant;
+	private List<String> tagEnAjout;
 
 
 	/**
@@ -51,6 +64,7 @@ public class UploadFichier extends JFrame {
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
+		tagEnAjout = new ArrayList<String>(3);
 		initialisation();
 	}
 	/**
@@ -94,16 +108,10 @@ public class UploadFichier extends JFrame {
 		contentPane.add(txtCheminAccesFichier);
 		txtCheminAccesFichier.setColumns(10);
 		
-		JButton btnCharger = new JButton("Charger");
-		btnCharger.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCharger.setBackground(new Color(11,29,62));
-		btnCharger.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		btnCharger.setForeground(new Color(255, 255, 255));
-		btnCharger.setBounds(291, 97, 89, 23);
-		contentPane.add(btnCharger);
+		JList list = new JList();
+		list.setBackground(new Color(211,210,250));
+		list.setForeground(new Color(11,29,62));
+		list.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		lblAjouterUnTag = new JLabel("Ajouter un tag :");
 		lblAjouterUnTag.setForeground(new Color(11, 29, 62));
@@ -116,11 +124,15 @@ public class UploadFichier extends JFrame {
 		comboBox.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		comboBox.setBackground(new Color(244,244,243));
 		comboBox.setBounds(10, 182, 128, 20);
+		comboBox.setModel(new DefaultComboBoxModel(refreshTagsEcriture()));
 		contentPane.add(comboBox);
 		
 		btnOkAddTagFichier = new JButton("OK");
 		btnOkAddTagFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String ajout = comboBox.getSelectedItem().toString();
+				if( ! tagEnAjout.contains(ajout))tagEnAjout.add(ajout);
+				list.setListData(refreshTagAjoute());
 			}
 		});
 		btnOkAddTagFichier.setForeground(Color.WHITE);
@@ -154,10 +166,6 @@ public class UploadFichier extends JFrame {
 		panel_1 = new JPanel();
 		scrollPane.setViewportView(panel_1);
 		
-		JList list = new JList();
-		list.setBackground(new Color(211,210,250));
-		list.setForeground(new Color(11,29,62));
-		list.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -183,10 +191,82 @@ public class UploadFichier extends JFrame {
 		contentPane.add(btnAnnuler);
 		
 		JButton btnUploadFich = new JButton("Upload");
+		btnUploadFich.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String urlServeur = txtNomFichier.getText();
+				if (urlServeur.length() != 0 && tagEnAjout.size() != 0){
+					try {
+						int cc = app.creerFichier(urlServeur, null, tagEnAjout.get(0), loginCourant, motDePasseCourant);
+						int n = 1;
+						while(n<tagEnAjout.size()){
+							app.ajouterTagSurEchangeable(urlServeur, tagEnAjout.get(n), loginCourant, motDePasseCourant);
+							n++;
+						}
+						upload(txtCheminAccesFichier.getText(), urlServeur, 10000, app, loginCourant, motDePasseCourant);
+						dispose();
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ExceptionEchangeablePasDeTag e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ExceptionEchangeableMauvaisType e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 		btnUploadFich.setForeground(Color.WHITE);
 		btnUploadFich.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnUploadFich.setBackground(new Color(11, 29, 62));
 		btnUploadFich.setBounds(489, 328, 89, 23);
 		contentPane.add(btnUploadFich);
+	}
+	
+	
+	protected String[] refreshTagsEcriture(){
+		Set<Tag> tags = null;
+		int i = 0;
+		try {
+			tags = app.getTagsDroitCreation(loginCourant, motDePasseCourant);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] nomsTags = new String[tags.size()];
+		
+		for(Tag p : tags){
+			nomsTags[i] = p.toString();
+			i++;
+		}
+		return nomsTags;
+	}
+	
+	protected String[] refreshTagAjoute(){
+		String[] nomsTags = new String[tagEnAjout.size()];
+		int i=0;
+		for(String t: tagEnAjout){
+			nomsTags[i] = t;
+			i++;
+		}
+		return nomsTags;
+	}
+	
+	private static void upload(String urlLocal, String urlServeur, int tailleBuffer, _ServicesCoeur c, String log, String mdp) throws ExceptionEchangeableMauvaisType{
+		long i=0;
+		File local = new File(urlLocal);
+		try(FileInputStream fis = new FileInputStream(local)){
+			Object[] data = new Object[2];
+			byte[] buffer = new byte[tailleBuffer];
+			i = (local.length()/tailleBuffer)+1;
+			while(i != 0){
+				data[0] = fis.read(buffer);
+				data[1] = buffer;
+				c.ecrireTranche(data, urlServeur, log, mdp);
+				i--;
+				System.out.println(""+data[0]);
+			}
+		}catch(IOException e){e.printStackTrace();}
 	}
 }
