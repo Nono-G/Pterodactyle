@@ -59,6 +59,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private List<String> tagsFiltre;
 	private JTextField txtFiltrerParTagCloud;
 	private JTextField textField_1;
+	private JButton btnRefreshCloud;
 
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
@@ -280,6 +281,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				dispose();
 				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
 				fr.setVisible(true);
 			}
@@ -383,7 +385,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnUploadFichier.setForeground(Color.WHITE);
 		btnUploadFichier.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnUploadFichier.setBackground(new Color(11, 29, 62));
-		btnUploadFichier.setBounds(479, 10, 185, 25);
+		btnUploadFichier.setBounds(366, 9, 185, 25);
 		onglet2.add(btnUploadFichier);
 		
 		JButton btnDownloadFichier = new JButton("Download");
@@ -400,8 +402,21 @@ public class ApplicationUtilisateur extends JFrame {
 		btnDownloadFichier.setForeground(Color.WHITE);
 		btnDownloadFichier.setFont(new Font("Book Antiqua", Font.PLAIN, 13));
 		btnDownloadFichier.setBackground(new Color(11, 29, 62));
-		btnDownloadFichier.setBounds(683, 10, 132, 25);
+		btnDownloadFichier.setBounds(561, 9, 132, 25);
 		onglet2.add(btnDownloadFichier);
+		
+		btnRefreshCloud = new JButton("");
+		btnRefreshCloud.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
+				fr.setVisible(true);
+			}
+		});
+		btnRefreshCloud.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		btnRefreshCloud.setBackground(new Color(11, 29, 62));
+		btnRefreshCloud.setBounds(783, 10, 32, 32);
+		onglet2.add(btnRefreshCloud);
 		btnNewPost.addActionListener(new ActionListener(){
 
 			@Override
@@ -622,7 +637,6 @@ public class ApplicationUtilisateur extends JFrame {
 			}
 		}catch(IOException e){System.out.println("Fichier local erreur");e.printStackTrace();};
 	}
-	
 }
 
 
