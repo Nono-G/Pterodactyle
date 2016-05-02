@@ -390,7 +390,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnUploadFichier.setBounds(366, 9, 185, 25);
 		onglet2.add(btnUploadFichier);
 		
-		JButton btnDownloadFichier = new JButton("Download");
+		JButton btnDownloadFichier = new JButton("T\u00E9l\u00E9charger");
 		btnDownloadFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(listFichiers.getSelectedIndex() != -1){
