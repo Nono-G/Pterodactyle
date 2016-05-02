@@ -463,6 +463,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		 if ( ! echangeables.containsKey(urlEchangeable)) throw new ExceptionEchangeableNonExistant();
 		 Specifique specifique = new Specifique(urlEchangeable);
 		 utilisateurs.get(idBeneficiant).ajouterAut(specifique);
+		 utilisateurs.get(idBeneficiant).sauver();
 	}
 	
 	
@@ -470,6 +471,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		 if( ! (verifIdentite.estAdmin(idAmin, cle, utilisateurs))) throw new AdministrateurException();
 		 if( ! (verifIdentite.estUtilisateur(idUtilisateur, cle, utilisateurs))) throw new UtilisateurException();
 		 utilisateurs.get(idUtilisateur).supprimerSpec(urlSpecifique);
+		 utilisateurs.get(idUtilisateur).sauver();
 	}
 	
 	
@@ -485,6 +487,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		}else{
 			utilisateur.getDroits(utilisateur.getSpecifique(urlSpec)).ajouterDroits(numeroDroit);
 		}
+		this.utilisateurs.get(idUtilisateur).sauver();
 		
 	}
 	
