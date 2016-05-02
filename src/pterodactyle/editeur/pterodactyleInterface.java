@@ -25,7 +25,6 @@ public class pterodactyleInterface {
 
 	private JFrame framePtrodactyle;
 	private JTextField textField;
-	private String[] implementationUtilisateur;
 	private static Editeur editeur;
 
 	/**
@@ -153,7 +152,7 @@ public class pterodactyleInterface {
 		panel_1.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"SQL", "XML"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(editeur.implementation("coeur")));
 		comboBox_1.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		comboBox_1.setBounds(371, 74, 116, 20);
 		panel_1.add(comboBox_1);
@@ -164,7 +163,7 @@ public class pterodactyleInterface {
 		panel_1.add(lblMoteur);
 		
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(editeur.implementation("coeur")));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"<Defaut>","Login, MotDePasse", "Session"}));
 		comboBox_2.setFont(new Font("Book Antiqua", Font.PLAIN, 12));
 		comboBox_2.setBounds(207, 74, 146, 20);
 		panel_1.add(comboBox_2);
@@ -181,10 +180,10 @@ public class pterodactyleInterface {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editeur.creerS(textField.getText(), (String)comboBox_2.getSelectedItem() );
+				editeur.creerS(textField.getText(), (String)comboBox_1.getSelectedItem() );
 				System.out.println((String)comboBox.getSelectedItem());
 				editeur.creerC(textField.getText(), (String)comboBox.getSelectedItem() );
-				System.out.println((String)comboBox_2.getSelectedItem());
+				System.out.println((String)comboBox_1.getSelectedItem());
 			}
 			
 		});
