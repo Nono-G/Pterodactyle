@@ -48,7 +48,8 @@ public class VerifAutorisation implements _VerifAutorisation {
 		if(utilisateur.estAdmin()){
 			return true;
 		}
-		return utilisateur.getDroits(tag).getDroits()[0] == true;
+		if(utilisateur.getDroits(tag) == null) {return false;}
+		return utilisateur.getDroits(tag).getDroits()[0];
 	}
 
 	@Override
@@ -56,7 +57,8 @@ public class VerifAutorisation implements _VerifAutorisation {
 		if(utilisateur.estAdmin()){
 			return true;
 		}
-		return utilisateur.getDroits(tag).getDroits()[1] == true;
+		if(utilisateur.getDroits(tag) == null) {return false;}
+		return utilisateur.getDroits(tag).getDroits()[1];
 	}
 
 	@Override
@@ -64,7 +66,8 @@ public class VerifAutorisation implements _VerifAutorisation {
 		if(utilisateur.estAdmin()){
 			return true;
 		}
-		return utilisateur.getDroits(tag).getDroits()[2] == true;
+		if(utilisateur.getDroits(tag) == null) {return false;}
+		return utilisateur.getDroits(tag).getDroits()[2];
 
 	}
 
@@ -73,7 +76,8 @@ public class VerifAutorisation implements _VerifAutorisation {
 		if(utilisateur.estAdmin()){
 			return true;
 		}
-		return utilisateur.getDroits(tag).getDroits()[3] == true;
+		if(utilisateur.getDroits(tag) == null) {return false;}
+		return utilisateur.getDroits(tag).getDroits()[3];
 	}
 
 	@Override
@@ -81,7 +85,8 @@ public class VerifAutorisation implements _VerifAutorisation {
 		if(utilisateur.estAdmin()){
 			return true;
 		}
-		return utilisateur.getDroits(tag).getDroits()[4] == true;
+		if(utilisateur.getDroits(tag) == null) {return false;}
+		return utilisateur.getDroits(tag).getDroits()[4];
 	}
 	
 	public boolean aDroit($EchangeableAvecTag echangeable, Utilisateur utilisateur, int numeroDroit){

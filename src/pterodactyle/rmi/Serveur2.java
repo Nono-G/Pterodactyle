@@ -18,7 +18,7 @@ import pterodactyle.coeur2._ServicesCoeur;
 
 public class Serveur2 {
 	
-	private static String hostname = "192.168.137.90";
+	private static String hostname = "127.0.0.1";
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 

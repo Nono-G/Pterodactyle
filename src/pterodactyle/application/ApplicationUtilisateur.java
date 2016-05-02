@@ -510,7 +510,8 @@ public class ApplicationUtilisateur extends JFrame {
 		JComboBox comboBox = new JComboBox();
 		Set<Tag> tags;
 		String[] tagsArray;
-		
+		System.out.println(loginCourant);
+		System.out.println(motDePasseCourant);
 		try {
 			tags = app.getTagsDroitCreation(loginCourant, motDePasseCourant);
 			tagsArray = new String[tags.size()];

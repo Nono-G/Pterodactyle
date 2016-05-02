@@ -153,7 +153,7 @@ public class AnnuaireIHM extends JFrame {
 				return values[index];
 			}
 		});
-		list.addMouseListener(new MouseAdapter() {
+		/*list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount()>=2){
@@ -165,13 +165,14 @@ public class AnnuaireIHM extends JFrame {
 				}
 			}
 
-		});
+		});*/
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(list.getSelectedValue()!=null){
 					String titre = list.getSelectedValue();
-					ProfilUser pu = new ProfilUser(app, loginCourant, loginCourant);
+					Utilisateur ut = utilisateurs.get(titre.split(" :")[0]);
+					ProfilUser pu = new ProfilUser(app,ut, loginCourant, loginCourant);
 					pu.setVisible(true);
 				}
 

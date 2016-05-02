@@ -18,14 +18,17 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
 import pterodactyle.coeur2._ServicesCoeur;
+import pterodactyle.echangeable.Tag;
 import pterodactyle.echangeable._Echangeable;
 import pterodactyle.utilisateur.Utilisateur;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -38,17 +41,20 @@ public class ProfilUser extends JFrame {
 	private String motDePasseCourant;
 	private String nomUtilisateur;
 	private String prenomUtilisateur;
+	private Utilisateur utilisateurCourant;
 	private Map<String, Utilisateur> utilisateurs;
 
 	/**
 	 * Launch the application.
 	 */
-	public ProfilUser(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
+	public ProfilUser(_ServicesCoeur app,Utilisateur utilisateur, String loginCourant, String motDePasseCourant){
 		setResizable(false);
 		this.loginCourant= loginCourant;
 		this.motDePasseCourant = motDePasseCourant;
 		this.app =app;
 		this.utilisateurs=new HashMap<String,Utilisateur>();
+		this.utilisateurCourant = utilisateur;
+		System.out.println(utilisateur.getLogin());
 		initialisation();
 	}
 
@@ -111,16 +117,62 @@ public class ProfilUser extends JFrame {
 		JComboBox comboBoxTagPourDroit = new JComboBox();
 		comboBoxTagPourDroit.setForeground(new Color(11,29,62));
 		comboBoxTagPourDroit.setFont(new Font("Book Antiqua", Font.BOLD, 13));
-		comboBoxTagPourDroit.setModel(new DefaultComboBoxModel(new String[] {"tag1", "tag2", "tag3"}));
+		try {
+			Set<Tag> tags = app.getTagsDroitCreation(loginCourant, motDePasseCourant);
+			String[] res = new String[tags.size()];
+			int i =0;
+			for(Tag t : tags){
+				res[i] = t.toString();
+				i++;
+			}
+			comboBoxTagPourDroit.setModel(new DefaultComboBoxModel(res));
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		
 		
 		JComboBox comboBoxListeDroits = new JComboBox();
-		comboBoxListeDroits.setModel(new DefaultComboBoxModel(new String[] {"lecture", "modification", "création", "suppression", "partage"}));
+		comboBoxListeDroits.setModel(new DefaultComboBoxModel(new String[] {"lecture", "modification", "creation", "suppression", "partage"}));
 		comboBoxListeDroits.setForeground(new Color(11, 29, 62));
 		comboBoxListeDroits.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
 		JButton btnOkAddDroit = new JButton("OK");
 		btnOkAddDroit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String tag = (String) comboBoxTagPourDroit.getSelectedItem();				
+				String droit = (String) comboBoxListeDroits.getSelectedItem();
+				
+				if(droit.equals("lecture")){try {
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}}
+				if(droit.equals("modification")){try {
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}}
+				if(droit.equals("partage")){try {
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}}
+				if(droit.equals("creation")){try {
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}}
+				if(droit.equals("suppression")){try {
+					app.partageDroits(utilisateurCourant.getLogin(), tag, 0, loginCourant, motDePasseCourant);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}}
 			}
 		});
 		btnOkAddDroit.setForeground(Color.WHITE);
