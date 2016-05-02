@@ -215,7 +215,7 @@ public interface _ServicesCoeur extends Remote {
 	 * @author Fanny
 	 * création d'un tag par un admin
 	 * @Require verifIdentite.estAdmin(utilisateurCourant, utilisateurs)
-	 * @Ensure le tag est dans la liste de 
+	 * @Ensure le tag est ajouté dans la liste
 	 * @throws RemoteException
 	 * @throws AdministrateurException si l'identificateur ne correspond pas à un administrateur
 	 * @throws ExceptionEchangeableTagExistant si le tag que l'administrateur veut créer existe déjà dans la liste des tags
@@ -226,6 +226,10 @@ public interface _ServicesCoeur extends Remote {
 	/**
 	 * @author Fanny
 	 * Service de suppression de tag par un admin
+	 * @Require verifIdentite.estAdmin(utilisateurCourant, utilisateurs)
+	 * @Ensure le tag n'est plus dans la liste 
+	 * @throws RemoteException
+	 * @throws AdministrateurException si l'identificateur ne correspond pas à un administrateur
 	 */
 	public void supprimerTag(String tag, String identificateur, String cle)throws RemoteException, AdministrateurException;
 	
