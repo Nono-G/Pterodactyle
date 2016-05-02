@@ -62,6 +62,7 @@ public class ApplicationUtilisateur extends JFrame {
 	private JTextField txtFiltrerParTagCloud;
 	private JTextField textFieldTagCreation;
 	private JButton btnRefreshCloud;
+	private JButton btnResfreshAdmin;
 
 	
 	public ApplicationUtilisateur(_ServicesCoeur app, String loginCourant, String motDePasseCourant){
@@ -284,9 +285,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnRefresh.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
-				fr.setVisible(true);
+				refresh();
 			}
 		});
 		
@@ -411,9 +410,7 @@ public class ApplicationUtilisateur extends JFrame {
 		btnRefreshCloud = new JButton("");
 		btnRefreshCloud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
-				fr.setVisible(true);
+				refresh();
 			}
 		});
 		btnRefreshCloud.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
@@ -492,6 +489,7 @@ public class ApplicationUtilisateur extends JFrame {
 				String tag = textFieldTagCreation.getText();
 				try {
 					app.creerTag(tag, loginCourant, motDePasseCourant);
+					btnResfreshAdmin.doClick();
 				} catch (RemoteException | AdministrateurException | ExceptionEchangeableTagExistant e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -531,6 +529,7 @@ public class ApplicationUtilisateur extends JFrame {
 				String tagSelect = (String) comboBox.getSelectedItem();
 				try {
 					app.supprimerTag(tagSelect, loginCourant, motDePasseCourant);
+					btnRefresh.doClick();
 				} catch (RemoteException | AdministrateurException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -540,6 +539,15 @@ public class ApplicationUtilisateur extends JFrame {
 		btnSuppTagOk.setForeground(Color.WHITE);
 		btnSuppTagOk.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		btnSuppTagOk.setBackground(new Color(11,29,62));
+		
+		btnResfreshAdmin = new JButton("");
+		btnResfreshAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		btnResfreshAdmin.setIcon(new ImageIcon(ApplicationUtilisateur.class.getResource("/pterodactyle/application/ressourcesImages/logorafraichir.png")));
+		btnResfreshAdmin.setBackground(new Color(11, 29, 62));
 		GroupLayout gl_onglet3 = new GroupLayout(onglet3);
 		gl_onglet3.setHorizontalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
@@ -564,26 +572,34 @@ public class ApplicationUtilisateur extends JFrame {
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(btnFormulaireCreerProfil, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
 								.addGap(76))))
-					.addGap(422))
+					.addGap(380)
+					.addComponent(btnResfreshAdmin, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		gl_onglet3.setVerticalGroup(
 			gl_onglet3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_onglet3.createSequentialGroup()
-					.addGap(28)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnFormulaireCreerProfil))
-					.addGap(114)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldTagCreation, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(115)
-					.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnSuppTagOk, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(55, Short.MAX_VALUE))
+					.addGroup(gl_onglet3.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addGap(28)
+							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCreerUserAdmin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnFormulaireCreerProfil))
+							.addGap(114)
+							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCrerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldTagCreation, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnCreerUnTag, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+							.addGap(115)
+							.addGroup(gl_onglet3.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblSupprimerUnTag, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnSuppTagOk, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_onglet3.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnResfreshAdmin, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(51, Short.MAX_VALUE))
+
 		);
 		onglet3.setLayout(gl_onglet3);
 		
@@ -651,6 +667,12 @@ public class ApplicationUtilisateur extends JFrame {
 				System.out.println(""+data[0]);
 			}
 		}catch(IOException e){e.printStackTrace();}
+	}
+	
+	private void refresh(){
+		dispose();
+		ApplicationUtilisateur fr = new ApplicationUtilisateur(app,loginCourant,motDePasseCourant);
+		fr.setVisible(true);
 	}
 	
 	private static void download(String urlLocal, String urlServeur, int tailleBuffer, _ServicesCoeur c){
