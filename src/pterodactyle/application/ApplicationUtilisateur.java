@@ -376,6 +376,8 @@ public class ApplicationUtilisateur extends JFrame {
 		JButton btnUploadFichier = new JButton("Nouveau fichier !");
 		btnUploadFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				UploadFichier uf = new UploadFichier(app,loginCourant,motDePasseCourant);
+				uf.setVisible(true);
 			}
 		});
 		btnUploadFichier.setForeground(Color.WHITE);
