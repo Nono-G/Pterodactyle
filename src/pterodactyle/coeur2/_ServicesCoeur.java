@@ -224,7 +224,8 @@ public interface _ServicesCoeur extends Remote {
 	
 	/**
 	 * @author Fanny
-	 * Service de suppression de tag par un admin
+	 * Service de suppression de tag par un admin. Si cette supression conduit à l'existence
+	 * D'$EchangeableAvecTag sans aucun tag, ceux-ci sont SUPPRIMES.
 	 * @Require verifIdentite.estAdmin(utilisateurCourant, utilisateurs)
 	 * @Ensure le tag n'est plus dans la liste 
 	 * @throws RemoteException
