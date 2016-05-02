@@ -14,8 +14,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	protected Map<String, _Echangeable> echangeables;
 
 	/**
-	 * Constructeur permttant de générer un coeur en partant de zéro. Il ne contient alors aucun échangeables, seulement un compte utilisateur
-	 * dont les identifiant et cle sont passés en paramètres.
+	 * Constructeur permttant de gï¿½nï¿½rer un coeur en partant de zï¿½ro. Il ne contient alors aucun ï¿½changeables, seulement un compte utilisateur
+	 * dont les identifiant et cle sont passï¿½s en paramï¿½tres.
 	 * @param identifiantSuperAdmin
 	 * @param cleSuperAdmin
 	 * @throws RemoteException
@@ -36,8 +36,8 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 	}
 	
 	/**
-	 * Constructeur permettant de générer un coeur à partir de sauvegardes précédentes se trouvant dans le repertoire "sauv".
-	 * Ce coeur contiendra tous les utilisateurs, les tags, les echangeables, les fichiers bruts, laissés par les coeurs précédents.
+	 * Constructeur permettant de gï¿½nï¿½rer un coeur ï¿½ partir de sauvegardes prï¿½cï¿½dentes se trouvant dans le repertoire "sauv".
+	 * Ce coeur contiendra tous les utilisateurs, les tags, les echangeables, les fichiers bruts, laissï¿½s par les coeurs prï¿½cï¿½dents.
 	 * @throws RemoteException
 	 * @throws ClassNotFoundException
 	 */
@@ -381,11 +381,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		//Ajout du tags dans la liste des tags
 		this.tags.put(nomTag,tag);
 		tag.sauver();
-	}
-
-	@Override
-	public String test() throws RemoteException {
-		return "Ca marche fdp";
 	}
 
 

@@ -44,7 +44,7 @@ public class ApplicationPterodactyle {
 	 * @throws AdministrateurException 
 	 */
 	public static void main(String[] args) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag, AdministrateurException, ExceptionEchangeableTagExistant {
-		Client2 client = new Client2("127.0.0.1");
+		Client2 client = new Client2("192.168.137.90");
 		app = client.recupererApp();
 		//app.creerTag("compta", "admin", "admin");
 		//app.creerTag("economie", "admin", "admin");

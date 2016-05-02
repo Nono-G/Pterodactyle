@@ -138,7 +138,6 @@ public class FormulaireCreationProfil extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 		btnValiderCreationProfil.setForeground(Color.WHITE);
