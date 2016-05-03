@@ -3,7 +3,7 @@ package pterodactyle.utilisateur;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class $Utilisateur implements _Utilisateur, Serializable {
+public class $Utilisateur implements Serializable {
 	protected String nom; 
 	protected String prenom; 
 	protected String login; 
