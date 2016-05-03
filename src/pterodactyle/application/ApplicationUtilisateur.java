@@ -649,7 +649,7 @@ public class ApplicationUtilisateur extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String[] nomsFichiers = new String[posts.size()];
+		String[] nomsFichiers = new String[fichiersloc.size()];
 		
 		for(Fichier f : fichiersloc){
 			this.fichiers.put(f.getUrl(), f);
