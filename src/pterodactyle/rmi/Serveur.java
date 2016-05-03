@@ -20,7 +20,7 @@ import pterodactyle.utilisateur.AdministrateurException;
 
 public class Serveur {
 	
-	private static String hostname = "127.0.0.1";
+	private static String hostname = "192.168.137.90";
 
 	public static void main(String[] args) throws IOException, AdministrateurException, ExceptionEchangeableTagExistant {
 

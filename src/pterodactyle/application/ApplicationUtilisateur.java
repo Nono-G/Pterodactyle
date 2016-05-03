@@ -202,7 +202,7 @@ public class ApplicationUtilisateur extends JFrame {
 				if(e.getClickCount()>=2){
 					//listPourClick.getSelectedValue();
 					PaireTitreUrl titre = listPourClick.getModel().getElementAt(listPourClick.locationToIndex(e.getPoint()));
-					EditionPost ep = new EditionPost((Post)posts.get(titre.url), app, loginCourant, loginCourant);
+					EditionPost ep = new EditionPost((Post)posts.get(titre.url), app, loginCourant, motDePasseCourant);
 					ep.setVisible(true);
 				}
 			}

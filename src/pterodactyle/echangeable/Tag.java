@@ -26,4 +26,9 @@ public class Tag extends Autorisation implements Serializable{
 			oos.writeObject(this);
 		}catch(IOException e){e.printStackTrace();}
 	}
+	
+	@Override
+	public boolean equals (Object autre){
+		return (autre instanceof Tag && autre.toString().equals(this.nom));
+	}
 }

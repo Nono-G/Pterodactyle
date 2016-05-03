@@ -8,8 +8,6 @@ import pterodactyle.utilisateur.*;
 
 //Classe abstraite Echangeable général pour réunir les attributs communs
 public abstract class $Echangeable implements _Echangeable {
-
-	private static final long serialVersionUID = 9068503634795337620L;
 	
 		protected Date dateCreation;//Date a laquelle un échangeable à été mis en ligne sur le serveur
 		protected String url;//Nom sous lequel l'échangeable est connu sur le serveur

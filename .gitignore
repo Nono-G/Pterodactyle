@@ -5,3 +5,4 @@
 bin/pterodactyle/*
 sauv/*
 *.prefs
+/bin/

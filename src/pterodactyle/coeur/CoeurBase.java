@@ -8,7 +8,6 @@ import pterodactyle.utilisateur.*;
 
 public class CoeurBase extends $Coeur implements _ServicesCoeur {
 
-	private static final long serialVersionUID = -5431026872014363966L;
 	protected Map<String, Tag> tags;
 	protected Map<String, Utilisateur> utilisateurs;
 	protected Map<String, _Echangeable> echangeables;
@@ -177,6 +176,9 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		Set<_Echangeable> ret = new HashSet<_Echangeable>();
 		for(String url : this.echangeables.keySet()){
 			_Echangeable ech = this.echangeables.get(url);
+			/*TRACE*/ if(ech instanceof $EchangeableAvecTag)System.out.println((($EchangeableAvecTag)ech).getTags());
+			/*TRACE*/ System.out.println(this.utilisateurs.get(identificateur).toStringDroits());
+			/*TRACE*/ System.out.println(ech.getUrl() + " "+this.utilisateurs.get(identificateur) + " "+verifAutorisation.lecture((($EchangeableAvecTag)ech), this.utilisateurs.get(identificateur)));
 			if(cl.isInstance(ech) && verifAutorisation.lecture((($EchangeableAvecTag)ech), this.utilisateurs.get(identificateur))){
 				ret.add(ech);
 			}
@@ -261,6 +263,7 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if( ! verifAutorisation.creationTag(tags.get(urlTag), utilisateurs.get(identificateur)))throw new ExceptionAutorisationManquante();
 		
 		(($EchangeableAvecTag)ech).ajouterTag(this.tags.get(urlTag));
+		ech.sauver();
 	}
 	
 	/**
@@ -482,7 +485,6 @@ public class CoeurBase extends $Coeur implements _ServicesCoeur {
 		if( ! (utilisateur  != null)) throw new UtilisateurException("Bonjour");
 		if( ! utilisateur.aSpecifique(urlSpec)){
 			this.creerSpecifique(urlSpec, idUtilisateur, idResponsable, cle);
-			System.out.println("Il ne l'a pas ");
 			utilisateur.getDroits(utilisateur.getSpecifique(urlSpec)).ajouterDroits(numeroDroit);
 		}else{
 			utilisateur.getDroits(utilisateur.getSpecifique(urlSpec)).ajouterDroits(numeroDroit);

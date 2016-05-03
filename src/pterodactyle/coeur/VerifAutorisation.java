@@ -116,8 +116,13 @@ public class VerifAutorisation implements _VerifAutorisation {
 			}
 		}
 		for(Tag t : tags){
-			if(utilisateur.aAutorisation(t)){
-				if(droitTag(t,utilisateur, numeroDroit)) resultat = droitTag(t,utilisateur, numeroDroit);
+			boolean rustine = false;
+			Autorisation rustineTag = null;
+			for(Autorisation s : utilisateur.recupererTousLesDroits().keySet()){
+				if(s.equals(t)){rustine = true;rustineTag=s;}
+			}
+			if(rustine){
+				if(droitTag((Tag)rustineTag,utilisateur, numeroDroit)) resultat = true;
 			}
 		}
 		for(Specifique s : utilisateur.getSpecifique()){
@@ -135,7 +140,12 @@ public class VerifAutorisation implements _VerifAutorisation {
 		if(utilisateur.estAdmin()){
 			return true;
 		}
-		return  utilisateur.getDroits(tag).getDroits()[numeroDroit] == true;
+		if(utilisateur.getDroits(tag) != null && utilisateur.getDroits(tag).getDroits() != null){
+			return  utilisateur.getDroits(tag).getDroits()[numeroDroit] ;
+		}
+		return false;
+		//*TRACE*/System.out.println("TRACE D4ANASSE"+utilisateur.getDroits(tag).getDroits()[numeroDroit]);
+		//return  utilisateur.getDroits(tag).getDroits()[numeroDroit] ;
 	}
 	
 	

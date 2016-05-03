@@ -8,12 +8,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class Utilisateur extends $Utilisateur implements Serializable {
-	
-	
-	//Attributs de base de l'utilisateur
 
-	
-	
 	/*
 	 * Constructeur basique 
 	 * @param nom du nouvel utilisateur
@@ -108,7 +103,8 @@ public class Utilisateur extends $Utilisateur implements Serializable {
 	 */
 
 	public boolean aAutorisation(Autorisation autorisation){
-		return listeDroits.containsKey(autorisation);	
+		return listeDroits.keySet().contains(autorisation);
+		//return listeDroits.containsKey(autorisation);	
 	}
 	
 	/*
