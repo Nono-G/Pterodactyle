@@ -112,7 +112,10 @@ public class Utilisateur extends $Utilisateur implements Serializable {
 	 * @param autorisation 
 	 */
 	public Droits getDroits(Autorisation autorisation){
-		return listeDroits.get(autorisation);
+		for( Autorisation a : this.listeDroits.keySet()){
+			if (a.equals(autorisation)) return listeDroits.get(a);
+		}
+		return null;
 	}
 	
 	public HashMap<Autorisation,Droits> recupererTousLesDroits(){
