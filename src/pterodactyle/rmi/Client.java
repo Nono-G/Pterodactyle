@@ -21,7 +21,7 @@ public class Client {
 		String cwd = System.getProperty("user.dir");
 		System.out.println("PWD = " + cwd);
 
-		System.setProperty("java.security.policy", "file:/" + cwd + "/policy_file");
+		System.setProperty("java.security.policy", "file:/" + cwd + "/policy");
 		System.out.println("policy = " + System.getProperty("java.security.policy"));
 
 		// Connexion au serveur

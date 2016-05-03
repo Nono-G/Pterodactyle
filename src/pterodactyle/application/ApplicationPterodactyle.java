@@ -44,7 +44,7 @@ public class ApplicationPterodactyle {
 	 * @throws AdministrateurException 
 	 */
 	public static void main(String[] args) throws RemoteException, ExceptionEchangeableMauvaisType, ExceptionEchangeablePasDeTag, AdministrateurException, ExceptionEchangeableTagExistant {
-		Client client = new Client("127.0.0.1");
+		Client client = new Client("192.168.137.90");
 		app = client.recupererApp();
 
 		EventQueue.invokeLater(new Runnable() {

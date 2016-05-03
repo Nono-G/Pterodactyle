@@ -172,7 +172,7 @@ public class AnnuaireIHM extends JFrame {
 				if(list.getSelectedValue()!=null){
 					String titre = list.getSelectedValue();
 					Utilisateur ut = utilisateurs.get(titre.split(" :")[0]);
-					ProfilUser pu = new ProfilUser(app,ut, loginCourant, loginCourant);
+					ProfilUser pu = new ProfilUser(app,ut, loginCourant, motDePasseCourant);
 					pu.setVisible(true);
 				}
 
