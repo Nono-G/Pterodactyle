@@ -6,7 +6,6 @@ import pterodactyle.utilisateur.Utilisateur;
 
 public class Fichier extends $DossierOuFichier{
 
-	private static final long serialVersionUID = 4875854715778443691L;
 
 	private int cleCreation;
 	

@@ -7,8 +7,6 @@ import pterodactyle.utilisateur.Utilisateur;
 
 public class Post extends $EchangeableAvecTag {
 	
-	private static final long serialVersionUID = 9122133390678416634L;
-	
 	protected List<MessagePost> messages;
 	protected String titre;
 	

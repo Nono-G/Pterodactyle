@@ -7,8 +7,6 @@ import java.util.Date;
 
 public class MessagePost implements Serializable {
 	
-	private static final long serialVersionUID = -2438769035031697711L;
-	
 	private Utilisateur auteur; //L'auteur du message
 	private Date dateAjout;     //La date de l'ajout de la réponse
 	private String texte;       //Le contenu du message, non vide

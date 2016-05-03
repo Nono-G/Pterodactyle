@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 
 public class Utilisateur extends $Utilisateur implements Serializable {
 	
-	private static final long serialVersionUID = 3755293297347406031L;
 	
 	//Attributs de base de l'utilisateur
 
