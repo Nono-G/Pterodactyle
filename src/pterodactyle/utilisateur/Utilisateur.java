@@ -124,6 +124,14 @@ public class Utilisateur extends $Utilisateur implements Serializable {
 		return listeDroits;
 	}
 	
+	public String getPrenom(){
+		return prenom;
+	}
+	
+	public String getNom(){
+		return nom;
+	}
+	
 	
 	
 	/*

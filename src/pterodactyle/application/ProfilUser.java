@@ -81,11 +81,11 @@ public class ProfilUser extends JFrame {
 		lblLogin.setForeground(new Color(11,29,62));
 		lblLogin.setFont(new Font("Book Antiqua", Font.BOLD, 20));
 		
-		JLabel lblNomUser = new JLabel("Nom de l'utilisateur");
+		JLabel lblNomUser = new JLabel("Nom : "+utilisateurCourant.getNom());
 		lblNomUser.setForeground(new Color(11, 29, 62));
 		lblNomUser.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
-		JLabel lblPrenomUser = new JLabel("Prénom de l'utilisateur");
+		JLabel lblPrenomUser = new JLabel("Prenom : "+utilisateurCourant.getPrenom());
 		lblPrenomUser.setForeground(new Color(11, 29, 62));
 		lblPrenomUser.setFont(new Font("Book Antiqua", Font.BOLD, 13));
 		
